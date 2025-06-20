@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 15:48:37 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:58:27 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "../lib/libft/libft.h"
+#include "../libft/libft.h"
 
 typedef struct s_arena
 {
