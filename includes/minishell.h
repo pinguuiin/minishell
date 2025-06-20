@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 16:23:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/20 21:52:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_info
 	bool		is_error;
 	int			error_code;
 	t_env		*env;
+	char		**envp_copy;
 	t_cmd_line	*cmd_line;
 	t_arena		*arena;
 
