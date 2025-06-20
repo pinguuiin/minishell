@@ -1,3 +1,9 @@
+.editorconfig
+.vscode
+*.swp
+*.gch
+*.o
+*.txt
 a.out
 libft.a
 *.o
