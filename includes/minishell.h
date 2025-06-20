@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 10:51:32 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:48:37 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct s_env
 
 typedef struct s_info
 {
-	bool	is_error;
-	int		error_code;
-	t_env	*env;
-	// t_cmd	*cmd;
-	t_arena	*arena;
+	bool		is_error;
+	int			error_code;
+	t_env		*env;
+	t_cmd_line	*cmd_line;
+	t_arena		*arena;
 
 }	t_info;
 
@@ -74,11 +74,11 @@ typedef struct s_cmd
 }	t_cmd;
 
 // Full command line (could be one or multiple piped commands)
-typedef struct s_command_line
+typedef struct s_cmd_line
 {
 	t_cmd	*cmds;		// Linked list of piped commands
 	int		num_cmds;	// Number of commands in pipeline
-}	t_command_line;
+}	t_cmd_line;
 
 // memory management
 t_arena	*arena_create(size_t size);
