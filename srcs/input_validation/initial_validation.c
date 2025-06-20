@@ -6,12 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 16:52:49 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:08:38 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// check if all quotes are properly closed
 int	validate_quotes(const char *input)
 {
 	int	in_single;
@@ -32,6 +33,7 @@ int	validate_quotes(const char *input)
 	return (!in_single && !in_double);
 }
 
+// check if a valid token follows a redirection or pipe operator
 static int	validate_after_operator(const char *input)
 {
 	const char	*first_operator;
@@ -47,6 +49,7 @@ static int	validate_after_operator(const char *input)
 	return (1);
 }
 
+// validates redirection operators and their syntax outside of quotes
 int	validate_redirections(const char *input)
 {
 	int	in_single_quote;
@@ -69,6 +72,7 @@ int	validate_redirections(const char *input)
 	return (1);
 }
 
+// validate correct use and placement of pipe operators outside of quotes
 int	validate_operations(const char *input, int expect_command)
 {
 	int	in_single_quote;
@@ -98,6 +102,7 @@ int	validate_operations(const char *input, int expect_command)
 	return (1);
 }
 
+// runs all syntax validation checks
 int	check_syntax_error(const char *input)
 {
 	if (is_empty_input(input))
