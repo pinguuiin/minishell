@@ -6,19 +6,19 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:55:59 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 10:56:48 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:18:02 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_empty_input(const char *cmd)
+int	is_empty_input(const char *input)
 {
-	while (*cmd)
+	while (*input)
 	{
-		if (!ft_isspace((unsigned char)*cmd))
+		if (*input != ' ' || *input != '\t')
 			return (0);
-		cmd++;
+		input++;
 	}
 	return (1);
 }

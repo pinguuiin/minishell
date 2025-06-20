@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 15:58:27 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:23:01 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,6 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 } t_env;
-
-
-typedef struct s_info
-{
-	bool		is_error;
-	int			error_code;
-	t_env		*env;
-	t_cmd_line	*cmd_line;
-	t_arena		*arena;
-
-}	t_info;
 
 // Type of redirection
 typedef enum e_redir_type
@@ -80,12 +69,24 @@ typedef struct s_cmd_line
 	int		num_cmds;	// Number of commands in pipeline
 }	t_cmd_line;
 
+
+typedef struct s_info
+{
+	bool		is_error;
+	int			error_code;
+	t_env		*env;
+	t_cmd_line	*cmd_line;
+	t_arena		*arena;
+
+}	t_info;
+
 // memory management
 t_arena	*arena_create(size_t size);
 void	*arena_alloc(t_arena **arena_ptr, size_t size);
 void	arena_free_all(t_arena *arena);
 
 // input validation
+int		is_empty_input(const char *input);
 int		validate_quotes(const char *cmd);
 int		validate_redirections(const char *cmd);
 int		validate_operations(const char *cmd, int expect_command);
