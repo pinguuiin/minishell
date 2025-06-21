@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 17:08:38 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 11:44:37 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	validate_operations(const char *input, int expect_command)
 				return (0);
 			expect_command = 1;
 		}
-		else if (*input == ' ' || *input == '\t')
+		else if (*input != ' ' && *input != '\t')
 			expect_command = 0;
 		input++;
 	}

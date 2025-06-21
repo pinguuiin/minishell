@@ -23,7 +23,9 @@ int	main(void)
 	run_test("ls || grep foo");                 // invalid operator
 	run_test("| ls");                           // invalid operator
 	run_test("ls |");                           // invalid operator
+	run_test("ls | ");                          // invalid operator
 	run_test("cat << EOF");                     // OK (simple case)
+	run_test("cat << EOF\"\"");                     // OK (simple case)
 	run_test("cat <");                          // invalid redirection
 	run_test("echo \"unclosed");                // unclosed quote
 	run_test("ls >| grep");                     // invalid redirection (>| not handled)
