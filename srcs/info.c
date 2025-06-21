@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 16:21:31 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 18:07:15 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,3 @@ void	init_info(char **envp)
 	info->error_code = 0;
 	info->envp_copy = envp_copy(envp, info);
 }
-

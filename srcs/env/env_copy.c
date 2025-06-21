@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 13:11:02 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 18:08:01 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	count_envp(char **envp)
 {
-	size_t count;
+	size_t	count;
 
 	count = 0;
 	if (!envp)
@@ -24,7 +24,8 @@ static int	count_envp(char **envp)
 	return (count);
 }
 
-static char	**copy_envp_entries(char **envp, char **envp_copy, int envp_num, t_info *info)
+static char	**copy_envp_entries(char **envp, \
+	char **envp_copy, int envp_num, t_info *info)
 {
 	int	i;
 
@@ -34,7 +35,8 @@ static char	**copy_envp_entries(char **envp, char **envp_copy, int envp_num, t_i
 		envp_copy[i] = aalloc(&(info->arena), ft_strlen(envp[i]) + 1);
 		if (!envp_copy[i])
 		{
-			ft_putstr_fd("fails memory allocation for envp_copy entry\n", STDERR_FILENO);
+			ft_putstr_fd("fails memory allocation for envp_copy entry\n", \
+				STDERR_FILENO);
 			arena_free_all(info->arena);
 			exit(1);
 		}

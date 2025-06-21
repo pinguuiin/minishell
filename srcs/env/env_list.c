@@ -6,16 +6,18 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:16 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 16:56:02 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 18:08:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		set_key_value(t_env *node, const char *env, const char *equal, t_arena **arena)
+static int	set_key_value(t_env *node, const char *env, \
+	const char *equal, t_arena **arena)
 {
-	size_t key_len = equal - env ;
+	size_t	key_len;
 
+	key_len = equal - env;
 	node->key = aalloc(arena, key_len + 1);
 	node->value = aalloc(arena, ft_strlen(equal + 1) + 1);
 	if (!node->key || !node->value)
