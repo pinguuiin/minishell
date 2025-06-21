@@ -6,14 +6,12 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 09:13:24 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 12:59:36 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define ARENA_BLOCK_SIZE (10 * 1024 * 1024)
 
 #include <stdlib.h>
 #include <string.h>

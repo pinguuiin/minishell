@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:16:49 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 12:34:34 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 12:59:38 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MEMORY_H
 
 #include "minishell.h"
+
+# define ARENA_BLOCK_SIZE (10 * 1024 * 1024)
 
 typedef struct s_arena
 {
@@ -23,9 +25,8 @@ typedef struct s_arena
 	struct s_arena	*next;
 } t_arena;
 
-
 t_arena	*arena_create(size_t size);
-void	*a_alloc(t_arena **arena_ptr, size_t size);
+void	*aalloc(t_arena **arena_ptr, size_t size);
 void	arena_free_all(t_arena *arena);
 
 #endif
