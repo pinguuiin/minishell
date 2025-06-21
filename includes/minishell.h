@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/20 21:52:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 09:13:24 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,56 +19,13 @@
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "../libft/libft.h"
 
-typedef struct s_arena
-{
-	void			*memory;
-	size_t			offset;
-	size_t			size;
-	struct s_arena	*next;
-} t_arena;
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-} t_env;
-
-// Type of redirection
-typedef enum e_redir_type
-{
-	REDIR_INPUT,	// <
-    REDIR_OUTPUT,	// >
-    REDIR_APPEND,	// >>
-    REDIR_HEREDOC	// <<
-}   t_redir_type;
-
-// Redirection node
-typedef struct s_redir
-{
-	t_redir_type	type;	// Type of redirection
-	char			*file;	// Target file or heredoc delimiter
-	struct s_redir	*next;	// Linked list for multiple redirections
-}	t_redir;
-
-// Command node (single command in a pipeline)
-typedef struct s_cmd
-{
-	char	**argv;			// NULL-terminated array of arguments
-	t_redir	*redirection;	// Linked list of input/output redirections
-	int		is_builtin;		// Boolean flag for built-ins
-	struct	s_cmd *next;	// Next command in pipeline
-}	t_cmd;
-
-// Full command line (could be one or multiple piped commands)
-typedef struct s_cmd_line
-{
-	t_cmd	*cmds;		// Linked list of piped commands
-	int		num_cmds;	// Number of commands in pipeline
-}	t_cmd_line;
-
+#include "libft.h"
+#include "memory.h"
+#include "validation.h"
+#include "env.h"
+#include "lexer.h"
+#include "parser.h"
 
 typedef struct s_info
 {
@@ -80,17 +37,5 @@ typedef struct s_info
 	t_arena		*arena;
 
 }	t_info;
-
-// memory management
-t_arena	*arena_create(size_t size);
-void	*arena_alloc(t_arena **arena_ptr, size_t size);
-void	arena_free_all(t_arena *arena);
-
-// input validation
-int		is_empty_input(const char *input);
-int		validate_quotes(const char *cmd);
-int		validate_redirections(const char *cmd);
-int		validate_operations(const char *cmd, int expect_command);
-int		check_syntax_error(const char *cmd);
 
 #endif
