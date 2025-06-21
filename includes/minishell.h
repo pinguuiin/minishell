@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 12:59:36 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 15:47:21 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,16 @@
 
 typedef struct s_info
 {
-	bool		is_error;
 	int			error_code;
 	t_env		*env;
 	char		**envp_copy;
-	t_cmd_line	*cmd_line;
+	t_cmd		*cmds;			// Linked list of piped commands
+	int			num_cmds;		// Number of commands in pipeline
 	t_arena		*arena;
 
 }	t_info;
+
+void	init_info(char **envp);
+t_info	*get_info(void);
 
 #endif
