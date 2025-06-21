@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 11:44:37 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/21 19:04:48 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,11 @@ int	check_syntax_error(const char *input)
 	if (!validate_operations(input, 1))
 	{
 		ft_putstr_fd("invalid operator\n", STDERR_FILENO);
+		return (0);
+	}
+	if (is_heredoc_limit_exceeded(input))
+	{
+		ft_putstr_fd("maximum here-document count exceeded\n", STDERR_FILENO);
 		return (0);
 	}
 	return (1);
