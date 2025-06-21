@@ -1,28 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 22:21:58 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 13:10:09 by donheo           ###   ########.fr       */
+/*   Created: 2025/06/21 09:17:16 by donheo            #+#    #+#             */
+/*   Updated: 2025/06/21 12:26:07 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
-
-struct s_info;
-typedef struct s_info t_info;
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-} t_env;
-
-// copy env
-char	**copy_envp(char **envp, t_info *info);
-#endif
+#include "minishell.h"
