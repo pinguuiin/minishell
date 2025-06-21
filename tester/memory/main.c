@@ -8,11 +8,11 @@ typedef struct s_node
 
 t_node *create_node(t_arena **arena_ptr, const char *str)
 {
-    t_node *node = (t_node *)arena_alloc(arena_ptr, sizeof(t_node));
+    t_node *node = (t_node *)aalloc(arena_ptr, sizeof(t_node));
     if (!node)
         return NULL;
 
-    node->value = (char *)arena_alloc(arena_ptr, strlen(str) + 1);
+    node->value = (char *)aalloc(arena_ptr, strlen(str) + 1);
     if (!node->value)
         return NULL;
 
