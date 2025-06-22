@@ -18,7 +18,7 @@ const char *token_type_str(t_token_type type) {
 
 void print_tokens(t_token *token) {
     while (token) {
-        printf("[Token] type: %-12s | value: %s\n",
+        printf("[Token] type: %-14s | value: %s\n",
                token_type_str(token->type),
                token->value ? token->value : "(null)");
         token = token->next;
@@ -30,7 +30,7 @@ int main(void) {
 
 	info = get_info();
 
-    const char *input = "echo hello > out.txt | grep hi < in.txt >> append.txt << EOF";
+    const char *input = "echo     hello     >           out.txt          |             grep              hi   $ABC      <            in.txt >>               append.txt << EOF | \"g$ABCdf'g'g\"\"sdfsfd\" |'$abc' | \"\"$ABC\"\"  ";
 
     tokenize_elements(input);
 

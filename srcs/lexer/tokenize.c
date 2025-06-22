@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:24:23 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 15:36:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 16:34:04 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ static void	get_token_type_and_value(const char *input, \
 	while (cmd_type->i <= cmd_type->end_i)
 	{
 		if (input[cmd_type->i] == '\'' && !cmd_type->in_double_quote)
-			cmd_type->in_single_quote = !cmd_type->in_single_quote;
+			set_quote_and_word(&(cmd_type->in_single_quote), cmd_type);
 		else if (input[cmd_type->i] == '"' && !cmd_type->in_single_quote)
-			cmd_type->in_double_quote = !cmd_type->in_double_quote;
+			set_quote_and_word(&(cmd_type->in_double_quote), cmd_type);
 		else if (input[cmd_type->i] == '$' && !cmd_type->in_single_quote)
-			cmd_type->has_env = 1;
+			cmd_type->i = skip_env_name(input, cmd_type);
 		else
 			cmd_type->has_word = 1;
 		(cmd_type->i)++;

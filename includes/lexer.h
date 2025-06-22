@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:26:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 15:36:52 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 16:34:39 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ void	tokenize_elements(const char *input);
 
 int		skip_spaces(const char *input, int i);
 void	connect_tokens(t_token **head, t_token *tail);
+int		skip_env_name(const char *input, t_cmd_type *cmd_type);
+void	set_quote_and_word(int *quote_flag, t_cmd_type *cmd_type);
 
 #endif

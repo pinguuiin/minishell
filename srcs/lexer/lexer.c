@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:47:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 15:53:20 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 16:38:18 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	tokenize_elements(const char *input)
 		else if (input[i] == '|')
 			i = tokenize_pipe(i, info);
 		else
-			i = tokenize_cmd(input, i, info);
+		{
+			if (input[i] != '\0')
+				i = tokenize_cmd(input, i, info);
+		}
 	}
 }
