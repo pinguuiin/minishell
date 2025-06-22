@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   info.c                                             :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 15:38:21 by donheo           ###   ########.fr       */
+/*   Created: 2025/06/21 18:47:38 by donheo            #+#    #+#             */
+/*   Updated: 2025/06/22 16:38:18 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_info	*get_info(void)
+void	tokenize_elements(const char *input)
 {
-	static t_info	info;
-
-	ft_memset(&info, 0, sizeof(t_info));
-	return (&info);
-}
-
-void	init_info(char **envp)
-{
+	int	i;
 	t_info	*info;
 
 	info = get_info();
-	info->arena = arena_create(ARENA_BLOCK_SIZE);
-	info->envp_copy = copy_envp(envp, info);
+	i = 0;
+	while (input[i])
+	{
+		i = skip_spaces(input, i);
+		if (input[i] == '<')
+			i = tokenize_input(input, i, info);
+		else if (input[i] == '>')
+			i = tokenize_output(input, i, info);
+		else if (input[i] == '|')
+			i = tokenize_pipe(i, info);
+		else
+		{
+			if (input[i] != '\0')
+				i = tokenize_cmd(input, i, info);
+		}
+	}
 }

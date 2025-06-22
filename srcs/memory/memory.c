@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 13:35:07 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 14:46:31 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ t_arena	*arena_create(size_t size)
 	arena = malloc(sizeof(t_arena));
 	if (!arena)
 	{
-		ft_putstr_fd("fails to create arena\n", STDERR_FILENO);
+		ft_putstr_fd("failed to create arena\n", STDERR_FILENO);
 		exit(1);
 	}
 	arena->memory = malloc(size);
-	if (!arena->memory) {
+	if (!arena->memory)
+	{
 		free(arena);
-		ft_putstr_fd("fails to create memory for arena\n", STDERR_FILENO);
+		ft_putstr_fd("failed to create memory for arena\n", STDERR_FILENO);
 		exit(1);
 	}
 	arena->offset = 0;
@@ -34,7 +35,7 @@ t_arena	*arena_create(size_t size)
 	return (arena);
 }
 
-static t_arena	*create_new_chunk(t_arena **arena_ptr, size_t size)
+static t_arena	*create_new_chunk(t_arena *arena_ptr, size_t size)
 {
 	t_arena	*new_chunk;
 
@@ -45,7 +46,7 @@ static t_arena	*create_new_chunk(t_arena **arena_ptr, size_t size)
 	if (!new_chunk)
 		return (NULL);
 	new_chunk->offset = size;
-	new_chunk->next = *arena_ptr;
+	new_chunk->next = arena_ptr;
 	return (new_chunk);
 }
 
@@ -66,12 +67,13 @@ void	*aalloc(t_arena **arena_ptr, size_t size)
 		}
 		arena_chunk = arena_chunk->next;
 	}
-	new_chunk = create_new_chunk(arena_ptr, size);
+	new_chunk = create_new_chunk(*arena_ptr, size);
 	if (!new_chunk)
 	{
 		arena_free_all(*arena_ptr);
 		return (NULL);
 	}
+	*arena_ptr = new_chunk;
 	return (new_chunk->memory);
 }
 
@@ -86,4 +88,11 @@ void	arena_free_all(t_arena *arena)
 		free(arena);
 		arena = next;
 	}
+}
+
+void	clean_and_exit(char *err_msg)
+{
+	ft_putendl_fd(err_msg, STDERR_FILENO);
+	arena_free_all(get_info()->arena);
+	exit(1);
 }

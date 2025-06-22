@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 11:44:37 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 13:46:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	validate_redirections(const char *input)
 	{
 		if (*input == '\'' && !in_double_quote)
 			in_single_quote = !in_single_quote;
-		else if ((*input) == '"' && !in_single_quote)
+		else if (*input == '"' && !in_single_quote)
 			in_double_quote = !in_double_quote;
 		else if (!in_single_quote && !in_double_quote \
 				&& (*input == '>' || *input == '<'))
@@ -73,20 +73,21 @@ int	validate_redirections(const char *input)
 }
 
 // validate correct use and placement of pipe operators outside of quotes
-int	validate_operations(const char *input, int expect_command)
+int	validate_operations(const char *input, \
+	int expect_command, int in_single_quote, int in_double_quote)
 {
-	int	in_single_quote;
-	int	in_double_quote;
-
-	in_single_quote = 0;
-	in_double_quote = 0;
-	expect_command = 1;
 	while (*input)
 	{
 		if (*input == '\'' && !in_double_quote)
+		{
 			in_single_quote = !in_single_quote;
-		else if ((*input) == '"' && !in_single_quote)
+			expect_command = 0;
+		}
+		else if (*input == '"' && !in_single_quote)
+		{
+			expect_command = 0;
 			in_double_quote = !in_double_quote;
+		}
 		else if (*input == '|' && !in_single_quote && !in_double_quote)
 		{
 			if (expect_command)
@@ -106,7 +107,9 @@ int	validate_operations(const char *input, int expect_command)
 int	check_syntax_error(const char *input)
 {
 	if (is_empty_input(input))
-		return (1);
+		return (0);
+	if (is_only_whitespaces(input))
+		return (0);
 	if (!validate_quotes(input))
 	{
 		ft_putstr_fd("unclosed quote\n", STDERR_FILENO);
@@ -117,9 +120,14 @@ int	check_syntax_error(const char *input)
 		ft_putstr_fd("invalid redirection\n", STDERR_FILENO);
 		return (0);
 	}
-	if (!validate_operations(input, 1))
+	if (!validate_operations(input, 1, 0, 0))
 	{
 		ft_putstr_fd("invalid operator\n", STDERR_FILENO);
+		return (0);
+	}
+	if (is_heredoc_limit_exceeded(input))
+	{
+		ft_putstr_fd("maximum here-document count exceeded\n", STDERR_FILENO);
 		return (0);
 	}
 	return (1);

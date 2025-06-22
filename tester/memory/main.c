@@ -48,7 +48,7 @@ int main(void)
     t_arena *arena = arena_create(ARENA_BLOCK_SIZE);
     if (!arena)
     {
-        fprintf(stderr, "Failed to create memory arena\n");
+        printf("Failed to create memory arena\n");
         return 1;
     }
 
