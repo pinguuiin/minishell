@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 14:25:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 14:44:51 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	**copy_envp_entries(char **envp, \
 	{
 		envp_copy[i] = aalloc(&(info->arena), ft_strlen(envp[i]) + 1);
 		if (!envp_copy[i])
-			clean_and_exit("fails memory allocation for envp_copy entry");
+			clean_and_exit("memory allocation failed for envp_copy entry");
 		ft_strlcpy(envp_copy[i], envp[i], ft_strlen(envp[i]) + 1);
 		i++;
 	}
@@ -50,7 +50,7 @@ char	**copy_envp(char **envp, t_info *info)
 	envp_num = count_envp(envp);
 	envp_copy = aalloc(&(info->arena), (envp_num + 1) * sizeof(char *));
 	if (!envp_copy)
-		clean_and_exit("fails memory allocation for envp_copy");
+		clean_and_exit("memory allocation failed for envp_copy");
 	envp_copy = copy_envp_entries(envp, envp_copy, envp_num, info);
 	return (envp_copy);
 }

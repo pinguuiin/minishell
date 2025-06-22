@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:16 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 18:08:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 14:45:06 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_env	*envp_to_list(char	**envp, t_arena **arena)
 		new_node = create_env_node(envp[i], arena);
 		if (!new_node)
 		{
-			ft_putstr_fd("fails to allocate t_env node\n", STDERR_FILENO);
+			ft_putstr_fd("failed to allocate t_env node\n", STDERR_FILENO);
 			return (NULL);
 		}
 		if (!head)

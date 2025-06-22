@@ -6,18 +6,29 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:47:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 13:31:07 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 15:53:20 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lexer(char *input)
+void	tokenize_elements(const char *input)
 {
+	int	i;
 	t_info	*info;
-	t_token	*tokens;
 
 	info = get_info();
-	tokenize_elements(input, info);
-
+	i = 0;
+	while (input[i])
+	{
+		i = skip_spaces(input, i);
+		if (input[i] == '<')
+			i = tokenize_input(input, i, info);
+		else if (input[i] == '>')
+			i = tokenize_output(input, i, info);
+		else if (input[i] == '|')
+			i = tokenize_pipe(i, info);
+		else
+			i = tokenize_cmd(input, i, info);
+	}
 }

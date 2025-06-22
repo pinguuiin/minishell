@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:24:23 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 14:30:51 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 15:36:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	tokenize_input(const char *input, int i, t_info *info)
 	token = aalloc(&(info->arena), sizeof(t_token));
 	token->value = NULL;
 	if (!token)
-		clean_and_exit("fails memory allocation for input token");
+		clean_and_exit("memory allocation failed for input token");
 	if (input[i + 1] == '<')
 	{
 		token->type = HEREDOC;
@@ -41,7 +41,7 @@ int	tokenize_output(const char *input, int i, t_info *info)
 	token = aalloc(&(info->arena), sizeof(t_token));
 	token->value = NULL;
 	if (!token)
-		clean_and_exit("fails memory allocation for output token");
+		clean_and_exit("memory allocation failed for output token");
 	if (input[i + 1] == '>')
 	{
 		token->type = APPEND;
@@ -56,67 +56,74 @@ int	tokenize_output(const char *input, int i, t_info *info)
 	}
 }
 
-int	tokenize_pipe(const char *input, int i, t_info *info)
+int	tokenize_pipe(int i, t_info *info)
 {
 	t_token	*token;
 
 	token = aalloc(&(info->arena), sizeof(t_token));
 	token->value = NULL;
 	if (!token)
-		clean_and_exit("fails memory allocation for pipe token");
+		clean_and_exit("memory allocation failed for pipe token");
 	token->type = PIPE;
 	connect_tokens(&(info->tokens), token);
 	return (i + 1);
 }
 
-void	check_token_type(const char *input, int i, t_token *token)
+static void	get_token_type_and_value(const char *input, \
+	t_cmd_type *cmd_type, t_token *token, t_info *info)
 {
-	if (input[i] == '$')
+	cmd_type->in_double_quote = 0;
+	cmd_type->in_single_quote = 0;
+	cmd_type->i = cmd_type->start_i;
+	token->value = aalloc(&info->arena, \
+		cmd_type->end_i - cmd_type->start_i + 2);
+	if (!token->value)
+		clean_and_exit("memory allocation failed for cmd token value");
+	while (cmd_type->i <= cmd_type->end_i)
 	{
-		while ()
+		if (input[cmd_type->i] == '\'' && !cmd_type->in_double_quote)
+			cmd_type->in_single_quote = !cmd_type->in_single_quote;
+		else if (input[cmd_type->i] == '"' && !cmd_type->in_single_quote)
+			cmd_type->in_double_quote = !cmd_type->in_double_quote;
+		else if (input[cmd_type->i] == '$' && !cmd_type->in_single_quote)
+			cmd_type->has_env = 1;
+		else
+			cmd_type->has_word = 1;
+		(cmd_type->i)++;
 	}
+	if (cmd_type->has_env && cmd_type->has_word)
+		token->type = WORD_WITH_ENV;
+	else if (cmd_type->has_env)
+		token->type = ENV_VAR;
+	else
+		token->type = WORD;
 }
 
-int	tokenize_cmd(const char *input, int i, t_info *info, int in_single_quote, int in_double_quote)
+int	tokenize_cmd(const char *input, int i, t_info *info)
 {
 	t_cmd_type	cmd_type;
 	t_token		*token;
 
+	ft_memset(&cmd_type, 0, sizeof(t_cmd_type));
 	cmd_type.start_i = i;
 	token = aalloc(&(info->arena), sizeof(t_token));
 	if (!token)
-		clean_and_exit("fails memory allocation for pipe token");
-	check_token_type(input, i, token);
+		clean_and_exit("memory allocation failed for cmd token");
 	while (input[i])
 	{
-		if (input[i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (input[i] == '"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else if ((input[i] == ' ' || input[i] == '\t') && !in_single_quote &&
-		!in_double_quote)
-			break;
+		if (input[i] == '\'' && !cmd_type.in_double_quote)
+			cmd_type.in_single_quote = !cmd_type.in_single_quote;
+		else if (input[i] == '"' && !cmd_type.in_single_quote)
+			cmd_type.in_double_quote = !cmd_type.in_double_quote;
+		else if ((input[i] == ' ' || input[i] == '\t') && \
+		!cmd_type.in_single_quote && !cmd_type.in_double_quote)
+			break ;
 		i++;
 	}
-	ft_strlcpy();
-
-}
-
-void	tokenize_elements(const char *input, t_info *info)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		i = skip_spaces(input, i, info);
-		if (input[i] == '<')
-			i = tokenize_input(input, i, info);
-		else if (input[i] == '>')
-			i = tokenkize_output(input, i, info);
-		else if (input[i] == '|')
-			i = tokenize_pipe(input, i, info);
-		else
-			i = tokenize_cmd(input, i, info, 0, 0);
-	}
+	cmd_type.end_i = i - 1;
+	get_token_type_and_value(input, &cmd_type, token, info);
+	ft_strlcpy(token->value, &input[cmd_type.start_i], \
+		cmd_type.end_i - cmd_type.start_i + 2);
+	connect_tokens(&(info->tokens), token);
+	return (i);
 }

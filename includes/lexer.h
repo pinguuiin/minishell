@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:26:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 14:18:47 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 15:36:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,21 @@ typedef	struct s_token
 typedef struct s_cmd_type
 {
 	int	start_i;
+	int	end_i;
+	int	in_single_quote;
+	int	in_double_quote;
+	int	i;
 	int	has_env;
 	int	has_word;
-}	t_cmd_type
+}	t_cmd_type;
 
+int		tokenize_input(const char *input, int i, t_info *info);
+int		tokenize_output(const char *input, int i, t_info *info);
+int		tokenize_pipe(int i, t_info *info);
+int		tokenize_cmd(const char *input, int i, t_info *info);
+void	tokenize_elements(const char *input);
+
+int		skip_spaces(const char *input, int i);
+void	connect_tokens(t_token **head, t_token *tail);
 
 #endif

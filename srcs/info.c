@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 13:35:25 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 15:38:21 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	init_info(char **envp)
 
 	info = get_info();
 	info->arena = arena_create(ARENA_BLOCK_SIZE);
-	info->envp_copy = envp_copy(envp, info);
+	info->envp_copy = copy_envp(envp, info);
 }

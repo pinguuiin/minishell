@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:06:19 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 13:50:31 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 15:42:42 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	skip_spaces(const char *input, int i)
 	return (i);
 }
 
-void	connect_toekns(t_token **head, t_token *tail)
+void	connect_tokens(t_token **head, t_token *tail)
 {
 	t_token	*current;
 
 	tail->next = NULL;
-	if (*head = NULL)
+	if (*head == NULL)
 	{
 		*head = tail;
-		return;
+		return ;
 	}
 	current = *head;
 	while (current->next != NULL)
