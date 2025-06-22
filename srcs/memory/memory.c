@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 18:09:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 12:43:20 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_arena	*arena_create(size_t size)
 	return (arena);
 }
 
-static t_arena	*create_new_chunk(t_arena **arena_ptr, size_t size)
+static t_arena	*create_new_chunk(t_arena *arena_ptr, size_t size)
 {
 	t_arena	*new_chunk;
 
@@ -46,7 +46,7 @@ static t_arena	*create_new_chunk(t_arena **arena_ptr, size_t size)
 	if (!new_chunk)
 		return (NULL);
 	new_chunk->offset = size;
-	new_chunk->next = *arena_ptr;
+	new_chunk->next = arena_ptr;
 	return (new_chunk);
 }
 
@@ -67,12 +67,13 @@ void	*aalloc(t_arena **arena_ptr, size_t size)
 		}
 		arena_chunk = arena_chunk->next;
 	}
-	new_chunk = create_new_chunk(arena_ptr, size);
+	new_chunk = create_new_chunk(*arena_ptr, size);
 	if (!new_chunk)
 	{
 		arena_free_all(*arena_ptr);
 		return (NULL);
 	}
+	*arena_ptr = new_chunk;
 	return (new_chunk->memory);
 }
 
