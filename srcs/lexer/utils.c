@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:06:19 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 16:33:18 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 21:23:40 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	skip_env_name(const char *input, t_cmd_type *cmd_type)
 	if (!(ft_isalpha(input[cmd_type->i]) || input[cmd_type->i] == '_'))
 		return (cmd_type->i - 1);
 	(cmd_type->i)++;
-	while (input[cmd_type->i] && (ft_isalnum(input[cmd_type->i]) || input[cmd_type->i] == '_'))
+	while (input[cmd_type->i] && (ft_isalnum(input[cmd_type->i]) \
+	|| input[cmd_type->i] == '_'))
 		(cmd_type->i)++;
 	cmd_type->has_env = 1;
 	return (cmd_type->i - 1);
