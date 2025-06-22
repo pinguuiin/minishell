@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 18:00:32 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 12:27:08 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_info
 	t_cmd		*cmds;			// Linked list of piped commands
 	int			num_cmds;		// Number of commands in pipeline
 	t_arena		*arena;
+	t_token		*tokens;
 
 }	t_info;
 

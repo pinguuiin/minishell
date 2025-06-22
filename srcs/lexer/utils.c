@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   info.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 13:35:25 by donheo           ###   ########.fr       */
+/*   Created: 2025/06/22 13:06:19 by donheo            #+#    #+#             */
+/*   Updated: 2025/06/22 13:50:31 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_info	*get_info(void)
+int	skip_spaces(const char *input, int i)
 {
-	static t_info	info;
-
-	ft_memset(&info, 0, sizeof(t_info));
-	return (&info);
+	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
+		i++;
+	return (i);
 }
 
-void	init_info(char **envp)
+void	connect_toekns(t_token **head, t_token *tail)
 {
-	t_info	*info;
+	t_token	*current;
 
-	info = get_info();
-	info->arena = arena_create(ARENA_BLOCK_SIZE);
-	info->envp_copy = envp_copy(envp, info);
+	tail->next = NULL;
+	if (*head = NULL)
+	{
+		*head = tail;
+		return;
+	}
+	current = *head;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = tail;
 }

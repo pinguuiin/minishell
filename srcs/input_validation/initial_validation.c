@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 08:46:22 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 13:46:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	validate_redirections(const char *input)
 	{
 		if (*input == '\'' && !in_double_quote)
 			in_single_quote = !in_single_quote;
-		else if ((*input) == '"' && !in_single_quote)
+		else if (*input == '"' && !in_single_quote)
 			in_double_quote = !in_double_quote;
 		else if (!in_single_quote && !in_double_quote \
 				&& (*input == '>' || *input == '<'))
@@ -83,7 +83,7 @@ int	validate_operations(const char *input, \
 			in_single_quote = !in_single_quote;
 			expect_command = 0;
 		}
-		else if ((*input) == '"' && !in_single_quote)
+		else if (*input == '"' && !in_single_quote)
 		{
 			expect_command = 0;
 			in_double_quote = !in_double_quote;
