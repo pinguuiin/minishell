@@ -23,19 +23,20 @@ int	main(void)
 	run_test("ls || grep foo");                 // invalid operator
 	run_test("| ls");                           // invalid operator
 	run_test(" \"\"'' | \"\" | ls");            // OK
-	run_test("<< 1 << 2 << 3 << 4 << 5 | << 6 << 7 << 8 << 9 << 10 << 11 << 12 << 13 << 14 << 15 << 16 | << 17");                               // OK (more than 16 heredoc)
 	run_test("ls |");                           // invalid operator
 	run_test("ls | ");                          // invalid operator
 	run_test("cat << EOF");                     // OK (simple case)
-	run_test("cat << EOF\"\"");                     // OK (simple case)
+	run_test("cat << EOF\"\"");                 // OK (simple case)
 	run_test("cat <");                          // invalid redirection
 	run_test("echo \"unclosed");                // unclosed quote
 	run_test("ls >| grep");                     // invalid redirection (>| not handled)
-	run_test("");                               // invalid input
-	run_test("   ");                            // OK (empty input)
+	run_test("");                               // OK
+	run_test("       ");                        // OK
+	run_test("\"\"");                           // OK
+	run_test("\"   \"");                        // OK
 	run_test("  | ls");                         // invalid operator
 	run_test("\"\" | ls");                      // OK
 	run_test(" \"   \" | \"\" | ls");           // OK
-
+	run_test("<< 1 << 2 << 3 << 4 << 5 | << 6 << 7 << 8 << 9 << 10 << 11 << 12 << 13 << 14 << 15 << 16 | << 17");             // too many heredoc (> 16)
 	return 0;
 }

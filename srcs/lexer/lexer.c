@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:47:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 16:38:18 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 21:23:50 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	tokenize_elements(const char *input)
 {
-	int	i;
+	int		i;
 	t_info	*info;
 
 	info = get_info();

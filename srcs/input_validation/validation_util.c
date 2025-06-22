@@ -6,21 +6,11 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:55:59 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 08:47:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/22 21:25:16 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_empty_input(const char *input)
-{
-	if (*input == '\0')
-	{
-		ft_putstr_fd("command '' not found\n", STDERR_FILENO);
-		return (1);
-	}
-	return (0);
-}
 
 int	is_only_whitespaces(const char *input)
 {
@@ -33,7 +23,7 @@ int	is_only_whitespaces(const char *input)
 	return (1);
 }
 
-int	is_heredoc_limit_exceeded(const char *input)
+void	is_heredoc_limit_exceeded(const char *input)
 {
 	int	count;
 
@@ -44,10 +34,9 @@ int	is_heredoc_limit_exceeded(const char *input)
 		{
 			count++;
 			if (count > 16)
-				return (1);
+				clean_and_exit("maximum here-document count exceeded");
 			input++;
 		}
 		input++;
 	}
-	return (0);
 }
