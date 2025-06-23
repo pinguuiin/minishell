@@ -45,7 +45,7 @@ typedef struct s_info
 
 }	t_info;
 
-void			init_info(t_info *info, char **envp);
+void			init_info(char **envp);
 t_info			*get_info(void);
 void			free_argv(char ***argv);
 void			free_path_elem(t_path *paths);

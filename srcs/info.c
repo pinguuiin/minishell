@@ -16,13 +16,15 @@ t_info	*get_info(void)
 {
 	static t_info	info;
 
-	ft_memset(&info, 0, sizeof(t_info));
 	return (&info);
 }
 
-void	init_info(t_info *info, char **envp)
+void	init_info(char **envp)
 {
+	t_info	*info;
+
 	info = get_info();
+	ft_memset(info, 0, sizeof(t_info));
 	info->paths->cmd = 0;
 	info->paths->prefix = 0;
 	info->paths->path = 0;

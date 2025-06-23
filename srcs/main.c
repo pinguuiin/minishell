@@ -12,12 +12,11 @@
 
 #include "minishell.h"
 
-static void	process_input(char *input, t_info *info)
+static void	process_input(t_info *info, char *input)
 {
-	t_token			*tokens;
+	t_token	*tokens;
 	t_cmd	*cmds;
 
-	info = get_info();
 	tokens = lex_input(input);
 	if (!tokens)
 		return ;
@@ -28,7 +27,7 @@ static void	process_input(char *input, t_info *info)
 	free_command_line(cmds);
 }
 
-static int	run_shell_loop(t_info *info)
+static void	run_shell_loop(t_info *info)
 {
 	char	*input;
 
@@ -46,19 +45,19 @@ static int	run_shell_loop(t_info *info)
 			continue ;
 		}
 		add_history(input);
-		process_input(input, info);
+		process_input(info, input);
 		free(input);
 	}
-	return (info->exit_code);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_info	info;
+	t_info	*info;
 
 	(void)argc;
 	(void)argv;
-	init_info(&info, envp);
-	run_shell_loop(&info);
-	return (info.exit_code);
+	init_info(envp);
+	info = get_info();
+	run_shell_loop(info);
+	return (info->exit_code);
 }

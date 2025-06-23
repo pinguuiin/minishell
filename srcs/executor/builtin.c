@@ -67,25 +67,24 @@ bool	is_builtin(t_cmd *cmds)
 int	execute_builtin(t_info *info, char **argv)
 {
 	char	*cmd;
-	int		exec_status;
 
 	cmd = argv[0];
 	if (ft_strncmp(cmd, "echo", 5) == 0)
-		exec_status = echo(argv);
+		info->exit_code = echo(argv);
 	else if (ft_strncmp(cmd, "cd", 3) == 0)
-		exec_status = cd(argv, info->envarr);
+		info->exit_code = cd(argv, info->envarr);
 	else if (ft_strncmp(cmd, "pwd", 4) == 0)
-		exec_status = pwd(argv);
+		info->exit_code = pwd(argv);
 	else if (ft_strncmp(cmd, "export", 7) == 0)
-		exec_status = export(argv, &info->envarr);
+		info->exit_code = export(argv, &info->envarr);
 	else if (ft_strncmp(cmd, "unset", 6) == 0)
-		exec_status = unset(argv, info->envarr);
+		info->exit_code = unset(argv, info->envarr);
 	else if (ft_strncmp(cmd, "env", 4) == 0)
-		exec_status = env(argv, info->envarr);
+		info->exit_code = env(argv, info->envarr);
 	else if (ft_strncmp(cmd, "exit", 5) == 0)
-		exec_status = shell_exit(info, argv);
+		info->exit_code = shell_exit(info, argv);
 	else
-		exec_status = -1;
-	clear_all
-	return (exec_status);
+		info->exit_code = -1;
+	//clear_all
+	return (info->exit_code);
 }
