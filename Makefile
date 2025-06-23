@@ -15,6 +15,7 @@ SRCS =		main.c \
 			clear_and_exit.c \
 			executor/builtin.c \
 			executor/builtin_cd.c \
+			executor/builtin_echo.c \
 			executor/builtin_unset.c \
 			executor/builtin_export.c \
 			executor/builtin_exit.c \

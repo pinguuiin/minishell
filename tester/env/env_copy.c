@@ -12,15 +12,15 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-    char **envp_copy = copy_envp(envp, &info);
+    char **envarr = copy_envp(envp, &info);
     printf("Copied envp:\n");
     for (int i = 0; envp[i]; i++)
     {
-        if (strcmp(envp[i], envp_copy[i]) != 0)
+        if (strcmp(envp[i], envarr[i]) != 0)
         {
             printf("❌ Mismatch at index %d:\n", i);
             printf("Original : %s\n", envp[i]);
-            printf("Copied   : %s\n", envp_copy[i]);
+            printf("Copied   : %s\n", envarr[i]);
         }
         else
         {

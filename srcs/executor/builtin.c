@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/20 04:28:05 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/23 04:10:30 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,43 +27,6 @@ int	pwd(char **argv)
 		return (126);
 	}
 	ft_putendl_fd(buf, STDOUT_FILENO);
-	return (EXIT_SUCCESS);
-}
-
-bool	is_n_flag(char *s)
-{
-	int	i;
-
-	i = 1;
-	if (!s || s[0] != '-')
-		return (false);
-	while (s[i] == 'n')
-		i++;
-	if (i == 1 || s[i])
-		return (false);
-	return (true);
-}
-
-int	echo(char **argv)
-{
-	int		i;
-	bool	newline;
-
-	i = 1;
-	newline = 1;
-	if (is_n_flag(argv[1]))
-		newline = 0;
-	while (is_n_flag(argv[i]))
-		i++;
-	while (argv[i])
-	{
-		ft_putstr_fd(argv[i], STDOUT_FILENO);
-		if (argv[i + 1])
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}
-	if (newline)
-		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
 
@@ -88,27 +51,41 @@ int	env(char **argv, char **envp)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_builtin(t_alloc *data, char **argv)
+bool	is_builtin(t_cmd *cmds)
+{
+	char	*cmd;
+
+	cmd = cmds->argv[0];
+	if (ft_strncmp(cmd, "echo", 5) == 0 || ft_strncmp(cmd, "cd", 3) == 0
+		|| ft_strncmp(cmd, "pwd", 4) == 0 || ft_strncmp(cmd, "export", 7) == 0
+		|| ft_strncmp(cmd, "unset", 6) == 0 || ft_strncmp(cmd, "env", 4) == 0
+		|| ft_strncmp(cmd, "exit", 5) == 0)
+		return (true);
+	return (false);
+}
+
+int	execute_builtin(t_info *info, char **argv)
 {
 	char	*cmd;
 	int		exec_status;
 
 	cmd = argv[0];
-	if (ft_strncmp(cmd, "echo", ft_strlen(cmd)) == 0)
+	if (ft_strncmp(cmd, "echo", 5) == 0)
 		exec_status = echo(argv);
-	else if (ft_strncmp(cmd, "cd", ft_strlen(cmd)) == 0)
-		exec_status = cd(argv, data->env);
-	else if (ft_strncmp(cmd, "pwd", ft_strlen(cmd)) == 0)
+	else if (ft_strncmp(cmd, "cd", 3) == 0)
+		exec_status = cd(argv, info->envarr);
+	else if (ft_strncmp(cmd, "pwd", 4) == 0)
 		exec_status = pwd(argv);
-	else if (ft_strncmp(cmd, "export", ft_strlen(cmd)) == 0)
-		exec_status = export(argv, &data->env);
-	else if (ft_strncmp(cmd, "unset", ft_strlen(cmd)) == 0)
-		exec_status = unset(argv, data->env);
-	else if (ft_strncmp(cmd, "env", ft_strlen(cmd)) == 0)
-		exec_status = env(argv, data->env);
-	else if (ft_strncmp(cmd, "exit", ft_strlen(cmd)) == 0)
-		exec_status = shell_exit(argv);
+	else if (ft_strncmp(cmd, "export", 7) == 0)
+		exec_status = export(argv, &info->envarr);
+	else if (ft_strncmp(cmd, "unset", 6) == 0)
+		exec_status = unset(argv, info->envarr);
+	else if (ft_strncmp(cmd, "env", 4) == 0)
+		exec_status = env(argv, info->envarr);
+	else if (ft_strncmp(cmd, "exit", 5) == 0)
+		exec_status = shell_exit(info, argv);
 	else
 		exec_status = -1;
+	clear_all
 	return (exec_status);
 }

@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:32:41 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/20 04:24:24 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/23 04:11:09 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ int	ft_atocode(char *s)
  * *error message:
  *@param argv
  */
-int	shell_exit(char **argv)
+int	shell_exit(t_info *info, char **argv)
 {
 	int	num;
 
 	ft_putendl_fd("exit", STDOUT_FILENO); //not print / not exit in pipe?
 	if (!argv[1])
-		exit(0); //then how to check exit code? free data?
+		exit(0); //then how to check exit code? free info?
 	num = ft_atocode(argv[1]);
 	if (num >= 0 && !argv[2])
 		exit(num);

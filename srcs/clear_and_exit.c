@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/20 04:24:24 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/23 00:07:02 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ void	free_path_elem(t_path *paths)
 	free(paths);
 }
 
-void	error_path_exit(t_alloc *data, char *s, int sys_error_flag)
+void	error_path_exit(t_info *info, char *s, int sys_error_flag)
 {
 	if (sys_error_flag == 0)
 	{
 		ft_putendl_fd(s, STDERR_FILENO);
-		free_path_elem(data->paths);
+		free_path_elem(info->paths);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		perror(s);
-		free_path_elem(data->paths);
+		free_path_elem(info->paths);
 		exit(sys_error_flag);
 	}
 }
