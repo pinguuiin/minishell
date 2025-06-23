@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:06:19 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/23 09:04:47 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/23 09:14:19 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	skip_env_name(const char *input, t_cmd_type *cmd_type)
 	return (cmd_type->i - 1);
 }
 
-int	is_sep_char(char c, t_cmd_type cmd_type)
+int	is_token_boundary(char c, t_cmd_type cmd_type)
 {
-	return ((c == ' ' || c == '\t' || c == '<' || c == '>' || c == '|') \
-	&& !cmd_type.in_single_quote && !cmd_type.in_double_quote);
+	return (!((c == ' ' || c == '\t' || c == '<' || c == '>' || c == '|') \
+	&& !cmd_type.in_single_quote && !cmd_type.in_double_quote));
 }

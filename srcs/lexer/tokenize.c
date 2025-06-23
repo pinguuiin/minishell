@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:24:23 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/23 09:04:10 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/23 09:14:54 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	tokenize_cmd(const char *input, int i, t_info *info)
 			cmd_type.in_single_quote = !cmd_type.in_single_quote;
 		else if (input[i] == '"' && !cmd_type.in_single_quote)
 			cmd_type.in_double_quote = !cmd_type.in_double_quote;
-		else if (is_sep_char(input[i], cmd_type))
+		else if (!is_token_boundary(input[i], cmd_type))
 			break ;
 		i++;
 	}
