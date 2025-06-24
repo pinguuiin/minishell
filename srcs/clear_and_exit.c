@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/24 21:13:39 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 21:31:18 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code)
 {
-	t_info	*info;
-
-	info = get_info();
-	info->exit_code = exit_code;
-	error_msg(s1, s2, s3);
-	arena_free_all(info->arena);
+	error_msg(s1, s2, s3, exit_code);
+	arena_free_all(get_info()->arena);
 	exit(exit_code);
 }
 
-void	error_msg(char *s1, char *s2, char *s3)
+int	error_msg(char *s1, char *s2, char *s3, int exit_code)
 {
+	get_info()->exit_code = exit_code;
 	if (s1)
 	{
 		ft_putstr_fd(s1, STDERR_FILENO);
@@ -38,4 +35,5 @@ void	error_msg(char *s1, char *s2, char *s3)
 	}
 	else
 		perror(s3);
+	return (exit_code);
 }

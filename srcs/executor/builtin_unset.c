@@ -6,24 +6,16 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 23:58:24 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/20 04:24:24 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 21:55:00 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_update_env(char **envp, int j)
+void	unset_update_env(char **envp, int i)
 {
-	int	i;
-
-	i = j;
 	while (envp[i])
 	{
-		if (i == j)
-		{
-			free(envp[j]);
-			envp[j] = NULL;
-		}
 		envp[i] = envp[i + 1];
 		i++;
 	}
@@ -44,6 +36,7 @@ int	unset(char **argv, char **envp)
 		if (argv[1][1])
 			ft_putchar_fd(argv[1][1], STDERR_FILENO);
 		ft_putendl_fd(": invalid option", STDERR_FILENO);
+		get_info()->exit_code = 2;
 		return (2);
 	}
 	while (argv[++i])

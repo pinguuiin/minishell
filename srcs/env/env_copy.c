@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/23 02:04:23 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/25 00:44:43 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count_envp(char **envp)
+int	count_envp(char **envp)
 {
 	size_t	count;
 
@@ -24,7 +24,7 @@ static int	count_envp(char **envp)
 	return (count);
 }
 
-static char	**copy_envp_entries(char **envp, \
+char	**copy_envp_entries(char **envp, \
 	char **envarr, int envp_num, t_info *info)
 {
 	int	i;
@@ -34,7 +34,7 @@ static char	**copy_envp_entries(char **envp, \
 	{
 		envarr[i] = aalloc(&(info->arena), ft_strlen(envp[i]) + 1);
 		if (!envarr[i])
-			clean_and_exit("memory allocation failed for envarr entry");
+			clean_and_exit("memory allocation failed for envarr entry"); //consistency?
 		ft_strlcpy(envarr[i], envp[i], ft_strlen(envp[i]) + 1);
 		i++;
 	}
@@ -50,7 +50,7 @@ char	**copy_envp(char **envp, t_info *info)
 	envp_num = count_envp(envp);
 	envarr = aalloc(&(info->arena), (envp_num + 1) * sizeof(char *));
 	if (!envarr)
-		clean_and_exit("memory allocation failed for envarr");
+		clean_and_exit("memory allocation failed for envarr"); //consistency?
 	envarr = copy_envp_entries(envp, envarr, envp_num, info);
 	return (envarr);
 }

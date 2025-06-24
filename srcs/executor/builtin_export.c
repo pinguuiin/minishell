@@ -6,23 +6,23 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 01:18:06 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/20 04:24:24 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/25 00:59:19 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sort_export(char **envp)
+static void	sort_export(char **envp)
 {
 	int		i;
 	int		j;
 	char	*temp;
 
 	i = 0;
-	while (i < count_env(envp) - 1)
+	while (i < count_envp(envp) - 1)
 	{
 		j = 0;
-		while (j < count_env(envp) - 1 - i)
+		while (j < count_envp(envp) - 1 - i)
 		{
 			if (envp[j][0] > envp[j + 1][0])
 			{
@@ -36,18 +36,18 @@ void	sort_export(char **envp)
 	}
 }
 
-int	print_export(char **envp)
+static int	print_export(char **envp)
 {
 	int		i;
 	char	*ptr;
 	char	**envp_cpy;
 
 	i = -1;
-	envp_cpy = copy_env(envp, count_env(envp) + 1);
+	envp_cpy = copy_envp(envp, get_info());
 	if (!envp_cpy)
-		return (EXIT_FAILURE);
+		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
 	sort_export(envp_cpy);
-	while (++i < count_env(envp_cpy))
+	while (++i < count_envp(envp_cpy))
 	{
 		ptr = envp_cpy[i];
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
@@ -61,11 +61,10 @@ int	print_export(char **envp)
 		}
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	}
-	free_argv(&envp_cpy);
 	return (EXIT_SUCCESS);
 }
 
-bool	is_valid_name(char *s)
+static bool	is_valid_name(char *s)
 {
 	if (!ft_isalpha(*s) && *s != '_')
 		return (false);
@@ -78,34 +77,32 @@ bool	is_valid_name(char *s)
 	return (true);
 }
 
-int	export_arg(char *s, char ***envp)
+static void	export_arg(char *s, char ***envp)
 {
 	int		len;
+	t_info	*info;
 	char	**new_envp;
 
-	len = count_env(*envp);
-	new_envp = copy_env(*envp, len + 2);
+	info = get_info();
+	len = count_envp(*envp);
+	new_envp = aalloc(&info->arena, (len + 2) * sizeof(char *));
 	if (!new_envp)
-		return (EXIT_FAILURE);
-	new_envp[len] = ft_strdup(s);
+		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
+	new_envp = copy_envp_entries(envp, new_envp, len, info);
+	new_envp[len] = arena_strjoin(&info->arena, s, "");
 	if (!new_envp[len])
-	{
-		free_argv(&new_envp);
-		return (EXIT_FAILURE);
-	}
+		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
 	new_envp[len + 1] = NULL;
-	free_argv(envp);
 	*envp = new_envp;
-	return (EXIT_SUCCESS);
 }
 
 int	export(char **argv, char ***envp)
 {
-	int	i;
-	int	exit_code;
+	int		i;
+	t_info	*info;
 
 	i = 1;
-	exit_code = 0;
+	info = get_info();
 	if (!argv[1])
 		return (print_export(*envp));
 	while (argv[i])
@@ -115,11 +112,10 @@ int	export(char **argv, char ***envp)
 			ft_putstr_fd("export: `", STDERR_FILENO);
 			ft_putstr_fd(argv[i], STDERR_FILENO);
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-			exit_code = 1;
+			info->exit_code = 1;
 		}
-		else if (export_arg(argv[i], envp))
-			exit_code = 1;
+		export_arg(argv[i], envp);
 		i++;
 	}
-	return (exit_code);
+	return (info->exit_code);
 }
