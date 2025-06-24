@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/23 04:10:30 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 21:14:44 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,5 @@ int	execute_builtin(t_info *info, char **argv)
 		info->exit_code = shell_exit(info, argv);
 	else
 		info->exit_code = -1;
-	//clear_all
 	return (info->exit_code);
 }
