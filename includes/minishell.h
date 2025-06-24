@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/23 04:48:03 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 19:21:20 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,13 @@ typedef struct s_info
 	t_token		*tokens;
 	t_path		*paths;
 
-
 }	t_info;
 
 void			init_info(char **envp);
 t_info			*get_info(void);
 void			free_argv(char ***argv);
 void			free_path_elem(t_path *paths);
-void			error_path_exit(t_info *info, char *s, int sys_error_flag);
+void			exec_exit(char *s1, char *s2, char *s3, int exit_code);
 int				error_return(char *s, int sys_error_flag);
 int				count_env(char **envp);
 char			**copy_env(char **envp, int len);

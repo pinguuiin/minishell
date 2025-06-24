@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/23 00:07:02 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 19:49:02 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,27 @@ void	free_path_elem(t_path *paths)
 	free(paths);
 }
 
-void	error_path_exit(t_info *info, char *s, int sys_error_flag)
+void	exec_exit(char *s1, char *s2, char *s3, int exit_code)
 {
-	if (sys_error_flag == 0)
+	t_info	*info;
+
+	info = get_info();
+	info->exit_code = exit_code;
+	if (s1)
 	{
-		ft_putendl_fd(s, STDERR_FILENO);
-		free_path_elem(info->paths);
-		exit(EXIT_FAILURE);
+		ft_putstr_fd(s1, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	if (s2)
+	{
+		ft_putstr_fd(s2, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putendl_fd(s3, STDERR_FILENO);
 	}
 	else
-	{
-		perror(s);
-		free_path_elem(info->paths);
-		exit(sys_error_flag);
-	}
+		perror(s3);
+	arena_free_all(info->arena);
+	exit(exit_code);
 }
 
 int	error_return(char *s, int sys_error_flag)
