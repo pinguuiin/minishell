@@ -30,7 +30,7 @@ int main(void) {
 
 	info = get_info();
 
-    const char *input = "echo     hello     >           out.txt          |             grep              hi   $ABC      <            in.txt >>               append.txt << EOF | \"g$ABCdf'g'g\"\"sdfsfd\" |'$abc' | \"\"$ABC\"\"  ";
+    const char *input = "echo     hello     >           out.txt          |             grep              hi   $ABC      <            in.txt >>               append.txt << EOF | \"g$ABCdf'g'g\"\"sdfsfd\" |'$abc' | |\"\"$ABC\"\"  ";
 
     tokenize_elements(input);
 

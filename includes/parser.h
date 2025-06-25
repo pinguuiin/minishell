@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/21 19:37:30 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/25 01:45:06 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ typedef enum e_redir_type
 	REDIR_INPUT,
 	REDIR_OUTPUT,
 	REDIR_APPEND,
-	REDIR_HEREDOC
+	REDIR_HEREDOC,
+	REDIR_AMB
 }	t_redir_type;
 
 // Redirection node
