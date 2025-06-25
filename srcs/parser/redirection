@@ -6,27 +6,88 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:06:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 00:57:28 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/26 04:17:50 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	is_quoted_heredoc(char *value)
+{
+	int	i = 0;
+	while (value[i])
+	{
+		if (value[i] == '\'' || value[i] == '"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	remove_quotes_for_heredoc(char *result, char *src)
+{
+	int		src_i;
+	int		result_i;
+	int		in_single_quote;
+	int		in_double_quote;
+
+	src_i = 0;
+	result_i = 0;
+	in_single_quote = 0;
+	in_double_quote = 0;
+	while (src[src_i])
+	{
+		if (src[src_i] == '\'' && !in_double_quote)
+			in_single_quote = !in_single_quote;
+		else if (src[src_i] == '"' && !in_single_quote)
+			in_double_quote = !in_double_quote;
+		else
+			result[result_i++] = src[src_i];
+		src_i++;
+	}
+	result[result_i] = '\0';
+}
+
+char	*expand_heredoc_value(char *value, t_info *info)
+{
+	char	*result;
+	int		total_len;
+
+	total_len = ft_strlen(value);
+	result = aalloc(&(info->arena), total_len + 1);
+	if (!result)
+		clean_and_exit("memory allocation failed in heredoc result");
+	remove_quotes_for_heredoc(result, value);
+	return (result);
+}
+
+
+t_token	*save_heredoc(t_info *info, t_cmd *cmd, t_token *token)
+{
+	t_redir			*redir;
+
+	redir = allocate_and_connect_redir(info, cmd);
+	if (is_quoted_heredoc(token->value))
+		redir->type = REDIR_HEREDOC_QUOTE;
+	else
+		redir->type = REDIR_HEREDOC;
+	redir->file = expend_heredoc_value(token->value, info);
+	return (token->next);
+}
+
 t_token	*save_redirection(t_info *info, t_cmd *cmd, t_token *token)
 {
 	t_redir			*redir;
-	char			*expanded_value;
 
 	redir = allocate_and_connect_redir(info, cmd);
 	if (is_ambiguous_redir(token, info))
 		return (redir->type = REDIR_AMB, redir->file = token->next->value, cmd->is_error = 1, token->next);
-	if (token->type = IN)
+	if (token->type == IN)
 		redir->type = REDIR_INPUT;
-	else if (token->type = OUT)
+	else if (token->type == OUT)
 		redir->type = REDIR_OUTPUT;
-	else if (token->type = APPEND)
+	else if (token->type == APPEND)
 		redir->type = REDIR_APPEND;
-	expanded_value = expand_value(token->value, redir->file, info);
-	redir->file = expanded_value;
+	redir->file = expand_value(token->value, info);
 	return (token->next);
 }

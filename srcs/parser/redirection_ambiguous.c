@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:24:01 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 00:50:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/26 02:13:20 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 int	check_space_in_a_env(const char *value, int i, t_info *info)
 {
-	char	*env_name;
 	t_env	*env_list;
 
 	i++;
-	env_name = allocate_and_copy_env_name(value, i, info);
-	env_list = get_env_list(info, env_list, env_name);
+	env_list = get_env_list(value, i, info);
 	if (!env_list || !env_list->value)
 		return (0);
 	i = 0;
@@ -57,13 +55,12 @@ int	check_space_in_value(const char *value, t_info *info)
 	return (0);
 }
 
-int	check_empty_in_a_env(const char *env_name, t_info *info)
+int	check_empty_in_a_env(char *value, int i, t_info *info)
 {
-	char	*env_name;
 	t_env	*env_list;
 	int		i;
 
-	env_list = get_env_list(info, env_list, env_name);
+	env_list = get_env_list(value, i, info);
 	if (!env_list || !env_list->value)
 		return (1);
 	i = 0;
@@ -79,15 +76,13 @@ int	check_empty_in_a_env(const char *env_name, t_info *info)
 int	check_empty_in_value(char *value, t_info *info)
 {
 	int		i;
-	char	*env_name;
 
 	i = 0;
 	while (value[i])
 	{
 		if (value[i] == '$')
 		{
-			env_name = allocate_and_copy_env_name(value, i + 1, info);
-			if (!check_empty_in_a_env(env_name, info))
+			if (!check_empty_in_a_env(value, i + 1, info))
 				return (0);
 		}
 		i++;
