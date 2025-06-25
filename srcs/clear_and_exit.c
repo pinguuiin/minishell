@@ -6,75 +6,34 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/23 00:07:02 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 21:31:18 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_argv(char ***argv)
+void	exec_exit(char *s1, char *s2, char *s3, int exit_code)
 {
-	int i;
-
-	i = 0;
-	if (!*argv)
-		return ;
-    while ((*argv)[i])
-	{
-        free((*argv)[i]);
-		i++;
-	}
-    free(*argv);
-	*argv = NULL;
+	error_msg(s1, s2, s3, exit_code);
+	arena_free_all(get_info()->arena);
+	exit(exit_code);
 }
 
-void	free_path_elem(t_path *paths)
+int	error_msg(char *s1, char *s2, char *s3, int exit_code)
 {
-	if (!paths)
-		return ;
-	if (paths->cmd)
-		free_argv(&(paths->cmd));
-	if (paths->prefix)
-		free_argv(&(paths->prefix));
-	if (paths->path)
+	get_info()->exit_code = exit_code;
+	if (s1)
 	{
-		free(paths->path);
-		paths->path = NULL;
+		ft_putstr_fd(s1, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	if (paths->slash_cmd)
+	if (s2)
 	{
-		free(paths->slash_cmd);
-		paths->slash_cmd = NULL;
-	}
-	free(paths);
-}
-
-void	error_path_exit(t_info *info, char *s, int sys_error_flag)
-{
-	if (sys_error_flag == 0)
-	{
-		ft_putendl_fd(s, STDERR_FILENO);
-		free_path_elem(info->paths);
-		exit(EXIT_FAILURE);
+		ft_putstr_fd(s2, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putendl_fd(s3, STDERR_FILENO);
 	}
 	else
-	{
-		perror(s);
-		free_path_elem(info->paths);
-		exit(sys_error_flag);
-	}
-}
-
-int	error_return(char *s, int sys_error_flag)
-{
-	if (sys_error_flag == 0)
-	{
-		ft_putendl_fd(s, STDERR_FILENO);
-		return(EXIT_FAILURE);
-	}
-	else
-	{
-		perror(s);
-		return(sys_error_flag);
-	}
+		perror(s3);
+	return (exit_code);
 }

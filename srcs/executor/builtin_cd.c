@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:06:09 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/20 04:24:24 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 21:45:35 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 static int	realloc_env_var(char **var, char *name, char *content)
 {
-	free(*var);
-	*var = NULL;
-	*var = ft_calloc((ft_strlen(name) + ft_strlen(content) + 2), sizeof(char));
+	t_info	*info;
+
+	info = get_info();
+	*var = aalloc(&info->arena, ft_strlen(name) + ft_strlen(content) + 2);
 	if (!*var)
-		return (error_return("Coundn't allocate memory", 0));
+		return (error_msg("minishell", "cd", "Couldn't allocate memory", 1));
 	ft_memmove(*var, name, ft_strlen(name));
 	ft_memmove(*var + ft_strlen(name), "=", 1);
 	ft_memmove(*var + ft_strlen(name) + 1, content, ft_strlen(content));
@@ -53,21 +54,21 @@ int	cd(char **argv, char **envp)
 	char	*path;
 
 	if (!getcwd(oldpwd, sizeof(oldpwd)))
-		return (error_return("cd", 1));
+		return (error_msg("minishell", NULL, "cd", 1));
 	if (!argv[1])
 	{
 		path = envp[get_env_ind(envp, "HOME")];
 		if (!path || !ft_strchr(path, '='))
-			return (error_return("cd: HOME not set", 0));
+			return (error_msg("minishell", "cd", "HOME not set", 1));
 		path += ft_strlen("HOME") + 1;
 	}
 	else if (argv[2])
-		return (error_return("cd: too many arguments", 0));
+		return (error_msg("minishell", "cd", "too many arguments", 1));
 	else
 		path = argv[1];
 	if (chdir(path) == -1)
-		return (error_return("cd", 1));
+		return (error_msg("minishell", NULL, "cd", 1));
 	if (!getcwd(pwd, sizeof(pwd)))
-		return (error_return("cd", 1));
+		return (error_msg("minishell", NULL, "cd", 1));
 	return (update_env_pwd(envp, oldpwd, pwd));
 }

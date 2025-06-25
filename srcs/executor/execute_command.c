@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:32:56 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/23 03:58:59 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 20:50:20 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,76 +30,67 @@ int	get_env_ind(char **envp, char *name)
 }
 
 /*Find PATH in the environment variables and split it into a 2d array*/
-static char	**find_path(t_info *info)
+static char	**find_path(t_info *info, char *cmd)
 {
-	char	*ptr;
 	char	*path;
 	char	**prefix;
 
-	ptr = info->envarr[get_env_ind(info->envarr, "PATH")];
-	if (!ptr || !ft_strchr(ptr, '='))
-		error_path_exit(info, "Command not found: PATH not set", 127);
-	ptr += ft_strlen("PATH") + 1;
-	path = ft_strdup(ptr);
-	if (!path)
-		error_path_exit(info, "Couldn't allocate memory", 0);
-	prefix = ft_split(path, ':');
-	free(path);
+	path = info->envarr[get_env_ind(info->envarr, "PATH")];
+	if (!path || !ft_strchr(path, '='))
+		exec_exit("minishell", cmd, "No such file or directory", 127);
+	path += ft_strlen("PATH") + 1;
+	prefix = arena_split(&info->arena, path, ':');
 	if (!prefix)
-		error_path_exit(info, "Couldn't allocate memory", 0);
+		exec_exit("minishell", cmd, "Couldn't allocate memory", 1);
 	return (prefix);
 }
 
 /*Concatenate paths and filename and check the existence and
 accessability of the target file*/
-static char	*find_cmdfile(t_info *info, t_path *paths, char *cmd)
+static char	*find_cmdfile(t_info *info, char *cmd)
 {
-	int	i;
+	int		i;
+	char	**prefix;
+	char	*slash_cmd;
+	char	*path;
 
 	i = 0;
-	paths->prefix = find_path(info);
-	paths->slash_cmd = ft_strjoin("/", cmd);
-	if (!paths->slash_cmd)
-		error_path_exit(info, "Couldn't allocate memory", 0);
-	while (paths->prefix[i])
+	prefix = find_path(info, cmd);
+	slash_cmd = arena_strjoin(&info->arena, "/", cmd);
+	if (!slash_cmd)
+		exec_exit("minishell", cmd, "Couldn't allocate memory", 1);
+	while (prefix[i])
 	{
-		paths->path = ft_strjoin(paths->prefix[i], paths->slash_cmd);
-		if (!paths->path)
-			error_path_exit(info, "Couldn't allocate memory", 0);
-		if (access(paths->path, F_OK) == 0)
+		path = arena_strjoin(&info->arena, prefix[i], slash_cmd);
+		if (!path)
+			exec_exit("minishell", cmd, "Couldn't allocate memory", 1);
+		if (access(path, F_OK) == 0)
 		{
-			if (access(paths->path, X_OK) == -1)
-				error_path_exit(info, cmd, 126);
-			return (paths->path);
+			if (access(path, X_OK) == -1)
+				exec_exit("minishell", cmd, "Permission denied", 126);
+			return (path);
 		}
-		free(paths->path);
-		paths->path = NULL;
 		i++;
 	}
-	error_path_exit(info, cmd, 127);
+	exec_exit("minishell", cmd, "No such file or directory", 127);
 	return (NULL);
 }
 
 /*Check if command has absolute/relative path or no path and then execute it*/
 void	execute_command(t_info *info, char **argv)
 {
-	t_path	*paths;
-	char	**envp;
 	char	*filepath;
 
-	paths = info->paths;
-	envp = info->envarr;
-	paths->cmd = argv;
-	if (ft_isalpha(paths->cmd[0][0]))
-		filepath = find_cmdfile(info, paths, paths->cmd[0]);
+	if (ft_isalpha(argv[0][0]))
+		filepath = find_cmdfile(info, argv[0]);
 	else
 	{
-		filepath = paths->cmd[0];
+		filepath = argv[0];
+		if (access(filepath, F_OK) == -1)
+			exec_exit("minishell", filepath, "No such file or directory", 127);
 		if (access(filepath, F_OK) == 0 && access(filepath, X_OK) == -1)
-			error_path_exit(info, filepath, 126);
-		if (access(filepath, F_OK | X_OK) != 0)
-			error_path_exit(info, filepath, 127);
+			exec_exit("minishell", filepath, "Permission denied", 126);
 	}
-	if (execve(filepath, paths->cmd, envp) == -1)
-		error_path_exit(info, "Execution failed", 126);
+	if (execve(filepath, argv, info->envarr) == -1)
+		exec_exit("minishell", NULL, filepath, 126);
 }

@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:32:41 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/23 04:11:09 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/24 22:06:54 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,19 @@ int	shell_exit(t_info *info, char **argv)
 
 	ft_putendl_fd("exit", STDOUT_FILENO); //not print / not exit in pipe?
 	if (!argv[1])
-		exit(0); //then how to check exit code? free info?
+	{
+		arena_free_all(info->arena);
+		exit(0);
+	}
 	num = ft_atocode(argv[1]);
 	if (num >= 0 && !argv[2])
+	{
+		arena_free_all(info->arena);
 		exit(num);
+	}
 	if (num < 0)
-	{
-		ft_putstr_fd("exit: ", STDERR_FILENO);
-		ft_putstr_fd(argv[1], STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		exit(2);
-	}
+		exec_exit("minishell: exit", argv[1], "numeric argument required", 2);
 	if (num >= 0 && argv[2])
-	{
-		ft_putendl_fd("exit: too many argument", STDERR_FILENO);
-		return (1);
-	}
+		return (error_msg("minishell", "exit", "too many argument", 1));
 	return (0);
 }
