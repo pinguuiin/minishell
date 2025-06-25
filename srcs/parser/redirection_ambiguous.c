@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:24:01 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/25 18:18:32 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/26 00:50:01 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@ int	check_space_in_a_env(const char *value, int i, t_info *info)
 
 	i++;
 	env_name = allocate_and_copy_env_name(value, i, info);
-	env_list = info->env;
-	while (env_list)
-	{
-		if (ft_strncmp(env_name, env_list->key, ft_strlen(env_name) + 1))
-			env_list = env_list->next;
-		else
-			break ;
-	}
+	env_list = get_env_list(info, env_list, env_name);
 	if (!env_list || !env_list->value)
 		return (0);
 	i = 0;
@@ -70,14 +63,7 @@ int	check_empty_in_a_env(const char *env_name, t_info *info)
 	t_env	*env_list;
 	int		i;
 
-	env_list = info->env;
-	while (env_list)
-	{
-		if (ft_strncmp(env_name, env_list->key, ft_strlen(env_name) + 1))
-			env_list = env_list->next;
-		else
-			break ;
-	}
+	env_list = get_env_list(info, env_list, env_name);
 	if (!env_list || !env_list->value)
 		return (1);
 	i = 0;

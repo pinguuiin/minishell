@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/25 23:40:39 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/26 00:04:44 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ typedef struct s_info
 	int			num_cmds;		// Number of commands in pipeline
 	t_arena		*arena;
 	t_token		*tokens;
-	t_path		*paths;
-
 
 }	t_info;
 

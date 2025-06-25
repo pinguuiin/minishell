@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/25 18:15:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/26 00:55:37 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,30 @@ t_cmd	*allocate_and_connect_cmd(t_info *info, t_cmd *cmd)
 	return (new_cmd);
 }
 
-t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
+char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 {
-	t_redir	*new_redir;
-	t_redir	*temp;
-	if (!cmd->redirection)
-	{
-		cmd->redirection = alloc(&(info->arena), sizeof(t_redir));
-		if(!cmd->redirection)
-			clean_and_exit("memory allocation fails for new cmd redir");
-		new_redir = cmd->redirection;
-	}
-	else
-	{
-		temp = cmd->redirection;
-		new_redir = alloc(&(info->arena), sizeof(t_redir));
-		if(!new_redir)
-			clean_and_exit("memory allocation fails for cmd redir");
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = new_redir;
-	}
-	return (new_redir);
+	int		start_i;
+	char	*env_name;
+
+	start_i = i;
+	while (value[i] && ft_isalnum(value[i]) || value[i] == '_')
+		i++;
+	env_name = aalloc(&(info->arena), i - start_i + 2);
+	if (!env_name)
+		clean_and_exit("memory allocation fails for env name");
+	strlcpy(env_name, &value[start_i], i - start_i + 2);
+	return (env_name);
 }
 
-
+t_env	*get_env_list(t_info *info, t_env *env_list, char *env_name)
+{
+	env_list = info->env;
+	while (env_list)
+	{
+		if (ft_strncmp(env_name, env_list->key, ft_strlen(env_name) + 1))
+			env_list = env_list->next;
+		else
+			break ;
+	}
+	return (env_list);
+}
