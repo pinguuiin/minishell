@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 00:39:44 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 01:24:20 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_cmd	*allocate_and_connect_cmd(t_info *info, t_cmd *cmd)
 	return (new_cmd);
 }
 
-char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
+static char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 {
 	int		start_i;
 	char	*env_name;
@@ -66,7 +66,7 @@ void add_to_argv(t_cmd *cmd, char *expanded_value, t_info *info)
 	count = 0;
 	if (cmd->argv)
 	{
-		while (cmd->argv[count])
+		while ((cmd->argv)[count])
 			count++;
 	}
 	new_argv = aalloc(&(info->arena), sizeof(char *) * (count + 2));

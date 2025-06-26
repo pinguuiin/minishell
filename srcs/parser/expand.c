@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 00:07:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 01:42:33 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	calculate_env_len(char *value, int	i, int *value_len)
+static int	calculate_env_len(char *value, int	i, int *value_len)
 {
 	int		key_len;
 	char	*env_name;
@@ -33,7 +33,7 @@ int	calculate_env_len(char *value, int	i, int *value_len)
 	return (key_len);
 }
 
-int	calculate_total_len_of_value(char *value)
+static int	calculate_total_len_of_value(char *value)
 {
 	int	i;
 	int	value_len;
@@ -52,20 +52,20 @@ int	calculate_total_len_of_value(char *value)
 			in_single_quote = !in_single_quote;
 		else if (value[i] == '"' && !in_single_quote)
 			in_double_quote = !in_double_quote;
-		else if (!in_single_quote && value[i] == '$' && (ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
+		else if (!in_single_quote && value[i] == '$' && value[i + 1] && (ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
 			key_len += calculate_env_len(value, i + 1, &value_len);
 		i++;
 	}
 	return (i + value_len - key_len);
 }
 
-void	save_env_value_with_del(char *value, char *expanded, int *i, int *j, t_info *info)
+static void	save_env_value_with_del(char *value, char *expanded, int *i, int *j, t_info *info)
 {
 	t_env	*env_list;
 	int		k;
 
 	k = 0;
-	env_list = get_env_list(value, i, info);
+	env_list = get_env_list(value, *i, info);
 	if (!env_list || !env_list->value)
 		return ;
 	while((env_list->value)[k])
@@ -82,7 +82,7 @@ void	save_env_value_with_del(char *value, char *expanded, int *i, int *j, t_info
 		(*i)++;
 }
 
-void	save_expanded_value(char *value, char *expanded, int total_len, t_info *info)
+static void	save_expanded_value(char *value, char *expanded, int total_len, t_info *info)
 {
 	int		i;
 	int		j;

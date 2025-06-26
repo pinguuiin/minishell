@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection                                        :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:06:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 00:51:38 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 01:50:00 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_quoted_heredoc(char *value)
+static int	is_quoted_heredoc(char *value)
 {
 	int	i = 0;
 	while (value[i])
@@ -24,7 +24,7 @@ int	is_quoted_heredoc(char *value)
 	return (0);
 }
 
-void	remove_quotes_for_heredoc(char *result, char *src)
+static void	remove_quotes_for_heredoc(char *result, char *src)
 {
 	int		src_i;
 	int		result_i;
@@ -48,7 +48,7 @@ void	remove_quotes_for_heredoc(char *result, char *src)
 	result[result_i] = '\0';
 }
 
-char	*expand_heredoc_value(char *value, t_info *info)
+static char	*expand_heredoc_value(char *value, t_info *info)
 {
 	char	*result;
 	int		total_len;
@@ -80,7 +80,7 @@ t_token	*save_redirection(t_info *info, t_cmd *cmd, t_token *token)
 	t_redir			*redir;
 
 	redir = allocate_and_connect_redir(info, cmd);
-	if (is_ambiguous_redir(token, info))
+	if (is_ambiguous_redir(token->next, info))
 		return (redir->type = REDIR_AMB, redir->file = token->next->value, cmd->is_error = 1, token->next);
 	if (token->type == IN)
 		redir->type = REDIR_INPUT;
@@ -88,6 +88,6 @@ t_token	*save_redirection(t_info *info, t_cmd *cmd, t_token *token)
 		redir->type = REDIR_OUTPUT;
 	else if (token->type == APPEND)
 		redir->type = REDIR_APPEND;
-	redir->file = save_cmd(info, cmd, token);
+	redir->file = expand_value(token->next->value, info);
 	return (token->next);
 }

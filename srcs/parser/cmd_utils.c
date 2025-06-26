@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 00:48:41 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 00:56:50 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	remove_delimiter(char *expanded_value)
 	{
 		if (expanded_value[i] == 127)
 		{
-			expanded_value[j++] == expanded_value[i++];
-			while (expanded_value[i] = 127)
+			expanded_value[j++] = expanded_value[i++];
+			while (expanded_value[i] == 127)
 				i++;
 			continue;
 		}

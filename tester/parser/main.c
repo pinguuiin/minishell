@@ -21,7 +21,6 @@ void	print_cmds(t_cmd *cmd)
 		if (cmd->redirection)
 			print_redirs(cmd->redirection);
 
-		printf("  is_builtin: %d\n", cmd->is_builtin);
 		printf("  is_error: %d\n", cmd->is_error);
 		cmd = cmd->next;
 	}
@@ -30,14 +29,14 @@ void	print_cmds(t_cmd *cmd)
 int main(int argc, char **argv, char **envp)
 {
     t_info	*info;
-	char	*input = "echo 'hello world'";
+	char	*input = "echo 'hello world' | < $a > $USER < sdfg > dsfg | > abc$ | def ghi | < abc ls -la ";
 
 	(void)argc;
 	(void)argv;
 	init_info(envp);
 	info = get_info();
 	info->env = envp_to_list(envp,&(info->arena));
-	if (check_syntax_error(input))
+	if (!check_syntax_error(input))
 	{
 		printf("syntax error detected");
 		return (1);
