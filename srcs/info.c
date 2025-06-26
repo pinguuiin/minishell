@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 17:24:49 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:27:24 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,17 @@ void	init_info(char **envp)
 
 	info = get_info();
 	info->arena = arena_create(ARENA_BLOCK_SIZE);
-	info->envarr = copy_envp(envp, info);
+	info->env_arr = copy_envp(envp, info);
+}
+
+void	reset_info()
+{
+	t_info	*info;
+
+	info = get_info();
+	info->tokens = NULL;
+	info->env_list = NULL;
+	info->cmds = NULL;
+	info->exit_code = 0;
+	info->cmd_num = 0;
 }
