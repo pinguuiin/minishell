@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:06:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 02:17:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 04:15:46 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,14 @@ static int	is_quoted_heredoc(char *value)
 	return (0);
 }
 
-static void	remove_quotes_for_heredoc(char *result, char *src)
-{
-	int		src_i;
-	int		result_i;
-	int		in_single_quote;
-	int		in_double_quote;
-
-	src_i = 0;
-	result_i = 0;
-	in_single_quote = 0;
-	in_double_quote = 0;
-	while (src[src_i])
-	{
-		if (src[src_i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (src[src_i] == '"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else
-			result[result_i++] = src[src_i];
-		src_i++;
-	}
-	result[result_i] = '\0';
-}
-
 static char	*expand_heredoc_value(char *value, t_info *info)
 {
-	char	*result;
 	int		total_len;
 
 	total_len = ft_strlen(value);
-	result = aalloc(&(info->arena), total_len + 1);
-	if (!result)
-		clean_and_exit("heredoc result");
-	remove_quotes_for_heredoc(result, value);
-	return (result);
+	remove_quotes(value, 0, 0);
+	return (value);
 }
-
 
 t_token	*save_heredoc(t_info *info, t_cmd *cmd, t_token *token)
 {
