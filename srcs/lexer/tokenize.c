@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:24:23 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/23 09:14:54 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:15:24 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	tokenize_input(const char *input, int i, t_info *info)
 	token = aalloc(&(info->arena), sizeof(t_token));
 	token->value = NULL;
 	if (!token)
-		clean_and_exit("memory allocation failed for input token");
+		clean_and_exit("input token");
 	if (input[i + 1] == '<')
 	{
 		token->type = HEREDOC;
@@ -41,7 +41,7 @@ int	tokenize_output(const char *input, int i, t_info *info)
 	token = aalloc(&(info->arena), sizeof(t_token));
 	token->value = NULL;
 	if (!token)
-		clean_and_exit("memory allocation failed for output token");
+		clean_and_exit("output token");
 	if (input[i + 1] == '>')
 	{
 		token->type = APPEND;
@@ -63,7 +63,7 @@ int	tokenize_pipe(int i, t_info *info)
 	token = aalloc(&(info->arena), sizeof(t_token));
 	token->value = NULL;
 	if (!token)
-		clean_and_exit("memory allocation failed for pipe token");
+		clean_and_exit("pipe token");
 	token->type = PIPE;
 	connect_tokens(&(info->tokens), token);
 	return (i + 1);
@@ -78,7 +78,7 @@ static void	get_token_type_and_value(const char *input, \
 	token->value = aalloc(&info->arena, \
 		cmd_type->end_i - cmd_type->start_i + 2);
 	if (!token->value)
-		clean_and_exit("memory allocation failed for cmd token value");
+		clean_and_exit("cmd token value");
 	while (cmd_type->i <= cmd_type->end_i)
 	{
 		if (input[cmd_type->i] == '\'' && !cmd_type->in_double_quote)
@@ -108,7 +108,7 @@ int	tokenize_cmd(const char *input, int i, t_info *info)
 	cmd_type.start_i = i;
 	token = aalloc(&(info->arena), sizeof(t_token));
 	if (!token)
-		clean_and_exit("memory allocation failed for cmd token");
+		clean_and_exit("cmd token");
 	while (input[i])
 	{
 		if (input[i] == '\'' && !cmd_type.in_double_quote)

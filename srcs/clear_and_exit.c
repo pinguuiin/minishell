@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/24 21:31:18 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/27 02:18:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,13 @@ int	error_msg(char *s1, char *s2, char *s3, int exit_code)
 	else
 		perror(s3);
 	return (exit_code);
+}
+
+void	clean_and_exit(char *err_msg)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	ft_putendl_fd(" :couldn't allocate memory", STDERR_FILENO);
+	arena_free_all(get_info()->arena);
+	exit(1);
 }

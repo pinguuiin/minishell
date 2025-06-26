@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 01:24:20 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:27:13 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ t_cmd	*allocate_and_connect_cmd(t_info *info, t_cmd *cmd)
 {
 	t_cmd	*new_cmd;
 
-	(info->num_cmds)++;
+	(info->cmd_num)++;
 	new_cmd = aalloc(&(info->arena), sizeof(t_cmd));
 	if (!new_cmd)
-		clean_and_exit("memory allocation fails for new cmd");
+		clean_and_exit("new cmd");
 	cmd->next = new_cmd;
 	return (new_cmd);
 }
@@ -34,7 +34,7 @@ static char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 		i++;
 	env_name = aalloc(&(info->arena), i - start_i + 2);
 	if (!env_name)
-		clean_and_exit("memory allocation fails for env name");
+		clean_and_exit("env name");
 	strlcpy(env_name, &value[start_i], i - start_i + 2);
 	return (env_name);
 }
@@ -45,7 +45,7 @@ t_env	*get_env_list(char *value, int i, t_info *info)
 	char	*env_name;
 
 	env_name = allocate_and_copy_env_name(value, i, info);
-	env_list = info->env;
+	env_list = info->env_list;
 	while (env_list)
 	{
 		if (ft_strncmp(env_name, env_list->key, ft_strlen(env_name) + 1))
@@ -71,7 +71,7 @@ void add_to_argv(t_cmd *cmd, char *expanded_value, t_info *info)
 	}
 	new_argv = aalloc(&(info->arena), sizeof(char *) * (count + 2));
 	if (!new_argv)
-		clean_and_exit("memory allocation failed for new argv");
+		clean_and_exit("new argv");
 	i = 0;
 	while (i < count)
 	{

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:06:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 01:50:00 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:17:19 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*expand_heredoc_value(char *value, t_info *info)
 	total_len = ft_strlen(value);
 	result = aalloc(&(info->arena), total_len + 1);
 	if (!result)
-		clean_and_exit("memory allocation failed in heredoc result");
+		clean_and_exit("heredoc result");
 	remove_quotes_for_heredoc(result, value);
 	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_copy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/25 00:44:43 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/27 02:24:48 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,32 @@ int	count_envp(char **envp)
 }
 
 char	**copy_envp_entries(char **envp, \
-	char **envarr, int envp_num, t_info *info)
+	char **env_arr, int envp_num, t_info *info)
 {
 	int	i;
 
 	i = 0;
 	while (i < envp_num)
 	{
-		envarr[i] = aalloc(&(info->arena), ft_strlen(envp[i]) + 1);
-		if (!envarr[i])
-			clean_and_exit("memory allocation failed for envarr entry"); //consistency?
-		ft_strlcpy(envarr[i], envp[i], ft_strlen(envp[i]) + 1);
+		env_arr[i] = aalloc(&(info->arena), ft_strlen(envp[i]) + 1);
+		if (!env_arr[i])
+			clean_and_exit("env_arr entry");
+		ft_strlcpy(env_arr[i], envp[i], ft_strlen(envp[i]) + 1);
 		i++;
 	}
-	envarr[i] = NULL;
-	return (envarr);
+	env_arr[i] = NULL;
+	return (env_arr);
 }
 
 char	**copy_envp(char **envp, t_info *info)
 {
-	char	**envarr;
+	char	**env_arr;
 	int		envp_num;
 
 	envp_num = count_envp(envp);
-	envarr = aalloc(&(info->arena), (envp_num + 1) * sizeof(char *));
-	if (!envarr)
-		clean_and_exit("memory allocation failed for envarr"); //consistency?
-	envarr = copy_envp_entries(envp, envarr, envp_num, info);
-	return (envarr);
+	env_arr = aalloc(&(info->arena), (envp_num + 1) * sizeof(char *));
+	if (!env_arr)
+		clean_and_exit("env_arr");
+	env_arr = copy_envp_entries(envp, env_arr, envp_num, info);
+	return (env_arr);
 }

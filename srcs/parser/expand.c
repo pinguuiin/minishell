@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 01:42:33 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:16:34 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	*expand_value(char *value, t_info *info)
 	total_value_len = calculate_total_len_of_value(value);
 	expanded_value = aalloc(&(info->arena), total_value_len + 1);
 	if (!expanded_value)
-		clean_and_exit("memory allocation failed for expanded value");
+		clean_and_exit("expanded value");
 	save_expanded_value(value, expanded_value, total_value_len, info);
 	remove_quotes(expanded_value, 0, 0);
 	remove_delimiter(expanded_value);

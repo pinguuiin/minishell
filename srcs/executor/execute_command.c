@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:32:56 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/24 20:50:20 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/27 02:25:03 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	**find_path(t_info *info, char *cmd)
 	char	*path;
 	char	**prefix;
 
-	path = info->envarr[get_env_ind(info->envarr, "PATH")];
+	path = info->env_arr[get_env_ind(info->env_arr, "PATH")];
 	if (!path || !ft_strchr(path, '='))
 		exec_exit("minishell", cmd, "No such file or directory", 127);
 	path += ft_strlen("PATH") + 1;
@@ -91,6 +91,6 @@ void	execute_command(t_info *info, char **argv)
 		if (access(filepath, F_OK) == 0 && access(filepath, X_OK) == -1)
 			exec_exit("minishell", filepath, "Permission denied", 126);
 	}
-	if (execve(filepath, argv, info->envarr) == -1)
+	if (execve(filepath, argv, info->env_arr) == -1)
 		exec_exit("minishell", NULL, filepath, 126);
 }

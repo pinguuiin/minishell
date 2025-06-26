@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 01:27:22 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:23:35 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	parser(t_info *info)
 	t_cmd		*cmd;
 
 	token = info->tokens;
-	(info->num_cmds)++;
+	(info->cmd_num)++;
 	cmd = aalloc(&(info->arena), sizeof(t_cmd));
 	if (!cmd)
-		clean_and_exit("memory allocation fails for cmd");
+		clean_and_exit("cmd");
 	info->cmds = cmd;
 	while (token)
 	{

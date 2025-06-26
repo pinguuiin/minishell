@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:18:49 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 21:26:21 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:05:41 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define VALIDATION_H
 
 void	is_heredoc_limit_exceeded(const char *input);
-int		is_only_whitespaces(const char *input);
+int		is_only_spaces(const char *input);
 int		validate_quotes(const char *cmd);
 int		validate_redirections(const char *cmd);
 int		validate_operations(const char *input, \

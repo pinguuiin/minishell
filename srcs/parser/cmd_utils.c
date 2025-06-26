@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 00:56:50 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:16:19 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static char	*copy_cmd(char *start, char *end, t_info *info)
 	len = end - start;
 	result = aalloc(&(info->arena), len + 1);
 	if (!result)
-		clean_and_exit("memory allocation fails for cmd");
+		clean_and_exit("cmd");
 	ft_memcpy(result, start, len);
 	result[len] = '\0';
 	return (result);
@@ -111,7 +111,7 @@ char	**divide_by_delimiter(char *value, t_info *info)
 	count = split_cmds(value);
 	result = aalloc(&(info->arena), sizeof(char *) * (count + 1));
 	if (!result)
-		clean_and_exit("memory allocation fails for cmds");
+		clean_and_exit("cmds");
 	while (value[i])
 	{
 		if (value[i] == 127)

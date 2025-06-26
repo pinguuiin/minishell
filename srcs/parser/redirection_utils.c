@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 01:09:41 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:16:56 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 	{
 		cmd->redirection = aalloc(&(info->arena), sizeof(t_redir));
 		if(!cmd->redirection)
-			clean_and_exit("memory allocation fails for new cmd redir");
+			clean_and_exit("new cmd redir");
 		new_redir = cmd->redirection;
 	}
 	else
@@ -29,7 +29,7 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 		temp = cmd->redirection;
 		new_redir = aalloc(&(info->arena), sizeof(t_redir));
 		if(!new_redir)
-			clean_and_exit("memory allocation fails for cmd redir");
+			clean_and_exit("cmd redir");
 		while (temp->next != NULL)
 			temp = temp->next;
 		temp->next = new_redir;

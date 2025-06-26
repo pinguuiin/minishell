@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:21:58 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/25 23:39:22 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:24:19 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_env
 
 // copy env
 int		count_envp(char **envp);
-char	**copy_envp_entries(char **envp, char **envarr, \
+char	**copy_envp_entries(char **envp, char **env_arr, \
 		int envp_num, t_info *info);
 char	**copy_envp(char **envp, t_info *info);
 t_env	*envp_to_list(char	**envp, t_arena **arena);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/24 21:14:44 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/27 02:24:56 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ int	execute_builtin(t_info *info, char **argv)
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 		info->exit_code = echo(argv);
 	else if (ft_strncmp(cmd, "cd", 3) == 0)
-		info->exit_code = cd(argv, info->envarr);
+		info->exit_code = cd(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "pwd", 4) == 0)
 		info->exit_code = pwd(argv);
 	else if (ft_strncmp(cmd, "export", 7) == 0)
-		info->exit_code = export(argv, &info->envarr);
+		info->exit_code = export(argv, &info->env_arr);
 	else if (ft_strncmp(cmd, "unset", 6) == 0)
-		info->exit_code = unset(argv, info->envarr);
+		info->exit_code = unset(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "env", 4) == 0)
-		info->exit_code = env(argv, info->envarr);
+		info->exit_code = env(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "exit", 5) == 0)
 		info->exit_code = shell_exit(info, argv);
 	else

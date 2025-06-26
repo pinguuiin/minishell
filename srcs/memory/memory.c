@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 19:48:08 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:06:27 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,4 @@ void	arena_free_all(t_arena *arena)
 		free(arena);
 		arena = next;
 	}
-}
-
-void	clean_and_exit(char *err_msg)
-{
-	ft_putendl_fd(err_msg, STDERR_FILENO);
-	arena_free_all(get_info()->arena);
-	exit(1);
 }
