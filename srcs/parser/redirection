@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:06:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 04:17:50 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 00:51:38 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_token	*save_heredoc(t_info *info, t_cmd *cmd, t_token *token)
 		redir->type = REDIR_HEREDOC_QUOTE;
 	else
 		redir->type = REDIR_HEREDOC;
-	redir->file = expend_heredoc_value(token->value, info);
+	redir->file = expand_heredoc_value(token->value, info);
 	return (token->next);
 }
 
@@ -88,6 +88,6 @@ t_token	*save_redirection(t_info *info, t_cmd *cmd, t_token *token)
 		redir->type = REDIR_OUTPUT;
 	else if (token->type == APPEND)
 		redir->type = REDIR_APPEND;
-	redir->file = expand_value(token->value, info);
+	redir->file = save_cmd(info, cmd, token);
 	return (token->next);
 }

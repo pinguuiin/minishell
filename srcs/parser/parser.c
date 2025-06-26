@@ -6,22 +6,24 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 04:22:18 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 00:50:00 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	save_env_var(t_info *info, t_cmd *cmd)
+void	save_cmd(t_info *info, t_cmd *cmd, t_token *token)
 {
+	char	*expanded_value;
+	char	**divided_value;
+	int		i;
 
-
+	expanded_value = expand_value(token->value);
+	divided_value = divide_by_delimiter(expanded_value);
+	i = 0;
+	while (divided_value[i])
+		add_cmd_struct(cmd, divided_value[i], info);
 }
-
-
-
-
-
 
 void	parser(t_info *info)
 {
@@ -37,13 +39,9 @@ void	parser(t_info *info)
 	while (token)
 	{
 		if (token->type == PIPE)
-			cmd = alloc_and_connect_cmd(info, cmd);
-		else if (token->type == ENV_VAR)
-			save_env_var(info, cmd);
-		else if (token->type == WORD)
-			save_word(info, cmd);
-		else if (token->type == WORD_WITH_ENV)
-			save_word_with_env(info, cmd);
+			cmd = alloc_and_connect_cmd(info, cmd, token);
+		else if (token->type == WORD || token->type == ENV_VAR || token->type == WORD_WITH_ENV)
+			save_cmd(info, cmd, token);
 		else if (token->type == HEREDOC)
 			token = save_heredoc(info, cmd, token);
 		else

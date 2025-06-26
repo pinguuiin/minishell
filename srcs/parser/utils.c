@@ -6,19 +6,11 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 02:17:13 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 00:39:44 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_space_pair(const char *str, int i)
-{
-	if (!str[i] || !str[i + 1])
-		return (0);
-	return ((str[i] == ' ' || str[i] == '\t') &&
-			(str[i + 1] == ' ' || str[i + 1] == '\t'));
-}
 
 t_cmd	*allocate_and_connect_cmd(t_info *info, t_cmd *cmd)
 {
@@ -63,3 +55,31 @@ t_env	*get_env_list(char *value, int i, t_info *info)
 	}
 	return (env_list);
 }
+
+
+void add_to_argv(t_cmd *cmd, char *expanded_value, t_info *info)
+{
+	int		count;
+	char	**new_argv;
+	int		i;
+
+	count = 0;
+	if (cmd->argv)
+	{
+		while (cmd->argv[count])
+			count++;
+	}
+	new_argv = aalloc(&(info->arena), sizeof(char *) * (count + 2));
+	if (!new_argv)
+		clean_and_exit("memory allocation failed for new argv");
+	i = 0;
+	while (i < count)
+	{
+		new_argv[i] = cmd->argv[i];
+		i++;
+	}
+	new_argv[count] = expanded_value;
+	new_argv[count + 1] = NULL;
+	cmd->argv = new_argv;
+}
+

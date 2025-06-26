@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/26 00:55:23 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 00:31:30 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,23 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 		temp->next = new_redir;
 	}
 	return (new_redir);
+}
+
+int	has_delimiter(const char *expanded_value)
+{
+	while (*expanded_value)
+	{
+		if (*expanded_value == 127)
+			return (1);
+		expanded_value++;
+	}
+	return (0);
+}
+
+int	is_ambiguous_redir(t_token *token, t_info *info)
+{
+	char	*expanded_value;
+
+	expanded_value = expand_value(token->value, info);
+	return (has_delimiter(expanded_value));
 }
