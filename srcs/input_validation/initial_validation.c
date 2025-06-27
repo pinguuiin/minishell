@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 21:25:03 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:05:49 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	validate_operations(const char *input, \
 // runs all syntax validation checks
 int	check_syntax_error(const char *input)
 {
-	if (is_only_whitespaces(input))
+	if (is_only_spaces(input))
 		return (1);
 	if (!validate_quotes(input))
 	{

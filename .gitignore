@@ -8,3 +8,4 @@ a.out
 libft.a
 *.o
 .vscode
+.DS_Store

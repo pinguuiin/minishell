@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:16 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/22 14:45:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/27 02:12:12 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ static int	set_key_value(t_env *node, const char *env, \
 
 	key_len = equal - env;
 	node->key = aalloc(arena, key_len + 1);
+	if (!node->key)
+		clean_and_exit("node key");
 	node->value = aalloc(arena, ft_strlen(equal + 1) + 1);
-	if (!node->key || !node->value)
-		return (0);
+	if (!node->value)
+		clean_and_exit("node value");
 	ft_memcpy(node->key, env, key_len);
 	node->key[key_len] = '\0';
 	ft_memcpy(node->value, equal + 1, ft_strlen(equal + 1) + 1);
@@ -46,7 +48,7 @@ static t_env	*create_env_node(const char *env, t_arena **arena)
 	{
 		node->key = aalloc(arena, ft_strlen(env) + 1);
 		if (!node->key)
-			return (NULL);
+			clean_and_exit("node key in create function");
 		ft_memcpy(node->key, env, strlen(env) + 1);
 		node->value = NULL;
 	}
@@ -67,11 +69,6 @@ t_env	*envp_to_list(char	**envp, t_arena **arena)
 	while (envp[i])
 	{
 		new_node = create_env_node(envp[i], arena);
-		if (!new_node)
-		{
-			ft_putstr_fd("failed to allocate t_env node\n", STDERR_FILENO);
-			return (NULL);
-		}
 		if (!head)
 			head = new_node;
 		else
