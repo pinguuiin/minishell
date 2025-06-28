@@ -12,25 +12,26 @@
 
 #include "minishell.h"
 
-// check if all quotes are properly closed
-int	validate_quotes(const char *input)
+static void	is_heredoc_limit_exceeded(const char *input)
 {
-	int	in_single;
-	int	in_double;
-	int	i;
+	int	count;
 
-	in_single = 0;
-	in_double = 0;
-	i = 0;
-	while (input[i])
+	count = 0;
+	while (*input)
 	{
-		if (input[i] == '\'' && !in_double)
-			in_single = !in_single;
-		else if (input[i] == '"' && !in_single)
-			in_double = !in_double;
-		i++;
+		if (*input == '<' && *(input + 1) == '<')
+		{
+			count++;
+			if (count > 16)
+			{
+				ft_putendl_fd("maximum here-document count exceeded", STDERR_FILENO);
+				arena_free_all(get_info()->arena);
+				exit(1);
+			}
+			input++;
+		}
+		input++;
 	}
-	return (!in_single && !in_double);
 }
 
 // check if a valid token follows a redirection or pipe operator
@@ -50,7 +51,7 @@ static int	validate_after_operator(const char *input)
 }
 
 // validates redirection operators and their syntax outside of quotes
-int	validate_redirections(const char *input)
+static int	validate_redirections(const char *input)
 {
 	int	in_single_quote;
 	int	in_double_quote;
@@ -73,7 +74,7 @@ int	validate_redirections(const char *input)
 }
 
 // validate correct use and placement of pipe operators outside of quotes
-int	validate_operations(const char *input, \
+static int	validate_operations(const char *input, \
 	int expect_command, int in_single_quote, int in_double_quote)
 {
 	while (*input)

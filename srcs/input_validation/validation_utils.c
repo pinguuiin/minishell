@@ -23,24 +23,24 @@ int	is_only_spaces(const char *input)
 	return (1);
 }
 
-void	is_heredoc_limit_exceeded(const char *input)
+// check if all quotes are properly closed
+int	validate_quotes(const char *input)
 {
-	int	count;
+	int	in_single;
+	int	in_double;
+	int	i;
 
-	count = 0;
-	while (*input)
+	in_single = 0;
+	in_double = 0;
+	i = 0;
+	while (input[i])
 	{
-		if (*input == '<' && *(input + 1) == '<')
-		{
-			count++;
-			if (count > 16)
-			{
-				ft_putendl_fd("maximum here-document count exceeded", STDERR_FILENO);
-				arena_free_all(get_info()->arena);
-				exit(1);
-			}
-			input++;
-		}
-		input++;
+		if (input[i] == '\'' && !in_double)
+			in_single = !in_single;
+		else if (input[i] == '"' && !in_single)
+			in_double = !in_double;
+		i++;
 	}
+	return (!in_single && !in_double);
 }
+

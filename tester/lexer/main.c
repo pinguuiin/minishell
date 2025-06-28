@@ -4,9 +4,7 @@
 
 const char *token_type_str(t_token_type type) {
     switch (type) {
-        case WORD: return "WORD";
-        case ENV_VAR: return "ENV_VAR";
-        case WORD_WITH_ENV: return "WORD_WITH_ENV";
+        case CMD: return "CMD";
         case IN: return "IN";
         case OUT: return "OUT";
         case APPEND: return "APPEND";
@@ -30,7 +28,7 @@ int main(void) {
 
 	info = get_info();
 
-    const char *input = "echo     hello     >           out.txt          |             grep              hi   $ABC      <            in.txt >>               append.txt << EOF | \"g$ABCdf'g'g\"\"sdfsfd\" |'$abc' | |\"\"$ABC\"\"  ";
+    const char *input = "echo     hello     >           out.txt          |             grep              hi   $ABC      <            in.txt >>               append.txt << EOF | \"g$ABCdf'g'g\"\"sdfsfd\" |'$abc' | $abc$ |\"\"$ABC\"\"  ";
 
     tokenize_elements(input);
 
