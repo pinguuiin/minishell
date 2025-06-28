@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 04:43:16 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/28 05:25:36 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ========!Free cmds and info before exit!========
+// ========!Free memory and close fds before exit!========
 
 static void	select_executor(t_info *info, t_cmd *cmds)
 {
