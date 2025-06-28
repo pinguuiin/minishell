@@ -9,19 +9,32 @@ CC =		cc
 CFLAGS +=	-Wall -Wextra -Werror -g
 
 SRC_DIR =	src/
-SRCS =		main.c \
-			info.c \
-			signal.c \
-			clear_and_exit.c \
-			executor/builtin.c \
-			executor/builtin_cd.c \
-			executor/builtin_echo.c \
-			executor/builtin_unset.c \
-			executor/builtin_export.c \
-			executor/builtin_exit.c \
-			executor/execute_command.c \
-			executor/executor.c \
-			executor/redirection.c
+SRCS =	main.c \
+				info.c \
+				memory.c \
+				signal.c \
+				clear_and_exit.c \
+				env/env_copy.c \
+				env/env_list.c \
+				input_validation/initial_validation.c \
+				input_validation/validation_utils.c \
+				lexer/lexer.c \
+				lexer/utils.c \
+				parser/utils.c \
+				parser/cmd_utils.c \
+				parser/redirection_utils.c \
+				parser/expand.c \
+				parser/parser.c \
+				executor/builtin.c \
+				executor/builtin_cd.c \
+				executor/builtin_echo.c \
+				executor/builtin_unset.c \
+				executor/builtin_export.c \
+				executor/builtin_exit.c \
+				executor/execute_command.c \
+				executor/executor.c \
+				executor/redirection.c \
+
 
 OBJ_DIR =	objs/
 OBJS =		$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
