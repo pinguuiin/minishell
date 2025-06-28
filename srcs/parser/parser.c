@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 02:23:35 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/28 21:20:57 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	parser(t_info *info)
 	{
 		if (token->type == PIPE)
 			cmd = allocate_and_connect_cmd(info, cmd);
-		else if (token->type == WORD || token->type == ENV_VAR || token->type == WORD_WITH_ENV)
+		else if (token->type == CMD)
 			save_cmd(info, cmd, token);
 		else if (token->type == HEREDOC)
 			token = save_heredoc(info, cmd, token);
