@@ -10,8 +10,8 @@ CFLAGS +=	-Wall -Wextra -Werror -g
 
 SRC_DIR =	src/
 SRCS =		main.c \
-			process.c \
-			init.c \
+			info.c \
+			signal.c \
 			clear_and_exit.c \
 			executor/builtin.c \
 			executor/builtin_cd.c \
@@ -21,6 +21,7 @@ SRCS =		main.c \
 			executor/builtin_exit.c \
 			executor/execute_command.c \
 			executor/executor.c \
+			executor/redirection.c
 
 OBJ_DIR =	objs/
 OBJS =		$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))

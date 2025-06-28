@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:32:56 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/27 02:25:03 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/28 05:08:58 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,10 @@ void	execute_command(t_info *info, char **argv)
 			exec_exit("minishell", filepath, "Permission denied", 126);
 	}
 	if (execve(filepath, argv, info->env_arr) == -1)
-		exec_exit("minishell", NULL, filepath, 126);
+	{
+		if (argv[1])
+			exec_exit(filepath, NULL, argv[1], 126);
+		else
+			exec_exit("minishell", NULL, filepath, 126);
+	}
 }

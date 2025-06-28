@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 02:06:27 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/28 05:10:59 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,19 @@ void	*aalloc(t_arena **arena_ptr, size_t size)
 void	arena_free_all(t_arena *arena)
 {
 	t_arena	*next;
+	t_info	*info;
 
+	info = get_info();
 	while (arena)
 	{
 		next = arena->next;
 		free(arena->memory);
 		free(arena);
 		arena = next;
+	}
+	if (info->input)
+	{
+		free(info->input);
+		info->input = NULL;
 	}
 }

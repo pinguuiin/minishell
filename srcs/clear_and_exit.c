@@ -3,18 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   clear_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/27 02:18:22 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/28 05:11:38 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	close_fds(t_cmd *cmds)
+{
+	while (cmds)
+	{
+		while (cmds->redirection)
+		{
+			if (cmds->redirection->fd == -1)
+				break ;
+			close(cmds->redirection->fd);
+			cmds->redirection = cmds->redirection->next;
+		}
+		cmds = cmds->next;
+	}
+}
+
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code)
 {
 	error_msg(s1, s2, s3, exit_code);
+	close_fds(get_info()->cmds);
 	arena_free_all(get_info()->arena);
 	exit(exit_code);
 }
