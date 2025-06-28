@@ -31,14 +31,9 @@ typedef	struct s_token
 	struct s_token		*next;
 }	t_token;
 
-int		tokenize_input(const char *input, int i, t_info *info);
-int		tokenize_output(const char *input, int i, t_info *info);
-int		tokenize_pipe(int i, t_info *info);
-int		tokenize_cmd(const char *input, int i, t_info *info, int in_single_quote, int in_double_quote);
-void	tokenize_elements(const char *input);
-
 int		skip_spaces(const char *input, int i);
 void	connect_tokens(t_token **head, t_token *tail);
 int		is_token_boundary(char c, int in_single_quote, int in_double_quote);
+void	tokenize_elements(const char *input);
 
 #endif

@@ -49,6 +49,27 @@ static int	has_delimiter(const char *expanded_value)
 	return (0);
 }
 
+int	is_quoted_heredoc(char *value)
+{
+	int	i = 0;
+	while (value[i])
+	{
+		if (value[i] == '\'' || value[i] == '"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*expand_heredoc_value(char *value, t_info *info)
+{
+	int		total_len;
+
+	total_len = ft_strlen(value);
+	remove_quotes(value, 0, 0);
+	return (value);
+}
+
 int	is_ambiguous_redir(t_token *token, t_info *info)
 {
 	char	*expanded_value;

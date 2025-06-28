@@ -56,6 +56,30 @@ t_env	*get_env_list(char *value, int i, t_info *info)
 	return (env_list);
 }
 
+void	remove_quotes(char *value, int i, int j)
+{
+	int		in_single_quote;
+	int		in_double_quote;
+
+	in_single_quote = 0;
+	in_double_quote = 0;
+	while (value[i])
+	{
+		if (value[i] == '\'' && !in_double_quote)
+		{
+			in_single_quote = !in_single_quote;
+			i++;
+		}
+		else if (value[i] == '"' && !in_single_quote)
+		{
+			in_double_quote = !in_double_quote;
+			i++;
+		}
+		else
+			value[j++] = value[i++];
+	}
+	value[j] = '\0';
+}
 
 void add_to_argv(t_cmd *cmd, char *expanded_value, t_info *info)
 {

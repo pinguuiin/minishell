@@ -12,31 +12,6 @@
 
 #include "minishell.h"
 
-void	remove_quotes(char *value, int i, int j)
-{
-	int		in_single_quote;
-	int		in_double_quote;
-
-	in_single_quote = 0;
-	in_double_quote = 0;
-	while (value[i])
-	{
-		if (value[i] == '\'' && !in_double_quote)
-		{
-			in_single_quote = !in_single_quote;
-			i++;
-		}
-		else if (value[i] == '"' && !in_single_quote)
-		{
-			in_double_quote = !in_double_quote;
-			i++;
-		}
-		else
-			value[j++] = value[i++];
-	}
-	value[j] = '\0';
-}
-
 void	remove_delimiter(char *expanded_value)
 {
 	int	i;

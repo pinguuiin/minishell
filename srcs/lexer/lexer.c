@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	tokenize_input(const char *input, int i, t_info *info)
+static int	tokenize_input(const char *input, int i, t_info *info)
 {
 	t_token	*token;
 
@@ -34,7 +34,7 @@ int	tokenize_input(const char *input, int i, t_info *info)
 	}
 }
 
-int	tokenize_output(const char *input, int i, t_info *info)
+static int	tokenize_output(const char *input, int i, t_info *info)
 {
 	t_token	*token;
 
@@ -56,7 +56,7 @@ int	tokenize_output(const char *input, int i, t_info *info)
 	}
 }
 
-int	tokenize_pipe(int i, t_info *info)
+static int	tokenize_pipe(int i, t_info *info)
 {
 	t_token	*token;
 
@@ -69,7 +69,7 @@ int	tokenize_pipe(int i, t_info *info)
 	return (i + 1);
 }
 
-int	tokenize_cmd(const char *input, int i, t_info *info, int in_single_quote, int in_double_quote)
+static int	tokenize_cmd(const char *input, int i, t_info *info, int in_single_quote, int in_double_quote)
 {
 	t_token	*token;
 	int		start_i;
