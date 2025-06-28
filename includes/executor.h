@@ -13,9 +13,6 @@
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include <sys/stat.h>
-# include <fcntl.h>
-
 int		get_env_ind(char **envp, char *name);
 bool	is_builtin(t_cmd *cmds);
 int		cd(char **argv, char **envp);

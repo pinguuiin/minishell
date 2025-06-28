@@ -22,6 +22,8 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 # include "libft.h"
 # include "memory.h"
