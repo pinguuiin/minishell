@@ -30,7 +30,7 @@ static char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 	char	*env_name;
 
 	start_i = i;
-	while (value[i] && ft_isalnum(value[i]) || value[i] == '_')
+	while (value[i] && (ft_isalnum(value[i]) || value[i] == '_'))
 		i++;
 	env_name = aalloc(&(info->arena), i - start_i + 2);
 	if (!env_name)

@@ -70,10 +70,10 @@ char	*expand_heredoc_value(char *value, t_info *info)
 	return (value);
 }
 
-int	is_ambiguous_redir(t_token *token, t_info *info)
+int	is_ambiguous_redir(t_token *token, t_info *info, t_cmd *cmd)
 {
 	char	*expanded_value;
 
-	expanded_value = expand_value(token->value, info);
+	expanded_value = expand_value(token->value, info, cmd);
 	return (has_delimiter(expanded_value));
 }
