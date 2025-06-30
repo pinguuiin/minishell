@@ -18,7 +18,7 @@ static void	save_cmd(t_info *info, t_cmd *cmd, t_token *token)
 	char	**divided_value;
 	int		i;
 
-	expanded_value = expand_value(token->value, info);
+	expanded_value = expand_value(token->value, info, cmd);
 	divided_value = divide_by_delimiter(expanded_value, info);
 	i = 0;
 	while (divided_value[i])
@@ -45,7 +45,7 @@ static t_token	*save_redirection(t_info *info, t_cmd *cmd, t_token *token)
 	t_redir			*redir;
 
 	redir = allocate_and_connect_redir(info, cmd);
-	if (is_ambiguous_redir(token->next, info))
+	if (is_ambiguous_redir(token->next, info, cmd))
 		return (redir->type = REDIR_AMB, redir->file = token->next->value, cmd->is_error = 1, token->next);
 	if (token->type == IN)
 		redir->type = REDIR_INPUT;
@@ -53,7 +53,7 @@ static t_token	*save_redirection(t_info *info, t_cmd *cmd, t_token *token)
 		redir->type = REDIR_OUTPUT;
 	else if (token->type == APPEND)
 		redir->type = REDIR_APPEND;
-	redir->file = expand_value(token->next->value, info);
+	redir->file = expand_value(token->next->value, info, cmd);
 	return (token->next);
 }
 
