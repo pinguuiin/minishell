@@ -6,15 +6,14 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:26:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 08:45:34 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:54:35 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-
-typedef	enum e_token_type
+typedef enum e_token_type
 {
 	PIPE,
 	IN,
@@ -24,7 +23,7 @@ typedef	enum e_token_type
 	WORD
 }	t_token_type;
 
-typedef	struct s_token
+typedef struct s_token
 {
 	t_token_type		type;
 	char				*value;

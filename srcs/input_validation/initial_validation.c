@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:51:57 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:56:13 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	is_heredoc_limit_exceeded(const char *input)
 			count++;
 			if (count > 16)
 			{
-				ft_putendl_fd("maximum here-document count exceeded", STDERR_FILENO);
+				ft_putendl_fd("maximum here-document count exceeded", \
+					STDERR_FILENO);
 				arena_free_all(get_info()->arena);
 				exit(1);
 			}
@@ -37,7 +38,8 @@ static void	is_heredoc_limit_exceeded(const char *input)
 // check if a valid token follows a redirection or pipe operator
 static int	has_valid_token_after_operator(const char *input)
 {
-	if ((input[0] == '<' && input[1] == '<') || (input[0] == '>' && input[1] == '>'))
+	if ((input[0] == '<' && input[1] == '<') || \
+	(input[0] == '>' && input[1] == '>'))
 		input += 2;
 	else
 		input += 1;

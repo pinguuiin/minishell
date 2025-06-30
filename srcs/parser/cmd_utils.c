@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:17:22 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:57:17 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	remove_delimiter(char *expanded_value)
 			expanded_value[j++] = expanded_value[i++];
 			while (expanded_value[i] == DELIMITER)
 				i++;
-			continue;
+			continue ;
 		}
 		expanded_value[j++] = expanded_value[i++];
 	}
@@ -102,7 +102,8 @@ char	**divide_by_delimiter(char *value, t_info *info)
 	return (result);
 }
 
-void	check_only_quote_and_del(char *expanded_value, t_cmd *cmd, int in_single_quote, int in_double_quote)
+void	check_only_quote_and_del(char *expanded_value, t_cmd *cmd, \
+	int in_single_quote, int in_double_quote)
 {
 	int	is_quote;
 	int	is_del;

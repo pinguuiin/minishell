@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:06:19 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 08:44:26 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 10:04:43 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	append_token(t_token **head, t_token *tail)
 
 t_token	*create_new_token(t_token_type type, t_info *info)
 {
-	t_token *token = aalloc(&(info->arena), sizeof(t_token));
+	t_token	*token;
+
+	token = aalloc(&(info->arena), sizeof(t_token));
 	if (!token)
 		clean_and_exit("token allocation");
 	token->type = type;

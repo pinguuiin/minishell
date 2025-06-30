@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:42:15 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 10:14:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static t_token	*process_heredoc_token(t_info *info, t_cmd *cmd, t_token *token)
 	return (token->next);
 }
 
-static t_token	*process_redirection_token(t_info *info, t_cmd *cmd, t_token *token)
+static t_token	*process_redirection_token(t_info *info, \
+	t_cmd *cmd, t_token *token)
 {
 	t_redir	*redir;
 	char	*expanded_value;

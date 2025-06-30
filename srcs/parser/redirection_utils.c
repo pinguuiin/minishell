@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:27:36 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:58:40 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
+t_redir	*allocate_and_connect_redir(t_info *info, t_cmd *cmd)
 {
 	t_redir	*new_redir;
 	t_redir	*temp;
@@ -20,7 +20,7 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 	if (!cmd->redirection)
 	{
 		cmd->redirection = aalloc(&(info->arena), sizeof(t_redir));
-		if(!cmd->redirection)
+		if (!cmd->redirection)
 			clean_and_exit("new cmd redir");
 		new_redir = cmd->redirection;
 	}
@@ -28,7 +28,7 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 	{
 		temp = cmd->redirection;
 		new_redir = aalloc(&(info->arena), sizeof(t_redir));
-		if(!new_redir)
+		if (!new_redir)
 			clean_and_exit("cmd redir");
 		while (temp->next != NULL)
 			temp = temp->next;
@@ -51,7 +51,9 @@ int	has_delimiter(const char *expanded_value)
 
 int	is_quoted_heredoc(char *value)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (value[i])
 	{
 		if (value[i] == '\'' || value[i] == '"')

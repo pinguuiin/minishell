@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:47:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:51:43 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 10:03:42 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ static int	tokenize_pipe(int i, t_info *info)
 	return (i + 1);
 }
 
-static int	tokenize_word(const char *input, int i, t_info *info, int in_single_quote, int in_double_quote)
+static int	tokenize_word(const char *input, int i, t_info *info)
 {
 	t_token	*token;
 	int		start_i;
+	int		in_single_quote;
+	int		in_double_quote;
 
+	in_single_quote = 0;
+	in_double_quote = 0;
 	token = create_new_token(WORD, info);
 	start_i = i;
 	while (input[i])
@@ -98,7 +102,7 @@ void	tokenize_elements(const char *input)
 		else
 		{
 			if (input[i] != '\0')
-				i = tokenize_word(input, i, info, 0, 0);
+				i = tokenize_word(input, i, info);
 		}
 	}
 }
