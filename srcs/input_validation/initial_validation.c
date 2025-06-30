@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 02:05:49 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:56:13 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	is_heredoc_limit_exceeded(const char *input)
 			count++;
 			if (count > 16)
 			{
-				ft_putendl_fd("maximum here-document count exceeded", STDERR_FILENO);
+				ft_putendl_fd("maximum here-document count exceeded", \
+					STDERR_FILENO);
 				arena_free_all(get_info()->arena);
 				exit(1);
 			}
@@ -35,14 +36,13 @@ static void	is_heredoc_limit_exceeded(const char *input)
 }
 
 // check if a valid token follows a redirection or pipe operator
-static int	validate_after_operator(const char *input)
+static int	has_valid_token_after_operator(const char *input)
 {
-	const char	*first_operator;
-
-	first_operator = input;
-	input++;
-	if (*first_operator == *input)
-		input++;
+	if ((input[0] == '<' && input[1] == '<') || \
+	(input[0] == '>' && input[1] == '>'))
+		input += 2;
+	else
+		input += 1;
 	while (*input == ' ' || *input == '\t')
 		input++;
 	if (*input == '|' || *input == '<' || *input == '>' || *input == '\0')
@@ -60,13 +60,10 @@ static int	validate_redirections(const char *input)
 	in_double_quote = 0;
 	while (*input)
 	{
-		if (*input == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (*input == '"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else if (!in_single_quote && !in_double_quote \
+		update_quote_state(*input, &in_single_quote, &in_double_quote);
+		if (!in_single_quote && !in_double_quote \
 				&& (*input == '>' || *input == '<'))
-			if (!validate_after_operator(input))
+			if (!has_valid_token_after_operator(input))
 				return (0);
 		input++;
 	}
@@ -74,7 +71,7 @@ static int	validate_redirections(const char *input)
 }
 
 // validate correct use and placement of pipe operators outside of quotes
-static int	validate_operations(const char *input, \
+static int	validate_pipe_syntax(const char *input, \
 	int expect_command, int in_single_quote, int in_double_quote)
 {
 	while (*input)
@@ -107,9 +104,9 @@ static int	validate_operations(const char *input, \
 // runs all syntax validation checks
 int	check_syntax_error(const char *input)
 {
-	if (is_only_spaces(input))
+	if (is_all_whitespace(input))
 		return (1);
-	if (!validate_quotes(input))
+	if (!has_balanced_quotes(input))
 	{
 		ft_putstr_fd("unclosed quote\n", STDERR_FILENO);
 		return (0);
@@ -119,7 +116,7 @@ int	check_syntax_error(const char *input)
 		ft_putstr_fd("invalid redirection\n", STDERR_FILENO);
 		return (0);
 	}
-	if (!validate_operations(input, 1, 0, 0))
+	if (!validate_pipe_syntax(input, 1, 0, 0))
 	{
 		ft_putstr_fd("invalid operator\n", STDERR_FILENO);
 		return (0);

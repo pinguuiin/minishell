@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/28 21:36:48 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:08:32 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
+t_redir	*allocate_and_connect_redir(t_info *info, t_cmd *cmd)
 {
 	t_redir	*new_redir;
 	t_redir	*temp;
@@ -20,7 +20,7 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 	if (!cmd->redirection)
 	{
 		cmd->redirection = aalloc(&(info->arena), sizeof(t_redir));
-		if(!cmd->redirection)
+		if (!cmd->redirection)
 			clean_and_exit("new cmd redir");
 		new_redir = cmd->redirection;
 	}
@@ -28,7 +28,7 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 	{
 		temp = cmd->redirection;
 		new_redir = aalloc(&(info->arena), sizeof(t_redir));
-		if(!new_redir)
+		if (!new_redir)
 			clean_and_exit("cmd redir");
 		while (temp->next != NULL)
 			temp = temp->next;
@@ -38,11 +38,11 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 	return (new_redir);
 }
 
-static int	has_delimiter(const char *expanded_value)
+int	has_delimiter(const char *expanded_value)
 {
 	while (*expanded_value)
 	{
-		if (*expanded_value == 127)
+		if (*expanded_value == DELIMITER)
 			return (1);
 		expanded_value++;
 	}
@@ -51,7 +51,9 @@ static int	has_delimiter(const char *expanded_value)
 
 int	is_quoted_heredoc(char *value)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (value[i])
 	{
 		if (value[i] == '\'' || value[i] == '"')
@@ -61,19 +63,23 @@ int	is_quoted_heredoc(char *value)
 	return (0);
 }
 
-char	*expand_heredoc_value(char *value, t_info *info)
+int	is_only_env(const char *input)
 {
-	int		total_len;
+	int	i;
 
-	total_len = ft_strlen(value);
-	remove_quotes(value, 0, 0);
-	return (value);
-}
-
-int	is_ambiguous_redir(t_token *token, t_info *info, t_cmd *cmd)
-{
-	char	*expanded_value;
-
-	expanded_value = expand_value(token->value, info, cmd);
-	return (has_delimiter(expanded_value));
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '$')
+		{
+			i++;
+			if (input[i] && !(ft_isalpha(input[i]) || input[i] == '_'))
+				return (0);
+			while (input[i] && (ft_isalnum(input[i]) || input[i] == '_'))
+				i++;
+		}
+		else
+			return (0);
+	}
+	return (1);
 }

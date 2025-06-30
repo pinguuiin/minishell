@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/28 05:07:01 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/30 10:16:29 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ typedef struct s_info
 
 }	t_info;
 
-void			init_info(char **envp);
-t_info			*get_info(void);
-void			close_fds(t_cmd *cmds);
-void			exec_exit(char *s1, char *s2, char *s3, int exit_code);
-int				error_msg(char *s1, char *s2, char *s3, int exit_code);
-int				get_return_status(t_info *info, pid_t pid);
+void	init_info(char **envp);
+t_info	*get_info(void);
+void	close_fds(t_cmd *cmds);
+void	exec_exit(char *s1, char *s2, char *s3, int exit_code);
+int		error_msg(char *s1, char *s2, char *s3, int exit_code);
+int		get_return_status(t_info *info, pid_t pid);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 02:24:48 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 07:47:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int	count_envp(char **envp)
 }
 
 char	**copy_envp_entries(char **envp, \
-	char **env_arr, int envp_num, t_info *info)
+	char **env_arr, int envp_count, t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (i < envp_num)
+	while (i < envp_count)
 	{
 		env_arr[i] = aalloc(&(info->arena), ft_strlen(envp[i]) + 1);
 		if (!env_arr[i])
@@ -45,12 +45,12 @@ char	**copy_envp_entries(char **envp, \
 char	**copy_envp(char **envp, t_info *info)
 {
 	char	**env_arr;
-	int		envp_num;
+	int		envp_count;
 
-	envp_num = count_envp(envp);
-	env_arr = aalloc(&(info->arena), (envp_num + 1) * sizeof(char *));
+	envp_count = count_envp(envp);
+	env_arr = aalloc(&(info->arena), (envp_count + 1) * sizeof(char *));
 	if (!env_arr)
 		clean_and_exit("env_arr");
-	env_arr = copy_envp_entries(envp, env_arr, envp_num, info);
+	env_arr = copy_envp_entries(envp, env_arr, envp_count, info);
 	return (env_arr);
 }

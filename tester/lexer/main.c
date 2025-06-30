@@ -4,7 +4,7 @@
 
 const char *token_type_str(t_token_type type) {
     switch (type) {
-        case CMD: return "CMD";
+        case WORD: return "WORD";
         case IN: return "IN";
         case OUT: return "OUT";
         case APPEND: return "APPEND";

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 00:09:40 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 04:42:41 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/30 08:11:20 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ int		executor(t_info *info, t_cmd *cmds);
 char	*arena_strjoin(t_arena **arena_ptr, char const *s1, char const *s2);
 char	**arena_split(t_arena **arena_ptr, char const *s, char c);
 int		redirect(t_redir *redir);
+
 #endif
