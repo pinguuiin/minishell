@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 05:11:38 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/30 04:28:22 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,14 @@ int	error_msg(char *s1, char *s2, char *s3, int exit_code)
 
 void	clean_and_exit(char *err_msg)
 {
+	t_info	*info;
+
+	info = get_info();
+	close_fds(info->cmds);
+	info->exit_code = 1;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	ft_putendl_fd(" :couldn't allocate memory", STDERR_FILENO);
-	arena_free_all(get_info()->arena);
+	arena_free_all(info->arena);
 	exit(1);
 }
