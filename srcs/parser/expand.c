@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 10:10:16 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:20:40 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	compute_expanded_len(char *value)
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
 		if (!in_single_quote && value[i] == '$' && value[i + 1] && \
-			(ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
+			(ft_isalpha(value[i + 1]) || value[i + 1] == '_'))
 			key_len += calculate_env_len(value, i + 1, &value_len);
 		i++;
 	}
@@ -103,7 +103,7 @@ static void	save_expanded_value(char *value, char *expanded)
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
 		if (!in_single_quote && value[i] == '$' && \
-			(ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
+			(ft_isalpha(value[i + 1]) || value[i + 1] == '_'))
 		{
 			i++;
 			save_env_value_with_del(value, expanded, &i, &j);

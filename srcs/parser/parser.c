@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 18:08:03 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:42:45 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	process_word_token(t_info *info, t_cmd *cmd, t_token *token)
 	}
 }
 
-static t_token	*process_heredoc_token(t_info *info, t_cmd *cmd, t_token *token)
+void	process_heredoc_token(t_info *info, t_cmd *cmd, t_token *token)
 {
 	t_redir	*redir;
 
@@ -38,7 +38,6 @@ static t_token	*process_heredoc_token(t_info *info, t_cmd *cmd, t_token *token)
 		redir->type = REDIR_HEREDOC;
 	remove_quotes(token->value);
 	redir->file = token->value;
-	return (token->next);
 }
 
 static t_token	*process_redirection_token(t_info *info, \
@@ -49,8 +48,8 @@ static t_token	*process_redirection_token(t_info *info, \
 
 	redir = allocate_and_connect_redir(info, cmd);
 	expanded_value = expand_value(token->next->value, info, cmd);
-	;
-	if (has_delimiter(expanded_value) || (is_only_env(token->next->value) && !expanded_value[0]))
+	if (has_delimiter(expanded_value) || \
+	(is_only_env(token->next->value) && !expanded_value[0]))
 	{
 		redir->type = REDIR_AMB;
 		redir->file = token->next->value;
@@ -85,7 +84,7 @@ void	parser(t_info *info)
 		else if (token->type == WORD)
 			process_word_token(info, cmd, token);
 		else if (token->type == HEREDOC)
-			token = process_heredoc_token(info, cmd, token);
+			process_heredoc_token(info, cmd, token->next);
 		else
 			token = process_redirection_token(info, cmd, token);
 		token = token->next;
