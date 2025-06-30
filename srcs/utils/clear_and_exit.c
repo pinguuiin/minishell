@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/30 04:28:22 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/30 21:46:28 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ void	close_fds(t_cmd *cmds)
 		}
 		cmds = cmds->next;
 	}
+}
+
+void	silent_exit(int exit_code)
+{
+	get_info()->exit_code = exit_code;
+	close_fds(get_info()->cmds);
+	arena_free_all(get_info()->arena);
+	exit(exit_code);
 }
 
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code)

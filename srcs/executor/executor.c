@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 05:25:36 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/30 20:28:58 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ static void	select_executor(t_info *info, t_cmd *cmds)
 		exit(execute_builtin(info, cmds->argv));
 	else
 		execute_command(info, cmds->argv);
-}
-
-static bool	only_redir(t_cmd *cmds)
-{
-	if (cmds->argv[0] == "\0" && cmds->redirection->file)
-		return (true);
-	return (false);
 }
 
 int	run_single_command(t_info *info, t_cmd *cmds)
@@ -89,6 +82,13 @@ int	run_piped_command(t_info *info, t_cmd *cmds)
 	}
 	else
 		return (error_msg("minishell", NULL, "fork", 1));
+}
+
+static bool	only_redir(t_cmd *cmds)
+{
+	if (cmds->argv[0] == "\0" && cmds->redirection->file)
+		return (true);
+	return (false);
 }
 
 /*Execute command in child process and wait in parent process*/
