@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:16 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/27 02:12:12 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 07:52:13 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	set_key_value(t_env *node, const char *env, \
+static int	init_env_node_fields(t_env *node, const char *env, \
 	const char *equal, t_arena **arena)
 {
 	size_t	key_len;
@@ -30,7 +30,7 @@ static int	set_key_value(t_env *node, const char *env, \
 	return (1);
 }
 
-static t_env	*create_env_node(const char *env, t_arena **arena)
+static t_env	*new_env_node_from_string(const char *env, t_arena **arena)
 {
 	t_env		*node;
 	const char	*equal;
@@ -41,7 +41,7 @@ static t_env	*create_env_node(const char *env, t_arena **arena)
 	equal = ft_strchr(env, '=');
 	if (equal)
 	{
-		if (!set_key_value(node, env, equal, arena))
+		if (!init_env_node_fields(node, env, equal, arena))
 			return (NULL);
 	}
 	else
@@ -68,7 +68,7 @@ t_env	*envp_to_list(char	**envp, t_arena **arena)
 	i = 0;
 	while (envp[i])
 	{
-		new_node = create_env_node(envp[i], arena);
+		new_node = new_env_node_from_string(envp[i], arena);
 		if (!head)
 			head = new_node;
 		else

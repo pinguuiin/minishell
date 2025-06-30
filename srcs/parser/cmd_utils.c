@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/29 13:41:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:17:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,26 @@ void	remove_delimiter(char *expanded_value)
 
 	i = 0;
 	j = 0;
-	while (expanded_value[i] == 127)
+	while (expanded_value[i] == DELIMITER)
 		i++;
 	while (expanded_value[i])
 	{
-		if (expanded_value[i] == 127)
+		if (expanded_value[i] == DELIMITER)
 		{
 			expanded_value[j++] = expanded_value[i++];
-			while (expanded_value[i] == 127)
+			while (expanded_value[i] == DELIMITER)
 				i++;
 			continue;
 		}
 		expanded_value[j++] = expanded_value[i++];
 	}
-	if (expanded_value[j - 1] == 127)
+	if (j > 0 && expanded_value[j - 1] == DELIMITER)
 		expanded_value[j - 1] = '\0';
 	else
 		expanded_value[j] = '\0';
 }
 
-static int	split_cmds(char *str)
+static int	count_tokens_by_delimiter(char *str)
 {
 	int	count;
 	int	in_token;
@@ -47,7 +47,7 @@ static int	split_cmds(char *str)
 	in_token = 0;
 	while (*str)
 	{
-		if (*str == 127)
+		if (*str == DELIMITER)
 			in_token = 0;
 		else if (!in_token)
 		{
@@ -59,7 +59,7 @@ static int	split_cmds(char *str)
 	return (count);
 }
 
-static char	*copy_cmd(char *start, char *end, t_info *info)
+static char	*copy_word(char *start, char *end, t_info *info)
 {
 	int		len;
 	char	*result;
@@ -83,24 +83,26 @@ char	**divide_by_delimiter(char *value, t_info *info)
 
 	i = 0;
 	k = 0;
-	count = split_cmds(value);
+	count = count_tokens_by_delimiter(value);
 	result = aalloc(&(info->arena), sizeof(char *) * (count + 1));
 	if (!result)
-		clean_and_exit("cmds");
+		clean_and_exit("words");
 	while (value[i])
 	{
-		if (value[i] == 127)
+		if (value[i] == DELIMITER)
 			i++;
+		if (!value[i])
+			break ;
 		start = &value[i];
-		while (value[i] && value[i] != 127)
+		while (value[i] && value[i] != DELIMITER)
 			i++;
-		result[k++] = copy_cmd(start, &value[i], info);
+		result[k++] = copy_word(start, &value[i], info);
 	}
 	result[k] = NULL;
 	return (result);
 }
 
-void	has_only_quote_and_del(char *expanded_value, t_cmd *cmd, int in_single_quote, int in_double_quote)
+void	check_only_quote_and_del(char *expanded_value, t_cmd *cmd, int in_single_quote, int in_double_quote)
 {
 	int	is_quote;
 	int	is_del;
@@ -119,7 +121,7 @@ void	has_only_quote_and_del(char *expanded_value, t_cmd *cmd, int in_single_quot
 			in_double_quote = !in_double_quote;
 			is_quote = 1;
 		}
-		else if (*expanded_value == 127)
+		else if (*expanded_value == DELIMITER)
 			is_del = 1;
 		else
 			return ;

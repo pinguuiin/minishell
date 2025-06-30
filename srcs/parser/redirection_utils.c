@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/28 21:36:48 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:27:36 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ t_redir	*allocate_and_connect_redir(t_info *info,t_cmd *cmd)
 	return (new_redir);
 }
 
-static int	has_delimiter(const char *expanded_value)
+int	has_delimiter(const char *expanded_value)
 {
 	while (*expanded_value)
 	{
-		if (*expanded_value == 127)
+		if (*expanded_value == DELIMITER)
 			return (1);
 		expanded_value++;
 	}
@@ -59,21 +59,4 @@ int	is_quoted_heredoc(char *value)
 		i++;
 	}
 	return (0);
-}
-
-char	*expand_heredoc_value(char *value, t_info *info)
-{
-	int		total_len;
-
-	total_len = ft_strlen(value);
-	remove_quotes(value, 0, 0);
-	return (value);
-}
-
-int	is_ambiguous_redir(t_token *token, t_info *info, t_cmd *cmd)
-{
-	char	*expanded_value;
-
-	expanded_value = expand_value(token->value, info, cmd);
-	return (has_delimiter(expanded_value));
 }
