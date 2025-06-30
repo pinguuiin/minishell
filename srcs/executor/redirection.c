@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:39:02 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/30 05:28:27 by piyu             ###   ########.fr       */
+/*   Updated: 2025/06/30 05:48:54 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	write_heredoc_input(char *input, t_redir *redir, int *fd)
 			ft_putstr_fd(heredoc_expand(start, input, &key_len, fd), fd[1]);
 			input += key_len;
 		}
-		if (*input == '$')
+		else if (*input == '$')
 			ft_putchar_fd(*input++, fd[1]);
 	}
 	ft_putchar_fd('\n', fd[1]);
