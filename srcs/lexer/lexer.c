@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:47:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 08:46:45 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:51:43 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,8 @@ static int	tokenize_word(const char *input, int i, t_info *info, int in_single_q
 	start_i = i;
 	while (input[i])
 	{
-		if (input[i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (input[i] == '"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else if (!is_token_breaker(input[i], in_single_quote, in_double_quote))
+		update_quote_state(input[i], &in_single_quote, &in_double_quote);
+		if (!is_token_breaker(input[i], in_single_quote, in_double_quote))
 			break ;
 		i++;
 	}

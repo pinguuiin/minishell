@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 08:05:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:51:57 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,8 @@ static int	validate_redirections(const char *input)
 	in_double_quote = 0;
 	while (*input)
 	{
-		if (*input == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (*input == '"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else if (!in_single_quote && !in_double_quote \
+		update_quote_state(*input, &in_single_quote, &in_double_quote);
+		if (!in_single_quote && !in_double_quote \
 				&& (*input == '>' || *input == '<'))
 			if (!has_valid_token_after_operator(input))
 				return (0);

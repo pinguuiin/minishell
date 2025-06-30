@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:31:11 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 09:51:31 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,8 @@ static int	compute_expanded_len(char *value)
 	in_single_quote = 0;
 	while(value[i])
 	{
-		if (value[i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (value[i] == '"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else if (!in_single_quote && value[i] == '$' && value[i + 1] && (ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
+		update_quote_state(value[i], &in_single_quote, &in_double_quote);
+		if (!in_single_quote && value[i] == '$' && value[i + 1] && (ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
 			key_len += calculate_env_len(value, i + 1, &value_len);
 		i++;
 	}
@@ -100,11 +97,8 @@ static void	save_expanded_value(char *value, char *expanded, t_info *info)
 	in_double_quote = 0;
 	while (value[i])
 	{
-		if (value[i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (value[i] == '"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else if (!in_single_quote && value[i] == '$' && (ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
+		update_quote_state(value[i], &in_single_quote, &in_double_quote);
+		if (!in_single_quote && value[i] == '$' && (ft_isalnum(value[i + 1]) || value[i + 1] == '_'))
 		{
 			i++;
 			save_env_value_with_del(value, expanded, &i, &j, info);
