@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 10:14:52 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:08:03 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static t_token	*process_redirection_token(t_info *info, \
 
 	redir = allocate_and_connect_redir(info, cmd);
 	expanded_value = expand_value(token->next->value, info, cmd);
-	if (has_delimiter(expanded_value))
+	;
+	if (has_delimiter(expanded_value) || (is_only_env(token->next->value) && !expanded_value[0]))
 	{
 		redir->type = REDIR_AMB;
 		redir->file = token->next->value;
