@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:32:56 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 05:08:58 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/01 06:12:39 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	execute_command(t_info *info, char **argv)
 {
 	char	*filepath;
 
+	if (execution_error_check(info, info->cmds))
+		exit(info->exit_code);
 	if (ft_isalpha(argv[0][0]))
 		filepath = find_cmdfile(info, argv[0]);
 	else
