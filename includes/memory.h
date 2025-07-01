@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:16:49 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 07:34:57 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:18:15 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ typedef struct s_arena
 
 t_arena	*arena_create(size_t size);
 void	*aalloc(t_arena **arena_ptr, size_t size);
-void	arena_free_all(t_arena *arena);
+void	arena_free_all();
 
 #endif

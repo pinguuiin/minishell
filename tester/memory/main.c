@@ -62,6 +62,6 @@ int main(void)
     printf("Linked list contents:\n");
     print_list(list);
 
-    arena_free_all(arena);
+    arena_free_all();
     return 0;
 }

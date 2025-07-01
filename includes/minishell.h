@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 07:40:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 16:57:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@
 
 typedef struct s_info
 {
-	t_arena		*arena;
-	t_token		*tokens;
-	t_env		*env_list;
-	t_cmd		*cmds;			// Linked list of piped commands
-	char		**env_arr;
-	int			exit_code;
-	int			cmd_count;		// Number of commands in pipeline
-	int			pipefd[2];
+	t_arena	*arena;
+	t_token	*tokens;
+	t_env	*env_list;
+	t_cmd	*cmds;			// Linked list of piped commands
+	char	**env_arr;
+	char	*input;
+	int		exit_code;
+	int		cmd_count;		// Number of commands in pipeline
+	int		pipefd[2];
 }	t_info;
 
 void	init_info(char **envp);

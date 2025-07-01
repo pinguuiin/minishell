@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:32:41 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/24 22:06:54 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/01 17:15:39 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ int	shell_exit(t_info *info, char **argv)
 	ft_putendl_fd("exit", STDOUT_FILENO); //not print / not exit in pipe?
 	if (!argv[1])
 	{
-		arena_free_all(info->arena);
+		arena_free_all();
 		exit(0);
 	}
 	num = ft_atocode(argv[1]);
 	if (num >= 0 && !argv[2])
 	{
-		arena_free_all(info->arena);
+		arena_free_all();
 		exit(num);
 	}
 	if (num < 0)

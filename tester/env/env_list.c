@@ -20,7 +20,7 @@ int main(void)
 		cur = cur->next;
 	}
 
-	arena_free_all(arena);
+	arena_free_all();
 
 	return 0;
 }

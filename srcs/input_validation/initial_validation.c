@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 05:57:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:23:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	is_heredoc_limit_exceeded(const char *input)
 {
-	int	count;
+	int		count;
 
 	count = 0;
 	while (*input)
@@ -24,9 +24,10 @@ static void	is_heredoc_limit_exceeded(const char *input)
 			count++;
 			if (count > 16)
 			{
+				ft_putstr_fd("minishell: ", STDERR_FILENO);
 				ft_putendl_fd("maximum here-document count exceeded", \
 					STDERR_FILENO);
-				arena_free_all(get_info()->arena);
+				arena_free_all();
 				exit(1);
 			}
 			input++;
@@ -104,8 +105,6 @@ static int	validate_pipe_syntax(const char *input, \
 // runs all syntax validation checks
 int	has_syntax_error(const char *input)
 {
-	if (is_all_whitespace(input))
-		return (0);
 	if (!has_balanced_quotes(input))
 	{
 		ft_putstr_fd("unclosed quote\n", STDERR_FILENO);
