@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 07:56:10 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 08:15:28 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,19 @@ int	is_quoted_heredoc(const char *value)
 	return (0);
 }
 
-int	is_only_env(const char *input)
+int	is_only_env(const char *value)
 {
 	int	i;
 
 	i = 0;
-	while (input[i])
+	while (value[i])
 	{
-		if (input[i] == '$')
+		if (value[i] == '$')
 		{
 			i++;
-			if (input[i] && !(ft_isalpha(input[i]) || input[i] == '_'))
+			if (value[i] && !(ft_isalpha(value[i]) || value[i] == '_'))
 				return (0);
-			while (input[i] && (ft_isalnum(input[i]) || input[i] == '_'))
+			while (value[i] && (ft_isalnum(value[i]) || value[i] == '_'))
 				i++;
 		}
 		else
