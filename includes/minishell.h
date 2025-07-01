@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 10:16:29 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 05:59:39 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ void	close_fds(t_cmd *cmds);
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code);
 int		error_msg(char *s1, char *s2, char *s3, int exit_code);
 int		get_return_status(t_info *info, pid_t pid);
+
+
+int	main(int argc, char **argv, char **envp);
 
 #endif
