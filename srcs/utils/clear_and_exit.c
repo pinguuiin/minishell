@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 05:11:38 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/01 06:26:39 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,19 @@ void	close_fds(t_cmd *cmds)
 			if (cmds->redirection->fd == -1)
 				break ;
 			close(cmds->redirection->fd);
+			cmds->redirection->fd = -1;
 			cmds->redirection = cmds->redirection->next;
 		}
 		cmds = cmds->next;
 	}
+}
+
+void	silent_exit(int exit_code)
+{
+	get_info()->exit_code = exit_code;
+	close_fds(get_info()->cmds);
+	arena_free_all(get_info()->arena);
+	exit(exit_code);
 }
 
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code)
@@ -56,9 +65,14 @@ int	error_msg(char *s1, char *s2, char *s3, int exit_code)
 
 void	clean_and_exit(char *err_msg)
 {
+	t_info	*info;
+
+	info = get_info();
+	close_fds(info->cmds);
+	info->exit_code = 1;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	ft_putendl_fd(" :couldn't allocate memory", STDERR_FILENO);
-	arena_free_all(get_info()->arena);
+	arena_free_all(info->arena);
 	exit(1);
 }

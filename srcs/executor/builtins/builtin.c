@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/27 02:24:56 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 00:11:31 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd(char **argv)
+static int	pwd(char **argv)
 {
 	char	buf[PATH_MAX];
 
@@ -30,7 +30,7 @@ int	pwd(char **argv)
 	return (EXIT_SUCCESS);
 }
 
-int	env(char **argv, char **envp)
+static int	env(char **argv, char **envp)
 {
 	int	i;
 

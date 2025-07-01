@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 05:25:36 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 00:12:51 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ========!Free memory and close fds before exit!========
+// ========!Free memory and readlines; close pipe and fds before exit!========
 
 static void	select_executor(t_info *info, t_cmd *cmds)
 {
@@ -22,14 +22,7 @@ static void	select_executor(t_info *info, t_cmd *cmds)
 		execute_command(info, cmds->argv);
 }
 
-static bool	only_redir(t_cmd *cmds)
-{
-	if (cmds->argv[0] == "\0" && cmds->redirection->file)
-		return (true);
-	return (false);
-}
-
-int	run_single_command(t_info *info, t_cmd *cmds)
+static int	run_single_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
@@ -47,7 +40,7 @@ int	run_single_command(t_info *info, t_cmd *cmds)
 	return (EXIT_FAILURE);
 }
 
-int	run_last_command(t_info *info, t_cmd *cmds)
+static int	run_last_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
@@ -63,7 +56,7 @@ int	run_last_command(t_info *info, t_cmd *cmds)
 	return (EXIT_FAILURE);
 }
 
-int	run_piped_command(t_info *info, t_cmd *cmds)
+static int	run_piped_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 	int		pipefd[2];
@@ -91,7 +84,6 @@ int	run_piped_command(t_info *info, t_cmd *cmds)
 		return (error_msg("minishell", NULL, "fork", 1));
 }
 
-/*Execute command in child process and wait in parent process*/
 int	executor(t_info *info, t_cmd *cmds)
 {
 	// edge cases
@@ -99,8 +91,7 @@ int	executor(t_info *info, t_cmd *cmds)
 		return (run_single_command(info, cmds));
 	while (cmds->next)
 	{
-		if (run_piped_command(info, cmds))
-			return (EXIT_FAILURE);
+		run_piped_command(info, cmds);
 		cmds = cmds->next;
 	}
 	return (run_last_command(info, cmds));

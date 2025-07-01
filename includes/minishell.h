@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 07:40:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 23:31:47 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_info
 	char		**env_arr;
 	int			exit_code;
 	int			cmd_count;		// Number of commands in pipeline
-	int			pipefd[2];
 }	t_info;
 
 void	init_info(char **envp);
@@ -50,6 +49,7 @@ t_info	*get_info(void);
 void	reset_info(void);
 
 void	close_fds(t_cmd *cmds);
+void	silent_exit(int exit_code);
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code);
 int		error_msg(char *s1, char *s2, char *s3, int exit_code);
 void	clean_and_exit(char *err_msg);

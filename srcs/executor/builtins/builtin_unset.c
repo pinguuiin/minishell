@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 23:58:24 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/24 21:55:00 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 00:10:34 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_update_env(char **envp, int i)
+static void	unset_update_env(char **envp, int i)
 {
 	while (envp[i])
 	{

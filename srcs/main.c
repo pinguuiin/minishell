@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/01 07:46:51 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 23:57:05 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	run_shell_loop(t_info *info)
 		if (!input)
 		{
 			info->exit_code = 1;
-			break ;
+			break ; //exit
 		}
 		if (!input[0] && has_syntax_error(input))
 		{
