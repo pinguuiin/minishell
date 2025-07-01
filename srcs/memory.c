@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/28 05:10:59 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/01 07:32:50 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,5 @@ void	arena_free_all(t_arena *arena)
 		free(arena->memory);
 		free(arena);
 		arena = next;
-	}
-	if (info->input)
-	{
-		free(info->input);
-		info->input = NULL;
 	}
 }
