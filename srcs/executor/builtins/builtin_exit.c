@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:32:41 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/30 21:50:54 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 00:09:58 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_atocode(char *s)
+static int	ft_atocode(char *s)
 {
 	long long	num;
 	int			sign;

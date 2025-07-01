@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/01 06:09:28 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 00:12:51 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	select_executor(t_info *info, t_cmd *cmds)
 		execute_command(info, cmds->argv);
 }
 
-int	run_single_command(t_info *info, t_cmd *cmds)
+static int	run_single_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
@@ -40,7 +40,7 @@ int	run_single_command(t_info *info, t_cmd *cmds)
 	return (EXIT_FAILURE);
 }
 
-int	run_last_command(t_info *info, t_cmd *cmds)
+static int	run_last_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
@@ -56,7 +56,7 @@ int	run_last_command(t_info *info, t_cmd *cmds)
 	return (EXIT_FAILURE);
 }
 
-int	run_piped_command(t_info *info, t_cmd *cmds)
+static int	run_piped_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 	int		pipefd[2];
