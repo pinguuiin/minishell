@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 01:45:12 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 01:57:06 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ static void	run_shell_loop(t_info *info)
 		info->input = readline("minishell$ ");
 		if (!(info->input))
 			clean_and_exit("user input");
-		if (!((info->input)[0]))
+		if (!input[0] && has_syntax_error(input))
 		{
-			free(info->input);
+			if (has_syntax_error(input))
+				add_history(input);
+			free(input);
+			input = NULL;
 			continue ;
 		}
 		add_history(info->input);

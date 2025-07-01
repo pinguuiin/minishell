@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 00:09:40 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/30 08:11:20 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 23:36:21 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		export(char **argv, char ***envp);
 int		shell_exit(t_info *info, char **argv);
 int		execute_builtin(t_info *info, char **argv);
 void	execute_command(t_info *info, char **argv);
+int		execution_error_check(t_info *info, t_cmd *cmds);
 int		executor(t_info *info, t_cmd *cmds);
 char	*arena_strjoin(t_arena **arena_ptr, char const *s1, char const *s2);
 char	**arena_split(t_arena **arena_ptr, char const *s, char c);

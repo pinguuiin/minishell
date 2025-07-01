@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 17:18:24 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 02:08:04 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*aalloc(t_arena **arena_ptr, size_t size)
 	return (new_chunk->memory);
 }
 
-void	arena_free_all()
+void	arena_free_all(void)
 {
 	t_info	*info;
 	t_arena	*arena;
