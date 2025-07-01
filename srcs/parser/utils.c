@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 05:44:20 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 06:27:01 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmd	*allocate_and_connect_cmd(t_info *info, t_cmd *cmd)
 {
 	t_cmd	*new_cmd;
 
-	(info->cmd_num)++;
+	(info->cmd_count)++;
 	new_cmd = aalloc(&(info->arena), sizeof(t_cmd));
 	if (!new_cmd)
 		clean_and_exit("new cmd");
