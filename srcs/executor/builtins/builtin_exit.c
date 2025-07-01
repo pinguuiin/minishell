@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:32:41 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 00:09:58 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 02:03:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	shell_exit(t_info *info, char **argv)
 {
 	int	num;
 
-	if (info->cmd_num == 1)
+	if (info->cmd_count == 1)
 		ft_putendl_fd("exit", STDOUT_FILENO);
 	if (!argv[1])
 		silent_exit(0);

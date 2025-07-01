@@ -27,6 +27,6 @@ int main(int argc, char **argv, char **envp)
             printf("✅ Match at index %d: %s\n", i, envp[i]);
         }
     }
-    arena_free_all(info.arena);
+    arena_free_all();
     return 0;
 }

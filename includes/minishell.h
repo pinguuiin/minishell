@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 23:31:47 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 01:56:24 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@
 
 typedef struct s_info
 {
-	t_arena		*arena;
-	t_token		*tokens;
-	t_env		*env_list;
-	t_cmd		*cmds;			// Linked list of piped commands
-	char		**env_arr;
-	int			exit_code;
-	int			cmd_count;		// Number of commands in pipeline
+	t_arena	*arena;
+	t_token	*tokens;
+	t_env	*env_list;
+	t_cmd	*cmds;			// Linked list of piped commands
+	char	**env_arr;
+	char	*input;
+	int		exit_code;
+	int		cmd_count;		// Number of commands in pipeline
 }	t_info;
 
 void	init_info(char **envp);

@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 06:27:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 18:42:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*allocate_and_connect_cmd(t_info *info, t_cmd *cmd)
+t_cmd	*allocate_and_connect_cmd(t_cmd *cmd, t_info *info)
 {
 	t_cmd	*new_cmd;
 
@@ -36,7 +36,7 @@ static char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 	env_name = aalloc(&(info->arena), i - start_i + 2);
 	if (!env_name)
 		clean_and_exit("env name");
-	strlcpy(env_name, &value[start_i], i - start_i + 2);
+	ft_strlcpy(env_name, &value[start_i], i - start_i + 2);
 	return (env_name);
 }
 
@@ -86,7 +86,7 @@ void	remove_quotes(char *value)
 	value[j] = '\0';
 }
 
-void	add_to_argv(t_cmd *cmd, char *expanded_value, t_info *info)
+void	add_to_argv(char *expanded_value, t_cmd *cmd, t_info *info)
 {
 	int		count;
 	char	**new_argv;

@@ -41,7 +41,8 @@ int main(int argc, char **argv, char **envp)
 		printf("syntax error detected");
 		return (1);
 	}
-	tokenize_elements(input);
+	info->input = input;
+	tokenize_elements(info);
 	parser(info);
 
 	print_cmds(info->cmds);

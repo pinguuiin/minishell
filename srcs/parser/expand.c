@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 05:43:07 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 08:08:55 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char	*expand_value(const char *value, t_info *info, t_cmd *cmd)
 	if (!expanded_value)
 		clean_and_exit("expanded value");
 	save_expanded_value(value, expanded_value);
-	check_only_quote_and_del(expanded_value, cmd, 0, 0);
+	check_only_quote_and_del(expanded_value, 0, 0, cmd);
 	remove_quotes(expanded_value);
 	remove_delimiter(expanded_value);
 	return (expanded_value);
