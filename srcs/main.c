@@ -6,15 +6,14 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/01 07:11:59 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 07:46:51 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_input(char *input, t_info *info)
+static void	process_input(const char *input, t_info *info)
 {
-	t_token	*tokens;
 	t_cmd	*cmds;
 
 	envp_to_list(info->env_arr, &(info->arena));
@@ -61,5 +60,4 @@ int	main(int argc, char **argv, char **envp)
 	info = get_info();
 	run_shell_loop(info);
 	arena_free_all(info->arena);
-	//free memory; close fd; clear rl history; return exit code
 }

@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **envp)
 	init_info(envp);
 	info = get_info();
 	info->env_list = envp_to_list(envp,&(info->arena));
-	if (!check_syntax_error(input))
+	if (has_syntax_error(input))
 	{
 		printf("syntax error detected");
 		return (1);
