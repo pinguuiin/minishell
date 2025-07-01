@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/30 21:46:28 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/01 06:26:39 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	close_fds(t_cmd *cmds)
 			if (cmds->redirection->fd == -1)
 				break ;
 			close(cmds->redirection->fd);
+			cmds->redirection->fd = -1;
 			cmds->redirection = cmds->redirection->next;
 		}
 		cmds = cmds->next;
