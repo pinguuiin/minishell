@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 05:18:05 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 05:27:43 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	parser(t_info *info)
 			process_word_token(info, cmd, token);
 		else if (token->type == HEREDOC)
 			process_heredoc_token(info, cmd, token->next);
-		else
+		else if (token->type == IN || token->type == OUT \
+			|| token->type == APPEND)
 			token = process_redirection_token(info, cmd, token);
 		token = token->next;
 	}
