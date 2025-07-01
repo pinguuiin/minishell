@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:56:13 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 05:57:06 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,25 +102,25 @@ static int	validate_pipe_syntax(const char *input, \
 }
 
 // runs all syntax validation checks
-int	check_syntax_error(const char *input)
+int	has_syntax_error(const char *input)
 {
 	if (is_all_whitespace(input))
-		return (1);
+		return (0);
 	if (!has_balanced_quotes(input))
 	{
 		ft_putstr_fd("unclosed quote\n", STDERR_FILENO);
-		return (0);
+		return (1);
 	}
 	if (!validate_redirections(input))
 	{
 		ft_putstr_fd("invalid redirection\n", STDERR_FILENO);
-		return (0);
+		return (1);
 	}
 	if (!validate_pipe_syntax(input, 1, 0, 0))
 	{
 		ft_putstr_fd("invalid operator\n", STDERR_FILENO);
-		return (0);
+		return (1);
 	}
 	is_heredoc_limit_exceeded(input);
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 12:42:45 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 06:26:51 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ void	parser(t_info *info)
 	t_cmd		*cmd;
 
 	token = info->tokens;
-	(info->cmd_num)++;
+	(info->cmd_count)++;
 	cmd = aalloc(&(info->arena), sizeof(t_cmd));
 	if (!cmd)
 		clean_and_exit("cmd");
+	ft_memset(cmd, 0, sizeof(t_cmd));
 	info->cmds = cmd;
 	while (token)
 	{
@@ -85,7 +86,8 @@ void	parser(t_info *info)
 			process_word_token(info, cmd, token);
 		else if (token->type == HEREDOC)
 			process_heredoc_token(info, cmd, token->next);
-		else
+		else if (token->type == IN || token->type == OUT \
+			|| token->type == APPEND)
 			token = process_redirection_token(info, cmd, token);
 		token = token->next;
 	}

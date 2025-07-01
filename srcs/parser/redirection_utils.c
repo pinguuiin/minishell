@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 18:08:32 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 05:43:45 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	has_delimiter(const char *expanded_value)
 	return (0);
 }
 
-int	is_quoted_heredoc(char *value)
+int	is_quoted_heredoc(const char *value)
 {
 	int	i;
 

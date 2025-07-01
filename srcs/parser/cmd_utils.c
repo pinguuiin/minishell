@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 09:57:17 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 05:45:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	remove_delimiter(char *expanded_value)
 		expanded_value[j] = '\0';
 }
 
-static int	count_tokens_by_delimiter(char *str)
+static int	count_tokens_by_delimiter(const char *str)
 {
 	int	count;
 	int	in_token;
@@ -59,7 +59,7 @@ static int	count_tokens_by_delimiter(char *str)
 	return (count);
 }
 
-static char	*copy_word(char *start, char *end, t_info *info)
+static char	*copy_word(const char *start, const char *end, t_info *info)
 {
 	int		len;
 	char	*result;
@@ -102,7 +102,7 @@ char	**divide_by_delimiter(char *value, t_info *info)
 	return (result);
 }
 
-void	check_only_quote_and_del(char *expanded_value, t_cmd *cmd, \
+void	check_only_quote_and_del(const char *expanded_value, t_cmd *cmd, \
 	int in_single_quote, int in_double_quote)
 {
 	int	is_quote;

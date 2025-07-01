@@ -3,51 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 04:38:15 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/01 07:11:59 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_input(t_info *info, char *input)
+static void	process_input(char *input, t_info *info)
 {
 	t_token	*tokens;
 	t_cmd	*cmds;
 
-	tokens = lex_input(input);
-	if (!tokens)
-		return ;
-	cmds = parse_tokens(tokens);
-	if (!cmds)
-		return ;
+	envp_to_list(info->env_arr, &(info->arena));
+	tokenize_elements(input);
+	parser(info);
 	executor(info, cmds);
 	close_fds(cmds);
 }
 
 static void	run_shell_loop(t_info *info)
 {
+	char	*input;
 	while (1)
 	{
-		info->exit_code = 0;
-		info->input = readline("minishell$ ");
-		if (!info->input)
+		reset_info();
+		input = readline("minishell$ ");
+		if (!input)
 		{
 			info->exit_code = 1;
 			break ;
 		}
-		if (!*info->input)
+		if (!input[0] && has_syntax_error(input))
 		{
-			free(info->input);
-			info->input = NULL;
+			if (has_syntax_error(input))
+				add_history(input);
+			free(input);
+			input = NULL;
 			continue ;
 		}
-		add_history(info->input);
-		process_input(info, info->input);
-		free(info->input);
-		info->input = NULL;
+		add_history(input);
+		process_input(input, info);
+		free(input);
+		input = NULL;
 	}
 }
 
@@ -60,5 +60,6 @@ int	main(int argc, char **argv, char **envp)
 	init_info(envp);
 	info = get_info();
 	run_shell_loop(info);
+	arena_free_all(info->arena);
 	//free memory; close fd; clear rl history; return exit code
 }

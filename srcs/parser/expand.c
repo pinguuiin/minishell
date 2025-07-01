@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 18:20:40 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 05:43:07 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	calculate_env_len(char *value, int i, int *value_len)
+static int	calculate_env_len(const char *value, int i, int *value_len)
 {
 	int		key_len;
 	t_info	*info;
@@ -35,7 +35,7 @@ static int	calculate_env_len(char *value, int i, int *value_len)
 	return (key_len);
 }
 
-static int	compute_expanded_len(char *value)
+static int	compute_expanded_len(const char *value)
 {
 	int	i;
 	int	value_len;
@@ -59,7 +59,7 @@ static int	compute_expanded_len(char *value)
 	return (i + value_len - key_len);
 }
 
-static void	save_env_value_with_del(char *value, char *expanded, \
+static void	save_env_value_with_del(const char *value, char *expanded, \
 	int *i, int *j)
 {
 	t_env	*env_list;
@@ -88,7 +88,7 @@ static void	save_env_value_with_del(char *value, char *expanded, \
 	}
 }
 
-static void	save_expanded_value(char *value, char *expanded)
+static void	save_expanded_value(const char *value, char *expanded)
 {
 	int		i;
 	int		j;
@@ -114,7 +114,7 @@ static void	save_expanded_value(char *value, char *expanded)
 	expanded[j] = '\0';
 }
 
-char	*expand_value(char *value, t_info *info, t_cmd *cmd)
+char	*expand_value(const char *value, t_info *info, t_cmd *cmd)
 {
 	int		total_value_len;
 	char	*expanded_value;
