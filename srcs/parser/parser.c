@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 12:42:45 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 05:18:05 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	parser(t_info *info)
 	cmd = aalloc(&(info->arena), sizeof(t_cmd));
 	if (!cmd)
 		clean_and_exit("cmd");
+	ft_memset(cmd, 0, sizeof(t_cmd));
 	info->cmds = cmd;
 	while (token)
 	{
