@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 06:26:51 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 07:58:55 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_word_token(t_info *info, t_cmd *cmd, t_token *token)
+static void	process_word_token(t_token *token, t_cmd *cmd, t_info *info)
 {
 	char	*expanded_value;
 	char	**divided_value;
@@ -23,15 +23,15 @@ static void	process_word_token(t_info *info, t_cmd *cmd, t_token *token)
 	i = 0;
 	while (divided_value[i])
 	{
-		add_to_argv(cmd, divided_value[i++], info);
+		add_to_argv(divided_value[i++], cmd, info);
 	}
 }
 
-void	process_heredoc_token(t_info *info, t_cmd *cmd, t_token *token)
+void	process_heredoc_token(t_token *token, t_cmd *cmd, t_info *info)
 {
 	t_redir	*redir;
 
-	redir = allocate_and_connect_redir(info, cmd);
+	redir = allocate_and_connect_redir(cmd, info);
 	if (is_quoted_heredoc(token->value))
 		redir->type = REDIR_HEREDOC_QUOTE;
 	else
@@ -40,13 +40,13 @@ void	process_heredoc_token(t_info *info, t_cmd *cmd, t_token *token)
 	redir->file = token->value;
 }
 
-static t_token	*process_redirection_token(t_info *info, \
-	t_cmd *cmd, t_token *token)
+static t_token	*process_redirection_token(t_token *token, \
+	t_cmd *cmd, t_info *info)
 {
 	t_redir	*redir;
 	char	*expanded_value;
 
-	redir = allocate_and_connect_redir(info, cmd);
+	redir = allocate_and_connect_redir(cmd, info);
 	expanded_value = expand_value(token->next->value, info, cmd);
 	if (has_delimiter(expanded_value) || \
 	(is_only_env(token->next->value) && !expanded_value[0]))
@@ -81,14 +81,14 @@ void	parser(t_info *info)
 	while (token)
 	{
 		if (token->type == PIPE)
-			cmd = allocate_and_connect_cmd(info, cmd);
+			cmd = allocate_and_connect_cmd(cmd, info);
 		else if (token->type == WORD)
-			process_word_token(info, cmd, token);
+			process_word_token(token, cmd, info);
 		else if (token->type == HEREDOC)
-			process_heredoc_token(info, cmd, token->next);
+			process_heredoc_token(token->next, cmd, info);
 		else if (token->type == IN || token->type == OUT \
 			|| token->type == APPEND)
-			token = process_redirection_token(info, cmd, token);
+			token = process_redirection_token(token, cmd, info);
 		token = token->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:47:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 10:03:42 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 07:58:21 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,10 @@ static int	tokenize_word(const char *input, int i, t_info *info)
 	return (i);
 }
 
-void	tokenize_elements(const char *input)
+void	tokenize_elements(const char *input, t_info *info)
 {
 	int		i;
-	t_info	*info;
 
-	info = get_info();
 	i = 0;
 	while (input[i])
 	{

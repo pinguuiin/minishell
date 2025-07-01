@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 06:27:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 07:57:26 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*allocate_and_connect_cmd(t_info *info, t_cmd *cmd)
+t_cmd	*allocate_and_connect_cmd(t_cmd *cmd, t_info *info)
 {
 	t_cmd	*new_cmd;
 
@@ -86,7 +86,7 @@ void	remove_quotes(char *value)
 	value[j] = '\0';
 }
 
-void	add_to_argv(t_cmd *cmd, char *expanded_value, t_info *info)
+void	add_to_argv(char *expanded_value, t_cmd *cmd, t_info *info)
 {
 	int		count;
 	char	**new_argv;

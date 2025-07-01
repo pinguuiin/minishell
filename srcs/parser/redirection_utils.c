@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 05:43:45 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/01 07:56:10 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir	*allocate_and_connect_redir(t_info *info, t_cmd *cmd)
+t_redir	*allocate_and_connect_redir(t_cmd *cmd, t_info *info)
 {
 	t_redir	*new_redir;
 	t_redir	*temp;
