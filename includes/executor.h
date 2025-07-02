@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 00:09:40 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/01 23:36:21 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 05:24:28 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		executor(t_info *info, t_cmd *cmds);
 char	*arena_strjoin(t_arena **arena_ptr, char const *s1, char const *s2);
 char	**arena_split(t_arena **arena_ptr, char const *s, char c);
 int		redirect(t_redir *redir);
+int		open_heredoc(t_redir *redir);
 
 #endif

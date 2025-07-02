@@ -30,12 +30,12 @@ SRCS =	main.c \
 		executor/builtins/builtin_unset.c \
 		executor/builtins/builtin.c \
 		executor/exec_error_check.c \
-		executor/utils.c \
+		executor/exec_utils.c \
 		executor/execute_command.c \
 		executor/executor.c \
 		executor/heredoc.c \
 		executor/redirection.c \
-		executor/signals.c
+		executor/signals.c \
 		utils/clear_and_exit.c \
 		utils/info.c \
 		utils/memory.c
@@ -62,7 +62,7 @@ $(LIBFT):
 	@make --no-print-directory -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(HEADER_DIR) -c $< -o $@
 	@echo "$(BYELLOW) Compiled $< $(RESET_COLOR)"
 
