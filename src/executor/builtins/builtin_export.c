@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 01:18:06 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 20:22:31 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 21:02:19 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	export_arg(t_info *info, char *s, char ***envp)
 
 	key_len = 0;
 	new_envp = *envp;
-	key = trim_env_key(s, key_len);
+	key = trim_env_key(s, &key_len);
 	if (!key)
 		clean_and_exit("export");
 	i = get_env_ind(info->env_arr, key);
