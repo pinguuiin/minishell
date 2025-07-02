@@ -9,3 +9,4 @@ libft.a
 *.o
 .vscode
 .DS_Store
+minishell

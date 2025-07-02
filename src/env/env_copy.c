@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 07:47:22 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 11:21:43 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_envp(char **envp)
 }
 
 char	**copy_envp_entries(char **envp, \
-	char **env_arr, int envp_count, t_info *info)
+char **env_arr, int envp_count, t_info *info)
 {
 	int	i;
 

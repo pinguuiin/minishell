@@ -6,14 +6,14 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:16 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 07:52:13 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 11:21:51 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	init_env_node_fields(t_env *node, const char *env, \
-	const char *equal, t_arena **arena)
+const char *equal, t_arena **arena)
 {
 	size_t	key_len;
 

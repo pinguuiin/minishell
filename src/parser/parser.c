@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 07:58:55 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 11:25:45 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	process_heredoc_token(t_token *token, t_cmd *cmd, t_info *info)
 }
 
 static t_token	*process_redirection_token(t_token *token, \
-	t_cmd *cmd, t_info *info)
+t_cmd *cmd, t_info *info)
 {
 	t_redir	*redir;
 	char	*expanded_value;
@@ -49,7 +49,7 @@ static t_token	*process_redirection_token(t_token *token, \
 	redir = allocate_and_connect_redir(cmd, info);
 	expanded_value = expand_value(token->next->value, info, cmd);
 	if (has_delimiter(expanded_value) || \
-	(is_only_env(token->next->value) && !expanded_value[0]))
+(is_only_env(token->next->value) && !expanded_value[0]))
 	{
 		redir->type = REDIR_AMB;
 		redir->file = token->next->value;
@@ -87,7 +87,7 @@ void	parser(t_info *info)
 		else if (token->type == HEREDOC)
 			process_heredoc_token(token->next, cmd, info);
 		else if (token->type == IN || token->type == OUT \
-			|| token->type == APPEND)
+|| token->type == APPEND)
 			token = process_redirection_token(token, cmd, info);
 		token = token->next;
 	}

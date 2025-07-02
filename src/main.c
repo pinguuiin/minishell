@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 04:24:32 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 11:21:24 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static void	run_shell_loop(t_info *info)
 			continue ;
 		}
 		add_history(info->input);
-		if (is_all_whitespace(info->input) || has_syntax_error(info->input))
+		if (is_all_whitespace(info->input) \
+|| has_syntax_error(info->input, info))
 		{
 			free(info->input);
 			continue ;

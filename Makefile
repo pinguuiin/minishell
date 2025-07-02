@@ -10,8 +10,8 @@ NAME = minishell
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 
-SRC_DIR = srcs
-SRCS =	main.c \
+SRC_DIR = src
+SRC =	main.c \
 		env/env_copy.c \
 		env/env_list.c \
 		input_validation/initial_validation.c \
@@ -40,8 +40,8 @@ SRCS =	main.c \
 		utils/info.c \
 		utils/memory.c
 
-OBJ_DIR = objs
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJ_DIR = obj
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 HEADERS = includes/minishell.h includes/env.h includes/executor.h \
 			includes/lexer.h includes/libft.h includes/memory.h \
@@ -53,7 +53,7 @@ LIBFT = libft/libft.a
 LIBFT_DIR = ./libft
 LIBFT_GIT = git@github.com:hyun-1324/libft.git
 
-.SECONDARY: $(OBJS)
+.SECONDARY: $(OBJ)
 
 all: $(NAME)
 
@@ -66,8 +66,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	$(CC) $(FLAGS) $(HEADER_DIR) -c $< -o $@
 	@echo "$(BYELLOW) Compiled $< $(RESET_COLOR)"
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBS) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(FLAGS) $(OBJ) $(LIBS) -o $(NAME)
 	@echo "$(BGREEN) Linked $(RESET_COLOR)"
 
 clean:
