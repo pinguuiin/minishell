@@ -20,6 +20,7 @@ SRC =	main.c \
 		lexer/utils.c \
 		parser/cmd_utils.c \
 		parser/expand.c \
+		parser/expand_utils.c \
 		parser/parser.c \
 		parser/redirection_utils.c \
 		parser/utils.c \
@@ -38,7 +39,9 @@ SRC =	main.c \
 		executor/signals.c \
 		utils/clear_and_exit.c \
 		utils/info.c \
-		utils/memory.c
+		utils/memory.c \
+		tester.c \
+
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

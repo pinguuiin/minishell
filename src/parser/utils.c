@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 18:42:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 21:11:13 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 	env_name = aalloc(&(info->arena), i - start_i + 2);
 	if (!env_name)
 		clean_and_exit("env name");
-	ft_strlcpy(env_name, &value[start_i], i - start_i + 2);
+	ft_strlcpy(env_name, &value[start_i], i - start_i + 1);
 	return (env_name);
 }
 

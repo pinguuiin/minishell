@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 01:56:24 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 15:29:45 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "executor.h"
+# include "tester.h"
 
 typedef struct s_info
 {
