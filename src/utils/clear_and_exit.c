@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 05:25:38 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/03 00:04:09 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,26 @@ void	close_fds(t_cmd *cmds)
 
 void	silent_exit(int exit_code)
 {
-	get_info()->exit_code = exit_code;
-	close_fds(get_info()->cmds);
+	t_info	*info;
+
+	info = get_info();
+	info->exit_code = exit_code;
+	close_fds(info->cmds);
+	close(info->fd_stdio[0]);
+	close(info->fd_stdio[1]);
 	arena_free_all();
 	exit(exit_code);
 }
 
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code)
 {
+	t_info	*info;
+
+	info = get_info();
 	error_msg(s1, s2, s3, exit_code);
-	close_fds(get_info()->cmds);
+	close_fds(info->cmds);
+	close(info->fd_stdio[0]);
+	close(info->fd_stdio[1]);
 	arena_free_all();
 	exit(exit_code);
 }
@@ -68,8 +78,10 @@ void	clean_and_exit(char *err_msg)
 	t_info	*info;
 
 	info = get_info();
-	close_fds(info->cmds);
 	info->exit_code = 1;
+	close_fds(info->cmds);
+	close(info->fd_stdio[0]);
+	close(info->fd_stdio[1]);
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	ft_putendl_fd(" :couldn't allocate memory", STDERR_FILENO);

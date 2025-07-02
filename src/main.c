@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 21:09:21 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 22:51:43 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static void	process_input(t_info *info)
 	print_cmds(info->cmds);
 	executor(info, info->cmds);
 	close_fds(info->cmds);
+	dup2(info->fd_stdio[0], STDIN_FILENO);
+	dup2(info->fd_stdio[1], STDOUT_FILENO);
 }
 
 static void	run_shell_loop(t_info *info)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 19:36:24 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 22:52:00 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	init_info(char **envp)
 	t_info	*info;
 
 	info = get_info();
+	info->fd_stdio[0] = dup(STDIN_FILENO);
+	info->fd_stdio[1] = dup(STDOUT_FILENO);
 	info->arena = arena_create(ARENA_BLOCK_SIZE);
 	info->env_arr = copy_envp(envp, info);
 }
