@@ -20,7 +20,6 @@ SRCS = \
 	ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
 OBJS = $(SRCS:.c=.o)
 AR = ar rcs
-INCLUDES = -I../includes
 RM = rm -f
 
 .SECONDARY: $(OBJS)
@@ -29,8 +28,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		$(AR) $(NAME) $^
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+%.o: %.c libft.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 		$(RM) $(OBJS)

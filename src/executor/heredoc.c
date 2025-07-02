@@ -6,15 +6,30 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:46:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 01:35:41 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 19:27:36 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*trim_env_key(char *s, int *key_len)
+{
+	char	*key;
+
+	*key_len = 0;
+	while (ft_isalnum(s[*key_len]) || s[*key_len] == '_')
+		(*key_len)++;
+	key = aalloc(&get_info()->arena, (*key_len) + 1);
+	if (!key)
+		return (NULL);
+	ft_strlcpy(key, s, (*key_len));
+	key[*key_len] = '\0';
+	return (key);
+}
+
 static void	write_expansion(char *start, char *input, int *key_len, int *fd)
 {
-	char	*env_var;
+	char	*key;
 	char	*ptr;
 
 	if (ft_strncmp(input, "?", 1))
@@ -24,18 +39,14 @@ static void	write_expansion(char *start, char *input, int *key_len, int *fd)
 		*key_len = 1;
 		return ;
 	}
-	while (ft_isalnum(input[*key_len]) || input[*key_len] == '_')
-		(*key_len)++;
-	env_var = aalloc(&get_info()->arena, (*key_len) + 1);
-	if (env_var == NULL)
+	key = trim_env_key(input, key_len);
+	if (!key)
 	{
 		close(fd[1]);
 		free(start);
 		clean_and_exit("heredoc");
 	}
-	ft_strlcpy(env_var, input, (*key_len));
-	env_var[*key_len] = '\0';
-	ptr = get_info()->env_arr[get_env_ind(get_info()->env_arr, env_var)];
+	ptr = get_info()->env_arr[get_env_ind(get_info()->env_arr, key)];
 	if (ptr && ft_strchr(ptr, '='))
 		ft_putstr_fd(ptr + *key_len + 1, fd[1]);
 }

@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 01:18:06 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 04:57:23 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 20:22:31 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ static int	print_export(char **envp)
 
 	i = -1;
 	envp_cpy = copy_envp(envp, get_info());
-	if (!envp_cpy)
-		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
 	sort_export(envp_cpy);
 	while (++i < count_envp(envp_cpy))
 	{
@@ -61,7 +59,7 @@ static int	print_export(char **envp)
 		}
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 static bool	is_valid_name(char *s)
@@ -77,22 +75,32 @@ static bool	is_valid_name(char *s)
 	return (true);
 }
 
-static void	export_arg(char *s, char ***envp)
+static void	export_arg(t_info *info, char *s, char ***envp)
 {
+	int		i;
 	int		len;
-	t_info	*info;
+	int		key_len;
+	char	*key;
 	char	**new_envp;
 
-	info = get_info();
+	key_len = 0;
+	new_envp = *envp;
+	key = trim_env_key(s, key_len);
+	if (!key)
+		clean_and_exit("export");
+	i = get_env_ind(info->env_arr, key);
 	len = count_envp(*envp);
-	new_envp = aalloc(&info->arena, (len + 2) * sizeof(char *));
-	if (!new_envp)
-		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
-	new_envp = copy_envp_entries(*envp, new_envp, len, info);
-	new_envp[len] = arena_strjoin(&info->arena, s, "");
-	if (!new_envp[len])
-		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
-	new_envp[len + 1] = NULL;
+	if (!info->env_arr[i])
+	{
+		new_envp = aalloc(&info->arena, (len + 2) * sizeof(char *));
+		if (!new_envp)
+			clean_and_exit("export");
+		new_envp = copy_envp_entries(*envp, new_envp, len, info);
+		new_envp[len + 1] = NULL;
+	}
+	new_envp[i] = arena_strjoin(&info->arena, s, "");
+	if (!new_envp[i])
+		clean_and_exit("export");
 	*envp = new_envp;
 }
 
@@ -114,7 +122,7 @@ int	export(char **argv, char ***envp)
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 			info->exit_code = 1;
 		}
-		export_arg(argv[i], envp);
+		export_arg(info, argv[i], envp);
 		i++;
 	}
 	return (info->exit_code);

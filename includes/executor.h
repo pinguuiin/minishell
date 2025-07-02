@@ -6,13 +6,14 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 00:09:40 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 05:24:28 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 19:14:15 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
+char	*trim_env_key(char *s, int *key_len);
 int		get_env_ind(char **envp, char *name);
 bool	is_builtin(t_cmd *cmds);
 int		cd(char **argv, char **envp);
