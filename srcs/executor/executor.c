@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 00:12:51 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 06:06:30 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	run_single_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
+	if (execution_error_check(info, cmds))
+		return (EXIT_FAILURE);
 	if (redirect(cmds->redirection))
 		return (EXIT_FAILURE);
 	if (is_builtin(cmds))
@@ -44,6 +46,8 @@ static int	run_last_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
+	if (execution_error_check(info, cmds))
+		return (EXIT_FAILURE);
 	if (redirect(cmds->redirection))
 		return (EXIT_FAILURE);
 	pid = fork();
@@ -56,11 +60,14 @@ static int	run_last_command(t_info *info, t_cmd *cmds)
 	return (EXIT_FAILURE);
 }
 
+//return type might need fix
 static int	run_piped_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 	int		pipefd[2];
 
+	if (execution_error_check(info, cmds))
+		return (EXIT_FAILURE);
 	if (redirect(cmds->redirection))
 		return (EXIT_FAILURE);
 	if (pipe(pipefd) == -1)
@@ -72,12 +79,14 @@ static int	run_piped_command(t_info *info, t_cmd *cmds)
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		select_executor(info, cmds);
+		return (EXIT_FAILURE);
 	}
 	else if (pid > 0)
 	{
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
+		get_return_status(info, pid);
 		return (EXIT_SUCCESS);
 	}
 	else

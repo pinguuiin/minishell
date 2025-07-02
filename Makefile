@@ -1,86 +1,84 @@
-RED =		\033[0;31m
-GREEN =		\033[0;32m
-YELLOW =	\033[0;33m
-RESETCOLOR =	\033[0m
+BRED = \033[1;31m
+BGREEN = \033[1;32m
+BYELLOW=\033[1;33m
+BBLUE = \033[1;34m
+BPURPLE = \033[1;35m
+RESET_COLOR = \033[0m
 
-NAME =		minishell
+NAME = minishell
 
-CC =		cc
-CFLAGS +=	-Wall -Wextra -Werror -g
+CC = cc
+FLAGS = -Wall -Wextra -Werror -g
 
-SRC_DIR =	src/
+SRC_DIR = srcs
 SRCS =	main.c \
-				info.c \
-				memory.c \
-				signal.c \
-				clear_and_exit.c \
-				env/env_copy.c \
-				env/env_list.c \
-				input_validation/initial_validation.c \
-				input_validation/validation_utils.c \
-				lexer/lexer.c \
-				lexer/utils.c \
-				parser/utils.c \
-				parser/cmd_utils.c \
-				parser/redirection_utils.c \
-				parser/expand.c \
-				parser/parser.c \
-				executor/builtin.c \
-				executor/builtin_cd.c \
-				executor/builtin_echo.c \
-				executor/builtin_unset.c \
-				executor/builtin_export.c \
-				executor/builtin_exit.c \
-				executor/execute_command.c \
-				executor/executor.c \
-				executor/redirection.c \
+		env/env_copy.c \
+		env/env_list.c \
+		input_validation/initial_validation.c \
+		input_validation/validation_utils.c \
+		lexer/lexer.c \
+		lexer/utils.c \
+		parser/cmd_utils.c \
+		parser/expand.c \
+		parser/parser.c \
+		parser/redirection_utils.c \
+		parser/utils.c \
+		executor/builtins/builtin_cd.c \
+		executor/builtins/builtin_echo.c \
+		executor/builtins/builtin_exit.c \
+		executor/builtins/builtin_export.c \
+		executor/builtins/builtin_unset.c \
+		executor/builtins/builtin.c \
+		executor/exec_error_check.c \
+		executor/exec_utils.c \
+		executor/execute_command.c \
+		executor/executor.c \
+		executor/heredoc.c \
+		executor/redirection.c \
+		executor/signals.c \
+		utils/clear_and_exit.c \
+		utils/info.c \
+		utils/memory.c
 
+OBJ_DIR = objs
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
-OBJ_DIR =	objs/
-OBJS =		$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
+HEADERS = includes/minishell.h includes/env.h includes/executor.h \
+			includes/lexer.h includes/libft.h includes/memory.h \
+			includes/parser.h includes/validation.h
+HEADER_DIR = -I./includes
 
-HEADERS =	includes/minishell.h includes/executor.h
-HEADERS_PATH = -I./includes -I./libft/includes
-
-
-LIBS =		-lreadline -lm -L./libft -lft
-LIBFT =		libft/libft.a
+LIBS = -lreadline -L./libft -lft
+LIBFT = libft/libft.a
 LIBFT_DIR = ./libft
 LIBFT_GIT = git@github.com:hyun-1324/libft.git
-
 
 .SECONDARY: $(OBJS)
 
 all: $(NAME)
 
 $(LIBFT):
-	@if [ ! -d "$(LIBFT_DIR)" ]; then \
-		git clone $(LIBFT_GIT) $(LIBFT_DIR); \
-	fi
-	@make -C $(LIBFT_DIR)
+	@if [ ! -d "$(LIBFT_DIR)" ]; then git clone $(LIBFT_GIT) $(LIBFT_DIR); fi
+	@make --no-print-directory -C $(LIBFT_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@mkdir -p $(dir $@)
-	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(HEADERS_PATH) -c $< -o $@
+	$(CC) $(FLAGS) $(HEADER_DIR) -c $< -o $@
+	@echo "$(BYELLOW) Compiled $< $(RESET_COLOR)"
 
 $(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
-	@echo "$(GREEN)Minishell: Compilation complete!$(RESETCOLOR)"
+	$(CC) $(FLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	@echo "$(BGREEN) Linked $(RESET_COLOR)"
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@if [ -d "$(LIBFT_DIR)" ]; then \
-		make -C $(LIBFT_DIR) clean; \
-	fi
-	@echo "$(YELLOW)Minishell: Clean complete.$(RESETCOLOR)"
+	if [ -d "$(OBJ_DIR)" ]; then rm -rf $(OBJ_DIR); fi
+	@if [ -d "$(LIBFT_DIR)" ]; then make clean -C $(LIBFT_DIR); fi
+	@echo "$(BBLUE) Cleaned .o files $(RESET_COLOR)"
 
 fclean: clean
-	@if [ -d "$(LIBFT_DIR)" ]; then \
-		make -C $(LIBFT_DIR) fclean; \
-	fi
-	@rm -rf $(OBJ_DIR) $(LIBFT_DIR) $(NAME)
-	@echo "$(YELLOW) Minishell: FClean complete.$(RESETCOLOR)"
+	@if [ -d "$(LIBFT_DIR)" ]; then make fclean -C $(LIBFT_DIR); fi
+	rm -f $(LIBFT_DIR) $(NAME)
+	@echo "$(BPURPLE) Cleaned all $(RESET_COLOR)"
 
 re: fclean all
 

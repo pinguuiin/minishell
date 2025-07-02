@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 01:56:58 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 05:25:38 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	silent_exit(int exit_code)
 {
 	get_info()->exit_code = exit_code;
 	close_fds(get_info()->cmds);
-	arena_free_all(get_info()->arena);
+	arena_free_all();
 	exit(exit_code);
 }
 

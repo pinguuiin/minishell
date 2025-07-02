@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 06:06:27 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/01 06:08:06 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 06:23:15 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static bool	is_directory(t_cmd *cmds)
 {
 	struct stat	buf;
 
+	if (cmds->argv[0] && cmds->argv[0][0] != '/')
+		return (false);
 	if (stat(cmds->argv[0], &buf))
 		return (error_msg("minishell", NULL, "stat", 1));
 	if (S_ISDIR(buf.st_mode))
@@ -61,7 +63,7 @@ static bool	is_directory(t_cmd *cmds)
 
 int	execution_error_check(t_info *info, t_cmd *cmds)
 {
-	if (cmds->redirection->type == REDIR_AMB)
+	if (cmds->redirection && cmds->redirection->type == REDIR_AMB)
 		return (error_msg("minishell", cmds->redirection->file,
 				"ambiguous redirect", 1));
 	if (cmds->argv == NULL || has_empty_string(info, cmds)

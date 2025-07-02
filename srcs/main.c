@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 02:28:16 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 04:24:32 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 static void	process_input(t_info *info)
 {
-	t_cmd	*cmds;
-
 	envp_to_list(info->env_arr, &(info->arena));
 	tokenize_elements(info);
 	parser(info);
-	executor(info, cmds);
-	close_fds(cmds);
+	executor(info, info->cmds);
+	close_fds(info->cmds);
 }
 
 static void	run_shell_loop(t_info *info)

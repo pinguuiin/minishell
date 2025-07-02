@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 01:18:06 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/25 00:59:19 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 04:57:23 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	export_arg(char *s, char ***envp)
 	new_envp = aalloc(&info->arena, (len + 2) * sizeof(char *));
 	if (!new_envp)
 		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
-	new_envp = copy_envp_entries(envp, new_envp, len, info);
+	new_envp = copy_envp_entries(*envp, new_envp, len, info);
 	new_envp[len] = arena_strjoin(&info->arena, s, "");
 	if (!new_envp[len])
 		exec_exit("minishell", "export", "Couldn't allocate memory", 1);
