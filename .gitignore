@@ -6,7 +6,9 @@
 *.txt
 a.out
 libft.a
-*.o
-.vscode
 .DS_Store
 minishell
+in
+out
+LICENSE
+README.md

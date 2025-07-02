@@ -48,9 +48,9 @@ OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 HEADERS = includes/minishell.h includes/env.h includes/executor.h \
-			includes/lexer.h includes/libft.h includes/memory.h \
-			includes/parser.h includes/validation.h
-HEADER_DIR = -I./includes
+			includes/lexer.h includes/memory.h includes/parser.h \
+			includes/validation.h
+HEADER_DIR = -I./includes -I$(LIBFT_DIR)
 
 LIBS = -lreadline -L./libft -lft
 LIBFT = libft/libft.a
@@ -81,7 +81,7 @@ clean:
 
 fclean: clean
 	@if [ -d "$(LIBFT_DIR)" ]; then make fclean -C $(LIBFT_DIR); fi
-	rm -f $(LIBFT_DIR) $(NAME)
+	rm -rf $(LIBFT_DIR) $(NAME)
 	@echo "$(BPURPLE) Cleaned all $(RESET_COLOR)"
 
 re: fclean all
