@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 08:08:55 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 11:25:22 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	compute_expanded_len(const char *value)
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
 		if (!in_single_quote && value[i] == '$' && value[i + 1] && \
-			(ft_isalpha(value[i + 1]) || value[i + 1] == '_'))
+(ft_isalpha(value[i + 1]) || value[i + 1] == '_'))
 			key_len += calculate_env_len(value, i + 1, &value_len);
 		i++;
 	}
@@ -60,7 +60,7 @@ static int	compute_expanded_len(const char *value)
 }
 
 static void	save_env_value_with_del(const char *value, char *expanded, \
-	int *i, int *j)
+int *i, int *j)
 {
 	t_env	*env_list;
 	int		k;
@@ -103,7 +103,7 @@ static void	save_expanded_value(const char *value, char *expanded)
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
 		if (!in_single_quote && value[i] == '$' && \
-			(ft_isalpha(value[i + 1]) || value[i + 1] == '_'))
+(ft_isalpha(value[i + 1]) || value[i + 1] == '_'))
 		{
 			i++;
 			save_env_value_with_del(value, expanded, &i, &j);

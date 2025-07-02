@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:06:19 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/30 10:04:43 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 11:24:30 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ t_token	*create_new_token(t_token_type type, t_info *info)
 int	is_token_breaker(char c, int in_single_quote, int in_double_quote)
 {
 	return (!((c == ' ' || c == '\t' || c == '<' || c == '>' || c == '|') \
-	&& !in_single_quote && !in_double_quote));
+&& !in_single_quote && !in_double_quote));
 }
