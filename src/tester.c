@@ -1,8 +1,6 @@
-
 #include "minishell.h"
-#include <stdio.h>
 
-const char *token_type_str(t_token_type type) {
+static const char *token_type_str(t_token_type type) {
     switch (type) {
         case WORD: return "WORD";
         case IN: return "IN";
@@ -23,18 +21,28 @@ void print_tokens(t_token *token) {
     }
 }
 
-int main(void) {
-    t_info	*info;
+static void	print_redirs(t_redir *redir)
+{
+	while (redir)
+	{
+		printf("    [Redirection] type: %d, file: %s\n", redir->type, redir->file);
+		redir = redir->next;
+	}
+}
 
-	info = get_info();
+void	print_cmds(t_cmd *cmd)
+{
+	int i = 0;
+	while (cmd)
+	{
+		printf("[Command %d]\n", i++);
+		for (int j = 0; cmd->argv && cmd->argv[j]; j++)
+			printf("  argv[%d]: %s\n", j, cmd->argv[j]);
 
-    char *input = "echo \"$USER\" $USER \'$USER\' $%FSD";
+		if (cmd->redirection)
+			print_redirs(cmd->redirection);
 
-	info->input = input;
-
-    tokenize_elements(info);
-
-    print_tokens(info->tokens);
-
-    return 0;
+		printf("  is_error: %d\n", cmd->is_error);
+		cmd = cmd->next;
+	}
 }

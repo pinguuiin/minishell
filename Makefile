@@ -38,7 +38,9 @@ SRC =	main.c \
 		executor/signals.c \
 		utils/clear_and_exit.c \
 		utils/info.c \
-		utils/memory.c
+		utils/memory.c \
+		tester.c \
+
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

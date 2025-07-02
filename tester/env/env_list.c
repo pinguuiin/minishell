@@ -1,17 +1,14 @@
 #include "minishell.h"
 #include <stdio.h>
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
-	t_arena *arena = arena_create(ARENA_BLOCK_SIZE);
-	char *test_envp[] = {
-		"PATH=/usr/bin",
-		"USER=testuser",
-		"EMPTYVAR=",
-		"KEYONLY",
-		NULL
-	};
-	t_env *env_list = envp_to_list(test_envp, &arena);
+    t_info info;
+    info.arena = arena_create(ARENA_BLOCK_SIZE);
+	(void)argc;
+	(void)argv;
+	 copy_envp(envp, &info);
+	t_env *env_list = envp_to_list(envp, &(info.arena));
 	t_env *cur = env_list;
 
 	while (cur)

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/01 16:59:20 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 19:36:24 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void	reset_info(void)
 	info->env_list = NULL;
 	info->cmds = NULL;
 	info->input = NULL;
-	info->exit_code = 0;
 	info->cmd_count = 0;
 }
