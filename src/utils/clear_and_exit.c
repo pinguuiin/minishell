@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 18:33:16 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/03 00:04:09 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	silent_exit(int exit_code)
 
 	info = get_info();
 	info->exit_code = exit_code;
-	close_fds(get_info()->cmds);
+	close_fds(info->cmds);
 	close(info->fd_stdio[0]);
 	close(info->fd_stdio[1]);
 	arena_free_all();
