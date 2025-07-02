@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 11:25:45 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 20:58:00 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	process_word_token(t_token *token, t_cmd *cmd, t_info *info)
 	char	**divided_value;
 	int		i;
 
-	expanded_value = expand_value(token->value, info, cmd);
+	expanded_value = expand_value(token->value, cmd, info);
 	divided_value = divide_by_delimiter(expanded_value, info);
 	i = 0;
 	while (divided_value[i])
@@ -27,7 +27,7 @@ static void	process_word_token(t_token *token, t_cmd *cmd, t_info *info)
 	}
 }
 
-void	process_heredoc_token(t_token *token, t_cmd *cmd, t_info *info)
+static t_token	*process_heredoc_token(t_token *token, t_cmd *cmd, t_info *info)
 {
 	t_redir	*redir;
 
@@ -38,6 +38,7 @@ void	process_heredoc_token(t_token *token, t_cmd *cmd, t_info *info)
 		redir->type = REDIR_HEREDOC;
 	remove_quotes(token->value);
 	redir->file = token->value;
+	return (token);
 }
 
 static t_token	*process_redirection_token(t_token *token, \
@@ -47,7 +48,7 @@ t_cmd *cmd, t_info *info)
 	char	*expanded_value;
 
 	redir = allocate_and_connect_redir(cmd, info);
-	expanded_value = expand_value(token->next->value, info, cmd);
+	expanded_value = expand_value(token->next->value, cmd, info);
 	if (has_delimiter(expanded_value) || \
 (is_only_env(token->next->value) && !expanded_value[0]))
 	{
@@ -85,7 +86,7 @@ void	parser(t_info *info)
 		else if (token->type == WORD)
 			process_word_token(token, cmd, info);
 		else if (token->type == HEREDOC)
-			process_heredoc_token(token->next, cmd, info);
+			token = process_heredoc_token(token->next, cmd, info);
 		else if (token->type == IN || token->type == OUT \
 || token->type == APPEND)
 			token = process_redirection_token(token, cmd, info);

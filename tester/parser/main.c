@@ -29,8 +29,8 @@ void	print_cmds(t_cmd *cmd)
 int main(int argc, char **argv, char **envp)
 {
     t_info	*info;
-	char	*input = "echo \"$USER\"";
-//	char	*input = "echo 'hello world' | < $a > $USER << sdfg >> dsfg | > abc$ | def ghi | < abc ls -la | \"$abcde\" | $var | < $dfsghdfsg | < \"\" ";
+	// char	*input = "echo $USER";
+	char	*input = "echo 'hello world' | < $a > $USER << sdfg >> dsfg | > abc$ | def ghi | < abc ls -la | \"$abcde\" | $var | < $dfsghdfsg | < \"\" ";
 
 	(void)argc;
 	(void)argv;

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 11:31:18 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 20:49:09 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*has_valid_token_after_pipe(char *input)
 	input++;
 	while (*input == ' ' || *input == '\t')
 		input++;
-	if (*input == '|' || *input == '<' || *input == '>' || *input == '\0')
+	if (*input == '|' || *input == '\0')
 		return (input);
 	return (NULL);
 }

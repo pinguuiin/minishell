@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 16:49:41 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/02 21:09:21 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	process_input(t_info *info)
 {
-	envp_to_list(info->env_arr, &(info->arena));
+	info->env_list = envp_to_list(info->env_arr, &(info->arena));
 	tokenize_elements(info);
 	print_tokens(info->tokens);
 	parser(info);
