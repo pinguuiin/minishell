@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 22:51:29 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/02 22:55:29 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-# include "libft.h"
+# include "../libft/libft.h"
 # include "memory.h"
 # include "validation.h"
 # include "env.h"
