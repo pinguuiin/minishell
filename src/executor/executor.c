@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 22:35:30 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/03 17:11:19 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 static void	select_executor(t_info *info, t_cmd *cmds)
 {
+	if (redirect(cmds->redirection))
+		exit(info->exit_code);
+	if (execution_error_check(info, cmds))
+		exit(info->exit_code);
 	if (is_builtin(cmds))
 		exit(execute_builtin(info, cmds->argv));
 	else
@@ -26,18 +30,19 @@ static int	run_single_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
-	if (execution_error_check(info, cmds))
-		return (EXIT_FAILURE);
-	if (redirect(cmds->redirection))
-		return (EXIT_FAILURE);
 	if (is_builtin(cmds))
+	{
+		if (redirect(cmds->redirection))
+			return (info->exit_code);
+		if (execution_error_check(info, cmds))
+			return (info->exit_code);
 		return (execute_builtin(info, cmds->argv));
-	//printf("here!\n"); //
+	}
 	pid = fork();
 	if (pid == -1)
 		return (error_msg("minishell", NULL, "fork", 1));
 	else if (pid == 0)
-		execute_command(info, cmds->argv);
+		select_executor(info, cmds);
 	else
 		return (get_return_status(info, pid));
 	return (EXIT_FAILURE);
@@ -47,10 +52,6 @@ static int	run_last_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
 
-	if (execution_error_check(info, cmds))
-		return (EXIT_FAILURE);
-	if (redirect(cmds->redirection))
-		return (EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
 		return (error_msg("minishell", NULL, "fork", 1));
@@ -67,8 +68,6 @@ static int	run_piped_command(t_info *info, t_cmd *cmds)
 	pid_t	pid;
 	int		pipefd[2];
 
-	if (execution_error_check(info, cmds))
-		return (EXIT_FAILURE);
 	if (pipe(pipefd) == -1)
 		return (error_msg("minishell", NULL, "pipe", 1));
 	pid = fork();
@@ -77,8 +76,6 @@ static int	run_piped_command(t_info *info, t_cmd *cmds)
 		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
-		if (redirect(cmds->redirection))
-			exit(info->exit_code);
 		select_executor(info, cmds);
 		return (EXIT_FAILURE);
 	}
