@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:46:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 19:27:36 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/04 01:04:00 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ char	*trim_env_key(char *s, int *key_len)
 	key = aalloc(&get_info()->arena, (*key_len) + 1);
 	if (!key)
 		return (NULL);
-	ft_strlcpy(key, s, (*key_len));
-	key[*key_len] = '\0';
+	ft_strlcpy(key, s, (*key_len) + 1);
 	return (key);
 }
 
@@ -32,7 +31,7 @@ static void	write_expansion(char *start, char *input, int *key_len, int *fd)
 	char	*key;
 	char	*ptr;
 
-	if (ft_strncmp(input, "?", 1))
+	if (ft_strncmp(input, "?", 1) == 0)
 	{
 		ft_putnbr_fd(get_info()->exit_code, fd[1]);
 		get_info()->exit_code = 0;
@@ -67,7 +66,8 @@ static void	write_heredoc_input(char *input, t_redir *redir, int *fd)
 		key_len = 0;
 		while (*input && *input != '$')
 			ft_putchar_fd(*input++, fd[1]);
-		if (*input == '$' && (ft_isalnum(*(input + 1)) || *(input + 1) == '_'))
+		if (*input == '$' && (ft_isalnum(*(input + 1)) ||
+		*(input + 1) == '_' || *(input + 1) == '?'))
 		{
 			input++;
 			write_expansion(start, input, &key_len, fd);
