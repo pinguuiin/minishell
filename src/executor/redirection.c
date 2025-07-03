@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:39:02 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 22:41:07 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/03 17:33:34 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int	redirect(t_redir *redir)
 	fd[1] = STDOUT_FILENO;
 	while (redir)
 	{
+		if (redir->type == REDIR_AMB)
+			return (error_msg("minishell", redir->file,
+					"ambiguous redirect", 1));
 		if (open_file(redir) == -1)
 			return (EXIT_FAILURE);
 		if (redir->type == REDIR_OUTPUT || redir->type == REDIR_APPEND)
