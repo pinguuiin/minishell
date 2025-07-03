@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 06:06:27 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/03 17:28:44 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/03 23:22:58 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,17 @@ static bool	has_empty_string(t_info *info, t_cmd *cmds)
 {
 	int	is_empty;
 
+	// if (cmds->argv == NULL)
+	// 	printf("IS NULL\n");
+	// else if (cmds->argv[0] == NULL)
+	// 	printf("argv[0] Is Null\n");
+	// else if (cmds->argv[0][0] == '\0')
+	// 	printf("argv[0][0] is null\n");
+	// else
+	// 	printf("None of them\n");
+	// return (true);
 	is_empty = 0;
-	if (ft_strncmp(cmds->argv[0], "", ft_strlen(cmds->argv[0])) == 0)
+	if (!cmds->argv)
 		is_empty = 1;
 	if (is_empty && cmds->is_error)
 	{
@@ -49,11 +58,7 @@ static bool	is_directory(t_cmd *cmds)
 {
 	struct stat	buf;
 
-	if (cmds->argv[0] && cmds->argv[0][0] != '/' && cmds->argv[0][0] != '.')
-		return (false);
-	if (stat(cmds->argv[0], &buf))
-		return (error_msg("minishell", NULL, "stat", 1));
-	if (S_ISDIR(buf.st_mode))
+	if (stat(cmds->argv[0], &buf) == 0 && S_ISDIR(buf.st_mode))
 	{
 		error_msg("minishell", cmds->argv[0], "Is a directory", 126);
 		return (true);
@@ -63,8 +68,8 @@ static bool	is_directory(t_cmd *cmds)
 
 int	execution_error_check(t_info *info, t_cmd *cmds)
 {
-	if (cmds->argv == NULL || has_empty_string(info, cmds)
-		|| has_only_dots(info, cmds) || is_directory(cmds))
+	if (has_empty_string(info, cmds) || has_only_dots(info, cmds)
+	|| is_directory(cmds))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

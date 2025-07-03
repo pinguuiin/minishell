@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 00:11:31 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/03 22:45:28 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ bool	is_builtin(t_cmd *cmds)
 {
 	char	*cmd;
 
+	if (!cmds->argv)
+		return (false);
 	cmd = cmds->argv[0];
 	if (ft_strncmp(cmd, "echo", 5) == 0 || ft_strncmp(cmd, "cd", 3) == 0
 		|| ft_strncmp(cmd, "pwd", 4) == 0 || ft_strncmp(cmd, "export", 7) == 0
