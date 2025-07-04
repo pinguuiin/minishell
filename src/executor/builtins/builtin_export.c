@@ -79,18 +79,16 @@ static void	export_arg(t_info *info, char *s, char ***envp)
 {
 	int		i;
 	int		len;
-	int		key_len;
 	char	*key;
 	char	**new_envp;
 
-	key_len = 0;
 	new_envp = *envp;
-	key = trim_env_key(s, &key_len);
+	key = trim_env_key(s);
 	if (!key)
 		clean_and_exit("export");
-	i = get_env_ind(info->env_arr, key);
+	i = get_env_ind(*envp, key);
 	len = count_envp(*envp);
-	if (!info->env_arr[i])
+	if (!(*envp)[i])
 	{
 		new_envp = aalloc(&info->arena, (len + 2) * sizeof(char *));
 		if (!new_envp)
@@ -98,7 +96,8 @@ static void	export_arg(t_info *info, char *s, char ***envp)
 		new_envp = copy_envp_entries(*envp, new_envp, len, info);
 		new_envp[len + 1] = NULL;
 	}
-	new_envp[i] = arena_strjoin(&info->arena, s, "");
+	if (!(*envp)[i] || ft_strchr(s, '='))
+		new_envp[i] = arena_strjoin(&info->arena, s, "");
 	if (!new_envp[i])
 		clean_and_exit("export");
 	*envp = new_envp;

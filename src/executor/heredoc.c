@@ -12,17 +12,18 @@
 
 #include "minishell.h"
 
-char	*trim_env_key(char *s, int *key_len)
+char	*trim_env_key(char *s)
 {
+	int		key_len;
 	char	*key;
 
-	*key_len = 0;
-	while (ft_isalnum(s[*key_len]) || s[*key_len] == '_')
-		(*key_len)++;
-	key = aalloc(&get_info()->arena, (*key_len) + 1);
+	key_len = 0;
+	while (ft_isalnum(s[key_len]) || s[key_len] == '_')
+		key_len++;
+	key = aalloc(&get_info()->arena, key_len + 1);
 	if (!key)
 		return (NULL);
-	ft_strlcpy(key, s, (*key_len) + 1);
+	ft_strlcpy(key, s, key_len + 1);
 	return (key);
 }
 
@@ -38,13 +39,14 @@ static void	write_expansion(char *start, char *input, int *key_len, int *fd)
 		*key_len = 1;
 		return ;
 	}
-	key = trim_env_key(input, key_len);
+	key = trim_env_key(input);
 	if (!key)
 	{
 		close(fd[1]);
 		free(start);
 		clean_and_exit("heredoc");
 	}
+	*key_len = ft_strlen(key);
 	ptr = get_info()->env_arr[get_env_ind(get_info()->env_arr, key)];
 	if (ptr && ft_strchr(ptr, '='))
 		ft_putstr_fd(ptr + *key_len + 1, fd[1]);
