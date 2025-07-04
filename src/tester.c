@@ -41,8 +41,6 @@ void	print_cmds(t_cmd *cmd)
 
 		if (cmd->redirection)
 			print_redirs(cmd->redirection);
-
-		printf("  is_error: %d\n", cmd->is_error);
 		cmd = cmd->next;
 	}
 }
