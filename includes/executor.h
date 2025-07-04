@@ -13,7 +13,7 @@
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-char	*trim_env_key(char *s, int *key_len);
+char	*trim_env_key(char *s);
 int		get_env_ind(char **envp, char *name);
 bool	is_builtin(t_cmd *cmds);
 int		cd(char **argv, char **envp);

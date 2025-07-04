@@ -25,16 +25,13 @@ static bool	has_empty_string(t_info *info, t_cmd *cmds)
 	// else
 	// 	printf("None of them\n");
 	// return (true);
-	is_empty = 0;
 	if (!cmds->argv)
-		is_empty = 1;
-	if (is_empty && cmds->is_error)
+		return (true);
+	if (cmds->argv[0][0] == '\0')
 	{
 		ft_putendl_fd("Command '' not found", STDERR_FILENO);
 		return (info->exit_code = 127, true);
 	}
-	else if (is_empty && !cmds->is_error)
-		return (true);
 	return (false);
 }
 

@@ -14,7 +14,7 @@
 
 static int	pwd(char **argv, char **envp)
 {
-	char	buf[PATH_MAX];
+	char	*buf;
 
 	if (argv[1] && argv[1][0] == '-' && argv[1][1])
 	{
@@ -27,12 +27,14 @@ static int	pwd(char **argv, char **envp)
 		ft_putendl_fd(buf + 4, STDOUT_FILENO);
 		return (EXIT_SUCCESS);
 	}
-	if (!getcwd(buf, sizeof(buf)))
+	buf = getcwd(NULL, 0);
+	if (!buf)
 	{
 		perror("pwd");
 		return (126);
 	}
 	ft_putendl_fd(buf, STDOUT_FILENO);
+	free(buf);
 	return (EXIT_SUCCESS);
 }
 

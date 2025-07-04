@@ -16,9 +16,9 @@ static void	process_input(t_info *info)
 {
 	info->env_list = envp_to_list(info->env_arr, &(info->arena));
 	tokenize_elements(info);
-	// print_tokens(info->tokens);
+	print_tokens(info->tokens);
 	parser(info);
-	// print_cmds(info->cmds);
+	print_cmds(info->cmds);
 	executor(info, info->cmds);
 	close_fds(info->cmds);
 	dup2(info->fd_stdio[0], STDIN_FILENO);
