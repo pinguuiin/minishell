@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 21:58:25 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 10:13:02 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,21 @@ static void	save_expanded_value(const char *value, char *expanded)
 char	*expand_value(const char *value, t_cmd *cmd, t_info *info)
 {
 	int		total_value_len;
+	int		empty_str_num;
 	char	*expanded_value;
+	char	*empty_str;
 
 	total_value_len = compute_expanded_len(value, 0, 0, info);
 	expanded_value = aalloc(&(info->arena), total_value_len + 1);
 	if (!expanded_value)
 		clean_and_exit("expanded value");
 	save_expanded_value(value, expanded_value);
-	check_only_quote_and_del(expanded_value, 0, 0, cmd);
+	empty_str_num = is_empty_string(expanded_value, 0, 0, cmd);
+	if (empty_str_num)
+	{
+		empty_str = get_empty_string(empty_str_num, info);
+		return (empty_str);
+	}
 	remove_quotes(expanded_value);
 	remove_delimiter(expanded_value);
 	return (expanded_value);

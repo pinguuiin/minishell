@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 16:21:13 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 09:54:37 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,34 +100,4 @@ char	**divide_by_delimiter(char *value, t_info *info)
 	}
 	result[k] = NULL;
 	return (result);
-}
-
-void	check_only_quote_and_del(const char *expanded_value, \
-int in_single_quote, int in_double_quote, t_cmd *cmd)
-{
-	int	is_quote;
-	int	is_del;
-
-	is_quote = 0;
-	is_del = 0;
-	while (*expanded_value)
-	{
-		if (*expanded_value == '\'' && !in_double_quote)
-		{
-			in_single_quote = !in_single_quote;
-			is_quote = 1;
-		}
-		else if (*expanded_value == '"' && !in_single_quote)
-		{
-			in_double_quote = !in_double_quote;
-			is_quote = 1;
-		}
-		else if (*expanded_value == DELIMITER)
-			is_del = 1;
-		else
-			return ;
-		expanded_value++;
-	}
-	if (is_quote && is_del)
-		cmd->is_error = 1;
 }

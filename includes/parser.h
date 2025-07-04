@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 21:58:03 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 10:12:36 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ void	save_env_value_with_del(const char *value, char *expanded, \
 int *i, int *j);
 void	remove_delimiter(char *expanded_value);
 char	**divide_by_delimiter(char *value, t_info *info);
-void	check_only_quote_and_del(const char *expanded_value, \
+int		is_empty_string(const char *expanded_value, \
 int in_single_quote, int in_double_quote, t_cmd *cmd);
+char	*get_empty_string(int empty_str_num, t_info *info);
 t_redir	*allocate_and_connect_redir(t_cmd *cmd, t_info *info);
 int		is_quoted_heredoc(const char *value);
 int		has_delimiter(const char *expanded_value);
 int		itoa_len(int n);
-int		is_only_env(const char *value);
+int		has_only_env(const char *value);
 t_cmd	*allocate_and_connect_cmd(t_cmd *cmd, t_info *info);
 t_env	*find_env_by_name(const char *value, int i, t_info *info);
 void	remove_quotes(char *value);
