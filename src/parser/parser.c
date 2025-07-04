@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 20:58:00 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/03 21:08:34 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	process_word_token(t_token *token, t_cmd *cmd, t_info *info)
 	divided_value = divide_by_delimiter(expanded_value, info);
 	i = 0;
 	while (divided_value[i])
-	{
 		add_to_argv(divided_value[i++], cmd, info);
-	}
+	if (cmd->argv == NULL && !is_only_env(token->value))
+		cmd->is_error = 1;
 }
 
 static t_token	*process_heredoc_token(t_token *token, t_cmd *cmd, t_info *info)
