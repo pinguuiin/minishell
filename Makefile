@@ -21,6 +21,7 @@ SRC =	main.c \
 		parser/cmd_utils.c \
 		parser/expand.c \
 		parser/expand_utils.c \
+		parser/empty_value_utils.c \
 		parser/parser.c \
 		parser/redirection_utils.c \
 		parser/utils.c \

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 21:20:07 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 12:08:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	is_quoted_heredoc(const char *value)
 	return (0);
 }
 
-int	is_only_env(const char *value)
+int	has_only_env(const char *value)
 {
 	int	i;
 

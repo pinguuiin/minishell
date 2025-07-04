@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/03 21:08:34 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 12:08:45 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ static void	process_word_token(t_token *token, t_cmd *cmd, t_info *info)
 	int		i;
 
 	expanded_value = expand_value(token->value, cmd, info);
-	divided_value = divide_by_delimiter(expanded_value, info);
+	divided_value = divide_by_delimiter(expanded_value, info, 0, 0, 0);
 	i = 0;
 	while (divided_value[i])
 		add_to_argv(divided_value[i++], cmd, info);
-	if (cmd->argv == NULL && !is_only_env(token->value))
-		cmd->is_error = 1;
 }
 
 static t_token	*process_heredoc_token(t_token *token, t_cmd *cmd, t_info *info)
@@ -49,8 +47,8 @@ t_cmd *cmd, t_info *info)
 
 	redir = allocate_and_connect_redir(cmd, info);
 	expanded_value = expand_value(token->next->value, cmd, info);
-	if (has_delimiter(expanded_value) || \
-(is_only_env(token->next->value) && !expanded_value[0]))
+	if (has_delimiter(expanded_value) \
+|| (has_only_env(token->next->value) && !expanded_value[0]))
 	{
 		redir->type = REDIR_AMB;
 		redir->file = token->next->value;
