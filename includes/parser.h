@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 12:09:09 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 19:54:51 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_cmd
 {
 	char			**argv;// NULL-terminated array of arguments
 	t_redir			*redirection;// Linked list of input/output redirections
-	bool			is_error;
 	struct s_cmd	*next;// Next command in pipeline
 }	t_cmd;
 
@@ -53,7 +52,7 @@ int *i, int *j);
 void	remove_delimiter(char *expanded_value);
 char	**divide_by_delimiter(char *value, t_info *info, int i, int j, int count);
 int		is_empty_string(const char *expanded_value, \
-int in_single_quote, int in_double_quote, t_cmd *cmd);
+int in_single_quote, int in_double_quote);
 char	*get_empty_string(t_info *info);
 t_redir	*allocate_and_connect_redir(t_cmd *cmd, t_info *info);
 int		is_quoted_heredoc(const char *value);
@@ -64,7 +63,7 @@ t_cmd	*allocate_and_connect_cmd(t_cmd *cmd, t_info *info);
 t_env	*find_env_by_name(const char *value, int i, t_info *info);
 void	remove_quotes(char *value);
 void	add_to_argv(char *expanded_value, t_cmd *cmd, t_info *info);
-char	*expand_value(const char *value, t_cmd *cmd, t_info *info);
+char	*expand_value(const char *value, t_info *info);
 void	parser(t_info *info);
 
 #endif

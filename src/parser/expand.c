@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 11:37:50 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 19:54:13 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	save_expanded_value(const char *value, char *expanded)
 	expanded[j] = '\0';
 }
 
-char	*expand_value(const char *value, t_cmd *cmd, t_info *info)
+char	*expand_value(const char *value, t_info *info)
 {
 	int		total_value_len;
 	char	*expanded_value;
@@ -113,7 +113,7 @@ char	*expand_value(const char *value, t_cmd *cmd, t_info *info)
 	if (!expanded_value)
 		clean_and_exit("expanded value");
 	save_expanded_value(value, expanded_value);
-	if (is_empty_string(expanded_value, 0, 0, cmd))
+	if (is_empty_string(expanded_value, 0, 0))
 		return (get_empty_string(info));
 	remove_quotes(expanded_value);
 	remove_delimiter(expanded_value);
