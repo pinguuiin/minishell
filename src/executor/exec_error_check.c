@@ -14,17 +14,6 @@
 
 static bool	has_empty_string(t_info *info, t_cmd *cmds)
 {
-	int	is_empty;
-
-	// if (cmds->argv == NULL)
-	// 	printf("IS NULL\n");
-	// else if (cmds->argv[0] == NULL)
-	// 	printf("argv[0] Is Null\n");
-	// else if (cmds->argv[0][0] == '\0')
-	// 	printf("argv[0][0] is null\n");
-	// else
-	// 	printf("None of them\n");
-	// return (true);
 	if (!cmds->argv)
 		return (true);
 	if (cmds->argv[0][0] == '\0')
