@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 00:11:31 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/03 22:45:28 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	pwd(char **argv)
+static int	pwd(char **argv, char **envp)
 {
 	char	buf[PATH_MAX];
 
@@ -20,6 +20,12 @@ static int	pwd(char **argv)
 	{
 		ft_putendl_fd("pwd: invalid option", STDERR_FILENO);
 		return (2);
+	}
+	buf = envp[get_env_ind(envp, "PWD")];
+	if (buf && ft_strchr(buf, '='))
+	{
+		ft_putendl_fd(buf + 4, STDOUT_FILENO);
+		return (EXIT_SUCCESS);
 	}
 	if (!getcwd(buf, sizeof(buf)))
 	{
@@ -55,6 +61,8 @@ bool	is_builtin(t_cmd *cmds)
 {
 	char	*cmd;
 
+	if (!cmds->argv)
+		return (false);
 	cmd = cmds->argv[0];
 	if (ft_strncmp(cmd, "echo", 5) == 0 || ft_strncmp(cmd, "cd", 3) == 0
 		|| ft_strncmp(cmd, "pwd", 4) == 0 || ft_strncmp(cmd, "export", 7) == 0
@@ -74,7 +82,7 @@ int	execute_builtin(t_info *info, char **argv)
 	else if (ft_strncmp(cmd, "cd", 3) == 0)
 		info->exit_code = cd(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "pwd", 4) == 0)
-		info->exit_code = pwd(argv);
+		info->exit_code = pwd(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "export", 7) == 0)
 		info->exit_code = export(argv, &info->env_arr);
 	else if (ft_strncmp(cmd, "unset", 6) == 0)
