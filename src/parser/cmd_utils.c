@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 09:54:37 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 12:13:13 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ static int	count_tokens_by_delimiter(const char *str)
 	in_token = 0;
 	while (*str)
 	{
-		if (*str == DELIMITER)
+		if (*str == EMPTY_STR)
+			return (1);
+		else if (*str == DELIMITER)
 			in_token = 0;
 		else if (!in_token)
 		{
@@ -73,20 +75,20 @@ static char	*copy_word(const char *start, const char *end, t_info *info)
 	return (result);
 }
 
-char	**divide_by_delimiter(char *value, t_info *info)
+char	**divide_by_delimiter(char *value, t_info *info, int i, int j, int count)
 {
-	int		i;
-	int		k;
 	char	**result;
 	char	*start;
-	int		count;
 
-	i = 0;
-	k = 0;
 	count = count_tokens_by_delimiter(value);
 	result = aalloc(&(info->arena), sizeof(char *) * (count + 1));
 	if (!result)
 		clean_and_exit("words");
+	if (value[0] == EMPTY_STR)
+	{
+		value[0] = '\0';
+		result[j++] = value;
+	}
 	while (value[i])
 	{
 		if (value[i] == DELIMITER)
@@ -96,8 +98,8 @@ char	**divide_by_delimiter(char *value, t_info *info)
 		start = &value[i];
 		while (value[i] && value[i] != DELIMITER)
 			i++;
-		result[k++] = copy_word(start, &value[i], info);
+		result[j++] = copy_word(start, &value[i], info);
 	}
-	result[k] = NULL;
+	result[j] = NULL;
 	return (result);
 }

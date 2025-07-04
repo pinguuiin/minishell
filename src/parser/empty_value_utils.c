@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 09:53:50 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 10:26:41 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/04 11:56:16 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int	is_empty_string(const char *expanded_value, \
 int in_single_quote, int in_double_quote, t_cmd *cmd)
 {
 	int	is_quote;
-	int	is_del;
 
 	is_quote = 0;
-	is_del = 0;
 	while (*expanded_value)
 	{
 		if (*expanded_value == '\'' && !in_double_quote)
@@ -33,39 +31,26 @@ int in_single_quote, int in_double_quote, t_cmd *cmd)
 			is_quote = 1;
 		}
 		else if (*expanded_value == DELIMITER)
-			is_del = 1;
+			;
 		else
 			return (0);
 		expanded_value++;
 	}
 	if (is_quote)
 		return (cmd->is_error = 1, 1);
-	else if (!is_quote && is_del)
-		return (2);
 	return (0);
 }
 
-char	*get_empty_string(int empty_str_num, t_info *info)
+char	*get_empty_string(t_info *info)
 {
 	char	*empty_str;
 
-	if (empty_str_num == 1)
-	{
-		empty_str = aalloc(&(info->arena), 2);
-		if (!empty_str)
+	empty_str = aalloc(&(info->arena), 2);
+	if (!empty_str)
 		clean_and_exit("empty string for word");
-		empty_str[0] = 1;
-		empty_str[1] = '\0';
-	}
-	else if (empty_str_num == 2)
-	{
-		empty_str = aalloc(&(info->arena), 4);
-		if (!empty_str)
-			clean_and_exit("empty string for env");
-		empty_str[0] = 2;
-		empty_str[1] = '\0';
-	}
-	else
-		empty_str = NULL;
+	empty_str[0] = 1;
+	empty_str[1] = '\0';
 	return (empty_str);
 }
+
+
