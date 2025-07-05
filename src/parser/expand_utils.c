@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:20:02 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 21:58:44 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/05 21:09:49 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int *i, int *j)
 	while (value[*i] && (ft_isalnum(value[*i]) || value[*i] == '_'))
 		(*i)++;
 	if (!env_list || !env_list->value)
-	{
-		expanded[(*j)++] = DELIMITER;
 		return ;
-	}
 	while ((env_list->value)[k])
 	{
 		if ((env_list->value)[k] == ' ' || (env_list->value)[k] == '\t')
