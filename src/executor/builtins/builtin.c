@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+int	getpwd(char **buf, char **envp)
+{
+	char	*bufcpy;
+
+	*buf = getcwd(NULL, 0);
+	if (*buf)
+	{
+		bufcpy = arena_strjoin(&get_info()->arena, *buf, "");
+		free(*buf);
+		if (!bufcpy)
+			clean_and_exit("pwd");
+		*buf = bufcpy;
+		return (0);
+	}
+	*buf = envp[get_env_ind(envp, "PWD")];
+	if (*buf && ft_strchr(*buf, '='))
+	{
+		*buf += 4;
+		return (0);
+	}
+	return (1);
+}
+
 static int	pwd(char **argv, char **envp)
 {
 	char	*buf;
@@ -21,21 +44,10 @@ static int	pwd(char **argv, char **envp)
 		ft_putendl_fd("pwd: invalid option", STDERR_FILENO);
 		return (2);
 	}
-	buf = envp[get_env_ind(envp, "PWD")];
-	if (buf && ft_strchr(buf, '='))
-	{
-		ft_putendl_fd(buf + 4, STDOUT_FILENO);
-		return (EXIT_SUCCESS);
-	}
-	buf = getcwd(NULL, 0);
-	if (!buf)
-	{
-		perror("pwd");
-		return (126);
-	}
+	if (getpwd(&buf, envp))
+		return (error_msg("minishell", NULL, "pwd", 126));
 	ft_putendl_fd(buf, STDOUT_FILENO);
-	free(buf);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 static int	env(char **argv, char **envp)

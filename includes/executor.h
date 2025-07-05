@@ -15,6 +15,7 @@
 
 char	*trim_env_key(char *s);
 int		get_env_ind(char **envp, char *name);
+int		getpwd(char **buf, char **envp);
 bool	is_builtin(t_cmd *cmds);
 int		cd(char **argv, char **envp);
 int		echo(char **argv);
