@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/05 23:20:42 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 05:26:11 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ int	execute_builtin(t_info *info, char **argv)
 	else if (ft_strncmp(cmd, "cd", 3) == 0)
 		info->exit_code = cd(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "pwd", 4) == 0)
-		info->exit_code = pwd(argv, info->env_arr);  //
+		info->exit_code = pwd(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "export", 7) == 0)
 		info->exit_code = export(argv, &info->env_arr);
 	else if (ft_strncmp(cmd, "unset", 6) == 0)
 		info->exit_code = unset(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "env", 4) == 0)
-		info->exit_code = env(argv, info->env_arr); //
+		info->exit_code = env(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "exit", 5) == 0)
 		info->exit_code = shell_exit(info, argv);
 	return (info->exit_code);
