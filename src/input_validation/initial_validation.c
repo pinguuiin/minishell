@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 20:49:09 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/06 07:14:19 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	is_heredoc_limit_exceeded(const char *input)
 				ft_putendl_fd("maximum here-document count exceeded", \
 STDERR_FILENO);
 				arena_free_all();
-				exit(1);
+				exit(2);
 			}
 			input++;
 		}
