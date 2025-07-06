@@ -6,6 +6,7 @@
 *.txt
 a.out
 libft.a
+libft/
 .DS_Store
 minishell
 in
