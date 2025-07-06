@@ -6,25 +6,24 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:06:09 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 19:36:48 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 00:24:04 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	realloc_env_var(char **var, char *name, char *content)
+static void	realloc_env_var(char **var, char *name, char *content)
 {
 	t_info	*info;
 
 	info = get_info();
 	*var = aalloc(&info->arena, ft_strlen(name) + ft_strlen(content) + 2);
 	if (!*var)
-		return (error_msg("minishell", "cd", "Couldn't allocate memory", 1));
+		clean_and_exit("cd");
 	ft_memmove(*var, name, ft_strlen(name));
 	ft_memmove(*var + ft_strlen(name), "=", 1);
 	ft_memmove(*var + ft_strlen(name) + 1, content, ft_strlen(content));
 	(*var)[(ft_strlen(name) + ft_strlen(content) + 1)] = '\0';
-	return (EXIT_SUCCESS);
 }
 
 static int	update_env_pwd(char **envp, char *oldpwd, char *pwd)
@@ -35,16 +34,10 @@ static int	update_env_pwd(char **envp, char *oldpwd, char *pwd)
 	oldpwd_ind = get_env_ind(envp, "OLDPWD");
 	pwd_ind = get_env_ind(envp, "PWD");
 	if (envp[oldpwd_ind])
-	{
-		if (realloc_env_var(&envp[oldpwd_ind], "OLDPWD", oldpwd))
-			return (EXIT_FAILURE);
-	}
+		realloc_env_var(&envp[oldpwd_ind], "OLDPWD", oldpwd);
 	if (envp[pwd_ind])
-	{
-		if (realloc_env_var(&envp[pwd_ind], "PWD", pwd))
-			return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+		realloc_env_var(&envp[pwd_ind], "PWD", pwd);
+	return (0);
 }
 
 static char	*expand_path(char *path, char *pwd)

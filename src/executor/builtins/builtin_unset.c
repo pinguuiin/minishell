@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 23:58:24 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 00:10:34 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 01:28:56 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ int	unset(char **argv, char **envp)
 
 	i = 0;
 	if (!argv[1])
-		return (EXIT_SUCCESS);
+		return (0);
 	if (argv[1][0] == '-')
 	{
-		ft_putstr_fd("unset: ", STDERR_FILENO);
+		ft_putstr_fd("minishell: unset: ", STDERR_FILENO);
 		ft_putchar_fd(argv[1][0], STDERR_FILENO);
 		if (argv[1][1])
 			ft_putchar_fd(argv[1][1], STDERR_FILENO);
 		ft_putendl_fd(": invalid option", STDERR_FILENO);
-		get_info()->exit_code = 2;
 		return (2);
 	}
 	while (argv[++i])
@@ -45,5 +44,5 @@ int	unset(char **argv, char **envp)
 		if (envp[j])
 			unset_update_env(envp, j);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }

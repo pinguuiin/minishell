@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 06:06:27 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/03 23:22:58 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 01:36:44 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int	execution_error_check(t_info *info, t_cmd *cmds)
 {
 	if (has_empty_string(info, cmds) || has_only_dots(info, cmds)
 	|| is_directory(cmds))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+		return (1);
+	return (0);
 }

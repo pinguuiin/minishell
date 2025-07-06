@@ -6,35 +6,20 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:46:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/04 01:04:00 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 05:11:40 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*trim_env_key(char *s)
-{
-	int		key_len;
-	char	*key;
-
-	key_len = 0;
-	while (ft_isalnum(s[key_len]) || s[key_len] == '_')
-		key_len++;
-	key = aalloc(&get_info()->arena, key_len + 1);
-	if (!key)
-		return (NULL);
-	ft_strlcpy(key, s, key_len + 1);
-	return (key);
-}
-
-static void	write_expansion(char *start, char *input, int *key_len, int *fd)
+static void	write_expansion(char *start, char *input, int *key_len, int fd)
 {
 	char	*key;
 	char	*ptr;
 
 	if (ft_strncmp(input, "?", 1) == 0)
 	{
-		ft_putnbr_fd(get_info()->exit_code, fd[1]);
+		ft_putnbr_fd(get_info()->exit_code, fd);
 		get_info()->exit_code = 0;
 		*key_len = 1;
 		return ;
@@ -42,17 +27,17 @@ static void	write_expansion(char *start, char *input, int *key_len, int *fd)
 	key = trim_env_key(input);
 	if (!key)
 	{
-		close(fd[1]);
+		close(fd);
 		free(start);
 		clean_and_exit("heredoc");
 	}
 	*key_len = ft_strlen(key);
 	ptr = get_info()->env_arr[get_env_ind(get_info()->env_arr, key)];
 	if (ptr && ft_strchr(ptr, '='))
-		ft_putstr_fd(ptr + *key_len + 1, fd[1]);
+		ft_putstr_fd(ptr + *key_len + 1, fd);
 }
 
-static void	write_heredoc_input(char *input, t_redir *redir, int *fd)
+static void	write_heredoc_input(char *input, t_redir *redir, int fd)
 {
 	int		key_len;
 	char	*start;
@@ -60,14 +45,14 @@ static void	write_heredoc_input(char *input, t_redir *redir, int *fd)
 	start = input;
 	if (redir->type == REDIR_HEREDOC_QUOTE)
 	{
-		ft_putendl_fd(input, fd[1]);
+		ft_putendl_fd(input, fd);
 		return ;
 	}
 	while (*input)
 	{
 		key_len = 0;
 		while (*input && *input != '$')
-			ft_putchar_fd(*input++, fd[1]);
+			ft_putchar_fd(*input++, fd);
 		if (*input == '$' && (ft_isalnum(*(input + 1)) ||
 		*(input + 1) == '_' || *(input + 1) == '?'))
 		{
@@ -76,9 +61,9 @@ static void	write_heredoc_input(char *input, t_redir *redir, int *fd)
 			input += key_len;
 		}
 		else if (*input == '$')
-			ft_putchar_fd(*input++, fd[1]);
+			ft_putchar_fd(*input++, fd);
 	}
-	ft_putchar_fd('\n', fd[1]);
+	ft_putchar_fd('\n', fd);
 }
 
 int	open_heredoc(t_redir *redir)
@@ -99,7 +84,7 @@ int	open_heredoc(t_redir *redir)
 		}
 		if (!ft_strncmp(input, redir->file, ft_strlen(input)))
 			break ;
-		write_heredoc_input(input, redir, pipefd);
+		write_heredoc_input(input, redir, pipefd[1]);
 		free(input);
 		input = NULL;
 	}

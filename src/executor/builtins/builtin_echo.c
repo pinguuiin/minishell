@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 20:53:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/22 20:54:53 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 00:32:18 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ int	echo(char **argv)
 	}
 	if (newline)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (EXIT_SUCCESS);
+	return (0);
 }

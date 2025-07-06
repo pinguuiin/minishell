@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 01:18:06 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 21:02:19 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 01:20:33 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ static void	export_arg(t_info *info, char *s, char ***envp)
 		clean_and_exit("export");
 	i = get_env_ind(*envp, key);
 	len = count_envp(*envp);
+	if ((*envp)[i] && !ft_strchr(s, '='))
+		return ;
 	if (!(*envp)[i])
 	{
 		new_envp = aalloc(&info->arena, (len + 2) * sizeof(char *));
@@ -96,8 +98,7 @@ static void	export_arg(t_info *info, char *s, char ***envp)
 		new_envp = copy_envp_entries(*envp, new_envp, len, info);
 		new_envp[len + 1] = NULL;
 	}
-	if (!(*envp)[i] || ft_strchr(s, '='))
-		new_envp[i] = arena_strjoin(&info->arena, s, "");
+	new_envp[i] = arena_strjoin(&info->arena, s, "");
 	if (!new_envp[i])
 		clean_and_exit("export");
 	*envp = new_envp;
@@ -116,7 +117,7 @@ int	export(char **argv, char ***envp)
 	{
 		if (!is_valid_name(argv[i]))
 		{
-			ft_putstr_fd("export: `", STDERR_FILENO);
+			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(argv[i], STDERR_FILENO);
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 			info->exit_code = 1;

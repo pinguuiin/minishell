@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 22:55:29 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 04:38:37 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	init_info(char **envp);
 t_info	*get_info(void);
 void	reset_info(void);
 
-void	close_fds(t_cmd *cmds);
+void	close_fds(t_info *info);
 void	silent_exit(int exit_code);
 void	exec_exit(char *s1, char *s2, char *s3, int exit_code);
 int		error_msg(char *s1, char *s2, char *s3, int exit_code);
 void	clean_and_exit(char *err_msg);
 
-int		get_return_status(t_info *info, pid_t pid);
+void	get_return_status(t_info *info, pid_t pid);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:32:41 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 02:03:22 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/06 00:38:03 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ int	shell_exit(t_info *info, char **argv)
 		exec_exit("minishell: exit", argv[1], "numeric argument required", 2);
 	if (num >= 0 && argv[2])
 		return (error_msg("minishell", "exit", "too many argument", 1));
-	return (0);
+	return (1);
 }
