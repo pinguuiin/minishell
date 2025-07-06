@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:55:59 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/06 07:21:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/06 07:50:15 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	print_syntax_error(char error_char, t_info *info)
 
 	if (!error_char)
 		info->exit_code = error_msg("minishell", \
-"syntax error near unexpected token ", "`newline'", 258);
+"syntax error near unexpected token ", "`newline'", 2);
 	else
 	{
 		error_message[0] = '`';
@@ -67,6 +67,6 @@ void	print_syntax_error(char error_char, t_info *info)
 		error_message[2] = '\'';
 		error_message[3] = '\0';
 		info->exit_code = error_msg("minishell", \
-"syntax error near unexpected token ", error_message, 258);
+"syntax error near unexpected token ", error_message, 2);
 	}
 }
