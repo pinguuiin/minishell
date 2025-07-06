@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   env_copy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 11:21:43 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/06 01:01:01 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	get_env_ind(char **envp, char *name)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(name);
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], name, len) && (*(envp[i] + len) == '='
+		|| *(envp[i] + len) == '\0'))
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+char	*trim_env_key(char *s)
+{
+	int		key_len;
+	char	*key;
+
+	key_len = 0;
+	while (ft_isalnum(s[key_len]) || s[key_len] == '_')
+		key_len++;
+	key = aalloc(&get_info()->arena, key_len + 1);
+	if (!key)
+		return (NULL);
+	ft_strlcpy(key, s, key_len + 1);
+	return (key);
+}
 
 int	count_envp(char **envp)
 {

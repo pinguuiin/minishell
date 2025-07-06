@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:39:02 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/03 17:33:34 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 04:52:27 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	redirect(t_redir *redir)
 			return (error_msg("minishell", redir->file,
 					"ambiguous redirect", 1));
 		if (open_file(redir) == -1)
-			return (EXIT_FAILURE);
+			return (1);
 		if (redir->type == REDIR_OUTPUT || redir->type == REDIR_APPEND)
 			fd[1] = redir->fd;
 		else
@@ -48,5 +48,5 @@ int	redirect(t_redir *redir)
 	}
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
-	return (EXIT_SUCCESS);
+	return (0);
 }

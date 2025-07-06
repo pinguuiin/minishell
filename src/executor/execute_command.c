@@ -6,28 +6,11 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:32:56 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/02 06:01:09 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 04:02:47 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	get_env_ind(char **envp, char *name)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(name);
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], name, len) && (*(envp[i] + len) == '='
-		|| *(envp[i] + len) == '\0'))
-			return (i);
-		i++;
-	}
-	return (i);
-}
 
 /*Find PATH in the environment variables and split it into a 2d array*/
 static char	**find_path(t_info *info, char *cmd)
@@ -41,7 +24,7 @@ static char	**find_path(t_info *info, char *cmd)
 	path += ft_strlen("PATH") + 1;
 	prefix = arena_split(&info->arena, path, ':');
 	if (!prefix)
-		exec_exit("minishell", cmd, "Couldn't allocate memory", 1);
+		clean_and_exit(cmd);
 	return (prefix);
 }
 
@@ -58,12 +41,12 @@ static char	*find_cmdfile(t_info *info, char *cmd)
 	prefix = find_path(info, cmd);
 	slash_cmd = arena_strjoin(&info->arena, "/", cmd);
 	if (!slash_cmd)
-		exec_exit("minishell", cmd, "Couldn't allocate memory", 1);
+		clean_and_exit(cmd);
 	while (prefix[i])
 	{
 		path = arena_strjoin(&info->arena, prefix[i], slash_cmd);
 		if (!path)
-			exec_exit("minishell", cmd, "Couldn't allocate memory", 1);
+			clean_and_exit(cmd);
 		if (access(path, F_OK) == 0)
 		{
 			if (access(path, X_OK) == -1)
@@ -81,7 +64,7 @@ void	execute_command(t_info *info, char **argv)
 {
 	char	*filepath;
 
-	if (ft_isalpha(argv[0][0]))
+	if (!ft_strchr(argv[0], '/'))
 		filepath = find_cmdfile(info, argv[0]);
 	else
 	{
@@ -91,11 +74,12 @@ void	execute_command(t_info *info, char **argv)
 		if (access(filepath, F_OK) == 0 && access(filepath, X_OK) == -1)
 			exec_exit("minishell", filepath, "Permission denied", 126);
 	}
+	close_fds(info);
 	if (execve(filepath, argv, info->env_arr) == -1)
 	{
 		if (argv[1])
-			exec_exit(filepath, NULL, argv[1], 126);
+			exec_exit(filepath, NULL, argv[1], 2);
 		else
-			exec_exit("minishell", NULL, filepath, 126);
+			exec_exit("minishell", NULL, filepath, 1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:23:59 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/03 22:45:28 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/05 23:20:42 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static int	pwd(char **argv, char **envp)
 	char	*buf;
 
 	if (argv[1] && argv[1][0] == '-' && argv[1][1])
-	{
-		ft_putendl_fd("pwd: invalid option", STDERR_FILENO);
-		return (2);
-	}
+		return (error_msg("minishell: pwd", argv[1], "invalid option", 2));
 	if (getpwd(&buf, envp))
-		return (error_msg("minishell", NULL, "pwd", 126));
+	{
+		error_msg("minishell", "pwd", "error retrieving current directory", 1);
+		return (1);
+	}
 	ft_putendl_fd(buf, STDOUT_FILENO);
 	return (0);
 }
@@ -68,7 +68,7 @@ static int	env(char **argv, char **envp)
 			ft_putendl_fd(envp[i], STDOUT_FILENO);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 bool	is_builtin(t_cmd *cmds)
@@ -96,16 +96,14 @@ int	execute_builtin(t_info *info, char **argv)
 	else if (ft_strncmp(cmd, "cd", 3) == 0)
 		info->exit_code = cd(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "pwd", 4) == 0)
-		info->exit_code = pwd(argv, info->env_arr);
+		info->exit_code = pwd(argv, info->env_arr);  //
 	else if (ft_strncmp(cmd, "export", 7) == 0)
 		info->exit_code = export(argv, &info->env_arr);
 	else if (ft_strncmp(cmd, "unset", 6) == 0)
 		info->exit_code = unset(argv, info->env_arr);
 	else if (ft_strncmp(cmd, "env", 4) == 0)
-		info->exit_code = env(argv, info->env_arr);
+		info->exit_code = env(argv, info->env_arr); //
 	else if (ft_strncmp(cmd, "exit", 5) == 0)
 		info->exit_code = shell_exit(info, argv);
-	else
-		info->exit_code = -1;
 	return (info->exit_code);
 }

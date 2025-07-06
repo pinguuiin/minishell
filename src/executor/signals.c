@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:36:43 by piyu              #+#    #+#             */
-/*   Updated: 2025/06/28 04:36:56 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/06 04:38:23 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_return_status(t_info *info, pid_t pid)
+void	get_return_status(t_info *info, pid_t pid)
 {
 	int	status;
 
@@ -23,5 +23,4 @@ int	get_return_status(t_info *info, pid_t pid)
 		info->exit_code = 128 + WTERMSIG(status);
 	else
 		info->exit_code = EXIT_SUCCESS;
-	return (info->exit_code);
 }
