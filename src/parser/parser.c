@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 19:54:35 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 14:03:00 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	process_word_token(t_token *token, t_cmd *cmd, t_info *info)
 	int		i;
 
 	expanded_value = expand_value(token->value, info);
-	divided_value = divide_by_delimiter(expanded_value, info, 0, 0, 0);
+	divided_value = divide_by_delimiter(expanded_value, info, 0, 0);
 	i = 0;
 	while (divided_value[i])
 		add_to_argv(divided_value[i++], cmd, info);

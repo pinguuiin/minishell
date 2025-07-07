@@ -6,14 +6,14 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/07 11:34:27 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 14:06:32 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	handle_dollar_expansion(const char *value, \
-	int *i, int *value_len, t_info *info)
+int *i, int *value_len, t_info *info)
 {
 	if (value[*i] && value[*i] == '?')
 	{
@@ -25,7 +25,7 @@ static void	handle_dollar_expansion(const char *value, \
 }
 
 static int	compute_expanded_len(const char *value, \
-	int in_single_quote, int in_double_quote, t_info *info)
+int in_single_quote, int in_double_quote, t_info *info)
 {
 	int	i;
 	int	value_len;
@@ -52,7 +52,7 @@ static int	compute_expanded_len(const char *value, \
 }
 
 static int	write_dollar_expansion(const char *value, \
-	char *expanded, int *i, int *j)
+char *expanded, int *i, int *j)
 {
 	char	*exit;
 	int		k;
@@ -92,7 +92,7 @@ static void	save_expanded_value(const char *value, char *expanded)
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
 		if (!in_single_quote && value[i] == '$' \
-			&& write_dollar_expansion(value, expanded, &i, &j))
+&& write_dollar_expansion(value, expanded, &i, &j))
 			continue ;
 		expanded[j++] = value[i++];
 	}

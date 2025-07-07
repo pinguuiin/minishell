@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 12:13:13 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 14:03:09 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ static char	*copy_word(const char *start, const char *end, t_info *info)
 	return (result);
 }
 
-char	**divide_by_delimiter(char *value, t_info *info, int i, int j, int count)
+char	**divide_by_delimiter(char *value, t_info *info, int i, int j)
 {
 	char	**result;
 	char	*start;
 
-	count = count_tokens_by_delimiter(value);
-	result = aalloc(&(info->arena), sizeof(char *) * (count + 1));
+	result = aalloc(&(info->arena), sizeof(char *) *\
+(count_tokens_by_delimiter(value) + 1));
 	if (!result)
 		clean_and_exit("words");
 	if (value[0] == EMPTY_STR)

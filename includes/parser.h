@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/07 11:22:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 14:02:38 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_arena_itoa(int n);
 void	save_env_value_with_del(const char *value, char *expanded, \
 int *i, int *j);
 void	remove_delimiter(char *expanded_value);
-char	**divide_by_delimiter(char *value, t_info *info, int i, int j, int count);
+char	**divide_by_delimiter(char *value, t_info *info, int i, int j);
 int		is_empty_string(const char *expanded_value, \
 int in_single_quote, int in_double_quote);
 char	*get_empty_string(t_info *info);
