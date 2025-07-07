@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 19:54:51 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:22:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;// Next command in pipeline
 }	t_cmd;
 
-int		calculate_env_len(const char *value, int *i, int *value_len);
+void	calculate_env_len(const char *value, int *i, int *value_len);
 int		itoa_len(int n);
 char	*ft_arena_itoa(int n);
 void	save_env_value_with_del(const char *value, char *expanded, \

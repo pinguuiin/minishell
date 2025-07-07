@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:20:02 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/05 21:09:49 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:35:12 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	calculate_env_len(const char *value, int *i, int *value_len)
+void	calculate_env_len(const char *value, int *i, int *value_len)
 {
 	int		key_len;
 	t_info	*info;
@@ -22,18 +22,11 @@ int	calculate_env_len(const char *value, int *i, int *value_len)
 	info = get_info();
 	env_list = find_env_by_name(value, *i, info);
 	if (!env_list || !env_list->value)
-	{
-		(*value_len)++;
-		return (0);
-	}
+		return ;
 	else
 		*value_len += ft_strlen(env_list->value);
 	while (value[*i] && (ft_isalnum(value[*i]) || value[*i] == '_'))
-	{
 		(*i)++;
-		key_len++;
-	}
-	return (key_len);
 }
 
 void	save_env_value_with_del(const char *value, char *expanded, \

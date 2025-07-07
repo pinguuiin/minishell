@@ -6,31 +6,22 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 19:54:13 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:34:27 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	handle_dollar_expansion(const char *value, \
+static void	handle_dollar_expansion(const char *value, \
 	int *i, int *value_len, t_info *info)
 {
-	int	key_len;
-
-	key_len = 0;
-	if (value[*i + 1] == '?')
+	if (value[*i] && value[*i] == '?')
 	{
 		*value_len += itoa_len(info->exit_code);
 		(*i)++;
-		return (2);
 	}
-	else if (ft_isalpha(value[*i + 1]) || value[*i + 1] == '_')
-	{
-		(*i)++;
-		key_len = calculate_env_len(value, i, value_len);
-		return (key_len);
-	}
-	return (0);
+	else if (value[*i] && (ft_isalpha(value[*i]) || value[*i] == '_'))
+		calculate_env_len(value, i, value_len);
 }
 
 static int	compute_expanded_len(const char *value, \
@@ -38,21 +29,26 @@ static int	compute_expanded_len(const char *value, \
 {
 	int	i;
 	int	value_len;
-	int	key_len;
+	int	old_i;
 
 	i = 0;
 	value_len = 0;
-	key_len = 0;
 	while (value[i])
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
 		if (!in_single_quote && value[i] == '$')
 		{
-			key_len += handle_dollar_expansion(value, &i, &value_len, info);
+			i++;
+			old_i = i;
+			handle_dollar_expansion(value, &i, &value_len, info);
+			if (old_i == i)
+				value_len++;
+			continue ;
 		}
+		value_len++;
 		i++;
 	}
-	return (i + value_len - key_len);
+	return (value_len);
 }
 
 static int	write_dollar_expansion(const char *value, \
