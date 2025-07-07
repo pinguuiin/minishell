@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_copy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/06 01:01:01 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/07 14:05:34 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	get_env_ind(char **envp, char *name)
 	len = ft_strlen(name);
 	while (envp[i])
 	{
-		if (!ft_strncmp(envp[i], name, len) && (*(envp[i] + len) == '='
-		|| *(envp[i] + len) == '\0'))
+		if (!ft_strncmp(envp[i], name, len) && \
+(*(envp[i] + len) == '=' || *(envp[i] + len) == '\0'))
 			return (i);
 		i++;
 	}

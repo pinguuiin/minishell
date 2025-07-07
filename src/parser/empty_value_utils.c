@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 09:53:50 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 19:53:12 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/07 14:06:00 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,3 @@ char	*get_empty_string(t_info *info)
 	empty_str[1] = '\0';
 	return (empty_str);
 }
-
-
