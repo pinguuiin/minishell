@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:20:02 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/07 11:35:12 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/08 07:06:56 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	calculate_env_len(const char *value, int *i, int *value_len)
 {
-	int		key_len;
 	t_info	*info;
 	t_env	*env_list;
 
-	key_len = 1;
 	info = get_info();
 	env_list = find_env_by_name(value, *i, info);
 	if (!env_list || !env_list->value)

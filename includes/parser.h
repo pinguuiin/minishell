@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/07 14:02:38 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/08 07:08:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	remove_delimiter(char *expanded_value);
 char	**divide_by_delimiter(char *value, t_info *info, int i, int j);
 int		is_empty_string(const char *expanded_value, \
 int in_single_quote, int in_double_quote);
-char	*get_empty_string(t_info *info);
 t_redir	*allocate_and_connect_redir(t_cmd *cmd, t_info *info);
 int		is_quoted_heredoc(const char *value);
 int		has_only_env(const char *value);

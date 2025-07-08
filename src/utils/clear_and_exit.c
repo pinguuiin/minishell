@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/06 04:02:25 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/08 15:09:44 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	clean_and_exit(char *err_msg)
 	t_info	*info;
 
 	info = get_info();
-	info->exit_code = 1;
 	close_fds(info);
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
