@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:38 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/08 15:09:37 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ static void	run_shell_loop(t_info *info)
 		reset_info();
 		info->input = readline("minishell$ ");
 		if (!(info->input))
-			clean_and_exit("user input");
+		{
+			arena_free_all();
+			exit(0);
+		}
 		if (!((info->input)[0]))
 		{
 			free(info->input);
