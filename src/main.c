@@ -53,23 +53,17 @@ static void	run_shell_loop(t_info *info)
 		info->input = readline("minishell$ ");
 		if (!(info->input))
 		{
+			ft_putendl_fd("exit", STDOUT_FILENO);
 			arena_free_all();
 			exit(0);
 		}
 		if (!((info->input)[0]))
-		{
-			free(info->input);
 			continue ;
-		}
 		add_history(info->input);
 		if (is_all_whitespace(info->input) \
-|| has_syntax_error(info->input, info))
-		{
-			free(info->input);
+		|| has_syntax_error(info->input, info))
 			continue ;
-		}
 		process_input(info);
-		free(info->input);
 	}
 }
 
@@ -77,6 +71,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_info	*info;
 
+	// signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	(void)argc;
 	(void)argv;
 	init_info(envp);

@@ -36,7 +36,7 @@ SRC =	main.c \
 		executor/executor.c \
 		executor/heredoc.c \
 		executor/redirection.c \
-		executor/signals.c \
+		utils/signals.c \
 		utils/clear_and_exit.c \
 		utils/info.c \
 		utils/memory.c \

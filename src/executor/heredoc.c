@@ -79,16 +79,18 @@ int	open_heredoc(t_redir *redir)
 		input = readline("> ");
 		if (!input)
 		{
-			close(pipefd[1]);
-			clean_and_exit("heredoc");
+			ft_putendl_fd("minishell: warning: here-document delimited "
+			"by end-of-file (wanted `eof')", STDERR_FILENO);
+			break ;
 		}
-		if (!ft_strncmp(input, redir->file, ft_strlen(input)))
+		if (!ft_strncmp(input, redir->file, ft_strlen(input) + 1))
 			break ;
 		write_heredoc_input(input, redir, pipefd[1]);
 		free(input);
 		input = NULL;
 	}
-	free(input);
+	if (input)
+		free(input);
 	close(pipefd[1]);
 	return (pipefd[0]);
 }

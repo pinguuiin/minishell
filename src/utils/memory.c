@@ -94,4 +94,5 @@ void	arena_free_all(void)
 	}
 	if (info->input)
 		free(info->input);
+	rl_clear_history();
 }

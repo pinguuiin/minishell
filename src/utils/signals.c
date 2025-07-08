@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+volatile sig_atomic_t	g_signal = 0;
+
+void	signal_handler(int signum)
+{
+	g_signal = signum;
+}
+
+// void	disable_printting_quit(void)
+// {
+// 	struct termios	tc;
+
+// 	if (tcgetattr(STDIN_FILENO, &tc) == 0)
+// 	{
+// 		tc.c_cc[VQUIT] = _POSIX_VDISABLE;
+// 		tcsetattr(STDIN_FILENO, TCSANOW, &tc);
+// 	}
+// }
+
 void	get_return_status(t_info *info, pid_t pid)
 {
 	int	status;

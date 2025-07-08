@@ -24,6 +24,8 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <signal.h>
+# include <termios.h>
 
 # include "../libft/libft.h"
 # include "memory.h"
@@ -33,6 +35,8 @@
 # include "parser.h"
 # include "executor.h"
 # include "tester.h"
+
+extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_info
 {
@@ -57,6 +61,7 @@ void	exec_exit(char *s1, char *s2, char *s3, int exit_code);
 int		error_msg(char *s1, char *s2, char *s3, int exit_code);
 void	clean_and_exit(char *err_msg);
 
+void	signal_handler(int signum);
 void	get_return_status(t_info *info, pid_t pid);
 
 #endif
