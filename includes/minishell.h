@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
-# include <termios.h>
+//# include <termios.h>
 
 # include "../libft/libft.h"
 # include "memory.h"
