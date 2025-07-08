@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/07 14:06:32 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/08 07:08:27 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ char	*expand_value(const char *value, t_info *info)
 {
 	int		total_value_len;
 	char	*expanded_value;
+	char	*empty_str;
 
 	total_value_len = compute_expanded_len(value, 0, 0, info);
 	expanded_value = aalloc(&(info->arena), total_value_len + 1);
@@ -110,7 +111,14 @@ char	*expand_value(const char *value, t_info *info)
 		clean_and_exit("expanded value");
 	save_expanded_value(value, expanded_value);
 	if (is_empty_string(expanded_value, 0, 0))
-		return (get_empty_string(info));
+	{
+		empty_str = aalloc(&(info->arena), 2);
+		if (!empty_str)
+			clean_and_exit("empty string for word");
+		empty_str[0] = EMPTY_STR;
+		empty_str[1] = '\0';
+		return (empty_str);
+	}
 	remove_quotes(expanded_value);
 	remove_delimiter(expanded_value);
 	return (expanded_value);

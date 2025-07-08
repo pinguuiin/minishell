@@ -6,24 +6,11 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/03 20:05:38 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/08 07:09:30 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_cmd	*allocate_and_connect_cmd(t_cmd *cmd, t_info *info)
-{
-	t_cmd	*new_cmd;
-
-	(info->cmd_count)++;
-	new_cmd = aalloc(&(info->arena), sizeof(t_cmd));
-	if (!new_cmd)
-		clean_and_exit("new cmd");
-	ft_memset(new_cmd, 0, sizeof(t_cmd));
-	cmd->next = new_cmd;
-	return (new_cmd);
-}
 
 static char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 {
@@ -110,4 +97,33 @@ void	add_to_argv(char *expanded_value, t_cmd *cmd, t_info *info)
 	new_argv[count] = expanded_value;
 	new_argv[count + 1] = NULL;
 	cmd->argv = new_argv;
+}
+
+int	is_empty_string(const char *expanded_value, \
+int in_single_quote, int in_double_quote)
+{
+	int	is_quote;
+
+	is_quote = 0;
+	while (*expanded_value)
+	{
+		if (*expanded_value == '\'' && !in_double_quote)
+		{
+			in_single_quote = !in_single_quote;
+			is_quote = 1;
+		}
+		else if (*expanded_value == '"' && !in_single_quote)
+		{
+			in_double_quote = !in_double_quote;
+			is_quote = 1;
+		}
+		else if (*expanded_value == DELIMITER)
+			;
+		else
+			return (0);
+		expanded_value++;
+	}
+	if (is_quote)
+		return (1);
+	return (0);
 }
