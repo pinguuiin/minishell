@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/10 09:03:54 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/11 01:07:00 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_info	*info;
 
-	// signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
+	// rl_event_hook = readline_handler;
 	(void)argc;
 	(void)argv;
 	init_info(envp);

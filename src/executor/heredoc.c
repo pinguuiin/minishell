@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:46:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/06 05:11:40 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/09 00:09:36 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,18 @@ int	open_heredoc(t_redir *redir)
 	while (1)
 	{
 		input = readline("> ");
-		if (!input)
+		if (!input || !ft_strncmp(input, redir->file, ft_strlen(input) + 1))
 		{
-			ft_putendl_fd("minishell: warning: here-document delimited "
-			"by end-of-file (wanted `eof')", STDERR_FILENO);
+			if (!input)
+				ft_putendl_fd("minishell: warning: here-document delimited "
+				"by EOF", STDERR_FILENO);
+			else
+				free(input);
 			break ;
 		}
-		if (!ft_strncmp(input, redir->file, ft_strlen(input) + 1))
-			break ;
 		write_heredoc_input(input, redir, pipefd[1]);
 		free(input);
-		input = NULL;
 	}
-	if (input)
-		free(input);
 	close(pipefd[1]);
 	return (pipefd[0]);
 }

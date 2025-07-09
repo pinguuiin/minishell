@@ -12,6 +12,7 @@ FLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = src
 SRC =	main.c \
+		signals.c \
 		env/env_copy.c \
 		env/env_list.c \
 		input_validation/initial_validation.c \
@@ -36,11 +37,10 @@ SRC =	main.c \
 		executor/executor.c \
 		executor/heredoc.c \
 		executor/redirection.c \
-		utils/signals.c \
 		utils/clear_and_exit.c \
 		utils/info.c \
 		utils/memory.c \
-		tester.c \
+		tester.c
 
 
 OBJ_DIR = obj
