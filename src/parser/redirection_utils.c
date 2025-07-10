@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 03:33:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/04 12:08:52 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/10 08:57:26 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_redir	*allocate_and_connect_redir(t_cmd *cmd, t_info *info)
 			temp = temp->next;
 		temp->next = new_redir;
 	}
+	memset(new_redir, 0, sizeof(t_redir));
 	new_redir->fd = -1;
 	return (new_redir);
 }

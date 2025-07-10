@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:20:17 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/06 07:14:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/10 07:45:56 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,17 @@ int in_double_quote)
 		input++;
 	if (*input == '|')
 		return (input);
+	error_char = NULL;
 	while (*input)
 	{
 		update_quote_state(*input, &in_single_quote, &in_double_quote);
 		if (!in_single_quote && !in_double_quote \
 && (*input == '>' || *input == '<'))
-		{
 			error_char = has_valid_token_after_io(input);
-			if (error_char)
-				return (error_char);
-		}
 		else if (!in_single_quote && !in_double_quote && (*input == '|'))
-		{
 			error_char = has_valid_token_after_pipe(input);
-			if (error_char)
-				return (error_char);
-		}
+		if (error_char)
+			return (error_char);
 		input++;
 	}
 	return (NULL);
