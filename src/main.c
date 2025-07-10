@@ -6,11 +6,31 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/08 15:09:37 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/10 09:03:54 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void process_heredoc(t_info *info)
+{
+	t_cmd	*cmd;
+	t_redir	*redir;
+
+	cmd = info->cmds;
+	while (cmd)
+	{
+		redir = cmd->redirection;
+		while (redir)
+		{
+			if (redir->type == REDIR_HEREDOC \
+|| redir->type == REDIR_HEREDOC_QUOTE)
+				redir->fd = open_heredoc(redir);
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
+}
 
 static void	process_input(t_info *info)
 {
@@ -19,6 +39,7 @@ static void	process_input(t_info *info)
 	// print_tokens(info->tokens);
 	parser(info);
 	// print_cmds(info->cmds);
+	process_heredoc(info);
 	executor(info, info->cmds);
 	dup2(info->fd_stdio[0], STDIN_FILENO);
 	dup2(info->fd_stdio[1], STDOUT_FILENO);
