@@ -55,7 +55,7 @@ static char	*find_cmdfile(t_info *info, char *cmd)
 		}
 		i++;
 	}
-	exec_exit("minishell", cmd, "No such file or directory", 127);
+	exec_exit(NULL, cmd, "command not found", 127);
 	return (NULL);
 }
 

@@ -44,6 +44,8 @@ static bool	is_directory(t_cmd *cmds)
 {
 	struct stat	buf;
 
+	if (!ft_strchr(cmds->argv[0], '/'))
+		return (false);	
 	if (stat(cmds->argv[0], &buf) == 0 && S_ISDIR(buf.st_mode))
 	{
 		error_msg("minishell", cmds->argv[0], "Is a directory", 126);

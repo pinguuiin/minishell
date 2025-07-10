@@ -20,8 +20,6 @@ static int	open_file(t_redir *redir)
 		redir->fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (redir->type == REDIR_APPEND)
 		redir->fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		redir->fd = open_heredoc(redir);
 	if (redir->fd == -1)
 		error_msg("minishell", NULL, redir->file, 1);
 	return (redir->fd);
