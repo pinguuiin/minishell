@@ -21,10 +21,11 @@ void	close_fds(t_info *info)
 	{
 		while (cmds->redirection)
 		{
-			if (cmds->redirection->fd == -1)
-				break ;
-			close(cmds->redirection->fd);
-			cmds->redirection->fd = -1;
+			if (cmds->redirection->fd != -1)
+			{
+				close(cmds->redirection->fd);
+				cmds->redirection->fd = -1;
+			}
 			cmds->redirection = cmds->redirection->next;
 		}
 		cmds = cmds->next;
