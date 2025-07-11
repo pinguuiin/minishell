@@ -63,6 +63,6 @@ int	shell_exit(t_info *info, char **argv)
 	if (num < 0)
 		exec_exit("minishell: exit", argv[1], "numeric argument required", 2);
 	if (num >= 0 && argv[2])
-		return (error_msg("minishell", "exit", "too many argument", 1));
+		return (error_msg("minishell", "exit", "too many arguments", 1));
 	return (1);
 }
