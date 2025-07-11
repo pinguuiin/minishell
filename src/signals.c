@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:36:43 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 04:00:21 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 06:55:02 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,25 @@ void	signal_handler(int signum)
 
 int	readline_handler(void)
 {
-	t_info	*info;
-
-	info = get_info();
 	if (g_signal == SIGINT)
 	{
-		info->exit_code = 128 + g_signal;
+		get_info()->exit_code = 128 + g_signal;
 		g_signal = 0;
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		write(STDOUT_FILENO, "\n", 1);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_redisplay();
 	}
-	// if (g_signal == SIGQUIT)
-	// {
-	// 	printf("what??\n");
-	// 	info->exit_code = 128 + g_signal;
-	// 	g_signal = 0;
-	// 	ft_putstr_fd("Quit (core dumped)", STDERR_FILENO);
-	// 	close_fds(info);
-	// 	arena_free_all();
-	// 	kill(getpid(), SIGQUIT);
-	// }
+	return (0);
+}
+
+int	rl_heredoc_handler(void)
+{
+	if (g_signal == SIGINT)
+	{
+		get_info()->exit_code = 128 + g_signal;
+		rl_done = 1;
+	}
 	return (0);
 }
 

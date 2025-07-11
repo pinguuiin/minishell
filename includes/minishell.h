@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/11 03:33:11 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 06:20:22 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	clean_and_exit(char *err_msg);
 
 void	signal_handler(int signum);
 int		readline_handler(void);
+int		rl_heredoc_handler(void);
 void	wait_call(t_info *info, pid_t pid);
 
 #endif

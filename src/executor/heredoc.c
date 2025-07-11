@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:46:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/09 00:09:36 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 06:59:00 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,32 @@ static void	write_heredoc_input(char *input, t_redir *redir, int fd)
 	ft_putchar_fd('\n', fd);
 }
 
+static int	heredoc_clean_up(char *input, int *pipefd)
+{
+	free(input);
+	close(pipefd[0]);
+	close(pipefd[1]);
+	return (-2);
+}
+
 int	open_heredoc(t_redir *redir)
 {
 	int		pipefd[2];
 	char	*input;
 
+	rl_event_hook = rl_heredoc_handler;
 	if (pipe(pipefd) == -1)
 		return (-1);
 	redir->fd = pipefd[0];
 	while (1)
 	{
 		input = readline("> ");
+		if (g_signal == SIGINT)
+			return (heredoc_clean_up(input, pipefd));
 		if (!input || !ft_strncmp(input, redir->file, ft_strlen(input) + 1))
 		{
 			if (!input)
-				ft_putendl_fd("minishell: warning: here-document delimited "
-				"by EOF", STDERR_FILENO);
+				write(2, "minishell: warning: heredoc delimited by EOF\n", 46);
 			else
 				free(input);
 			break ;
