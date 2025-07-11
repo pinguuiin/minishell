@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 16:13:23 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/11 19:22:09 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ static void	run_shell_loop(t_info *info)
 			char *line;
 			line = get_next_line(fileno(stdin));
 			info->input = ft_strtrim(line, "\n");
-			free(line);
 		}
 		if (!(info->input))
 		{
