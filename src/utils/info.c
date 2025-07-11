@@ -35,6 +35,7 @@ void	reset_info(void)
 	t_info	*info;
 
 	info = get_info();
+	free(info->input);
 	close_fds(info);
 	info->fd_stdio[0] = dup(STDIN_FILENO);
 	info->fd_stdio[1] = dup(STDOUT_FILENO);

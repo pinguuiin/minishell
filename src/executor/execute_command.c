@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:32:56 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/06 04:02:47 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 05:17:02 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	execute_command(t_info *info, char **argv)
 			exec_exit("minishell", filepath, "Permission denied", 126);
 	}
 	close_fds(info);
+	signal(SIGQUIT, SIG_DFL);
 	if (execve(filepath, argv, info->env_arr) == -1)
 	{
 		if (argv[1])

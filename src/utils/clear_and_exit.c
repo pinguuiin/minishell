@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 02:04:34 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/08 15:09:44 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/11 07:03:58 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ void	close_fds(t_info *info)
 	{
 		while (cmds->redirection)
 		{
-			if (cmds->redirection->fd != -1)
-			{
+			if (cmds->redirection->fd != -1 && cmds->redirection->fd != -2)
 				close(cmds->redirection->fd);
-				cmds->redirection->fd = -1;
-			}
+			cmds->redirection->fd = -1;
 			cmds->redirection = cmds->redirection->next;
 		}
 		cmds = cmds->next;

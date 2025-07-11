@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/06 04:38:37 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 06:20:22 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # include "../libft/libft.h"
 # include "memory.h"
@@ -33,6 +34,8 @@
 # include "parser.h"
 # include "executor.h"
 # include "tester.h"
+
+extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_info
 {
@@ -57,6 +60,9 @@ void	exec_exit(char *s1, char *s2, char *s3, int exit_code);
 int		error_msg(char *s1, char *s2, char *s3, int exit_code);
 void	clean_and_exit(char *err_msg);
 
-void	get_return_status(t_info *info, pid_t pid);
+void	signal_handler(int signum);
+int		readline_handler(void);
+int		rl_heredoc_handler(void);
+void	wait_call(t_info *info, pid_t pid);
 
 #endif

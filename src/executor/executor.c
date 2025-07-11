@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/06 04:51:28 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 03:32:18 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	run_single_command(t_info *info, t_cmd *cmds)
 	else if (pid == 0)
 		select_executor(info, cmds);
 	else
-		get_return_status(info, pid);
+		wait_call(info, pid);
 }
 
 static void	run_last_command(t_info *info, t_cmd *cmds)
@@ -55,7 +55,7 @@ static void	run_last_command(t_info *info, t_cmd *cmds)
 	else if (pid == 0)
 		select_executor(info, cmds);
 	else
-		get_return_status(info, pid);
+		wait_call(info, pid);
 }
 
 //return type might need fix
@@ -73,18 +73,16 @@ static int	run_piped_command(t_info *info, t_cmd *cmds)
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		select_executor(info, cmds);
-		return (1);
 	}
 	else if (pid > 0)
 	{
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
-		get_return_status(info, pid);
-		return (0);
 	}
 	else
 		return (error_msg("minishell", NULL, "fork", 1));
+	return (0);
 }
 
 void	executor(t_info *info, t_cmd *cmds)
@@ -97,7 +95,10 @@ void	executor(t_info *info, t_cmd *cmds)
 	while (cmds->next)
 	{
 		if (run_piped_command(info, cmds))
+		{
+			wait_call(info, 0);
 			return ;
+		}
 		cmds = cmds->next;
 	}
 	run_last_command(info, cmds);
