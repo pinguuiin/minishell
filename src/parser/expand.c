@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 21:56:36 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/12 22:40:28 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	save_expanded_value(const char *value, char *expanded)
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
 		if (!in_single_quote && value[i] == '$' && value[i + 1] == '?' \
 && write_exit_code(expanded, &i, &j))
-			continue;
+			continue ;
 		else if (!in_single_quote && in_double_quote && value[i] == '$' \
 && write_env_with_double_quote(value, expanded, &i, &j))
 			continue ;
