@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 06:06:27 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 23:20:08 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 05:31:01 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	has_empty_string(t_info *info, t_cmd *cmds)
 {
 	if (!cmds->argv)
-		return (true);
+		return (info->exit_code = 0, true);
 	if (cmds->argv[0][0] == '\0')
 	{
 		ft_putendl_fd("Command '' not found", STDERR_FILENO);
