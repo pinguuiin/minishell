@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 17:27:30 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/12 21:56:14 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ typedef struct s_cmd
 }	t_cmd;
 
 void	calculate_env_len(const char *value, int *i, int *value_len);
+int		write_exit_code(char *expanded, int *i, int *j);
+void	save_env_value_with_del(const char *value, char *expanded, \
+int *i, int *j);
+int		write_env_with_double_quote(const char *value, \
+char *expanded, int *i, int *j);
+int		write_env(const char *value, \
+char *expanded, int *i, int *j);
 int		itoa_len(int n);
 char	*ft_arena_itoa(int n);
 void	save_env_value_with_del(const char *value, char *expanded, \
@@ -59,7 +66,7 @@ int		has_only_env(const char *value);
 int		has_delimiter(const char *expanded_value);
 int		itoa_len(int n);
 t_cmd	*allocate_and_connect_cmd(t_cmd *cmd, t_info *info);
-t_env	*find_env_by_name(const char *value, int i, t_info *info);
+t_env	*find_env_by_name(const char *value, int i);
 void	remove_quotes(char *value);
 void	add_to_argv(char *expanded_value, t_cmd *cmd, t_info *info);
 char	*expand_value(const char *value, t_info *info);

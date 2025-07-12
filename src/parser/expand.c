@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/08 07:08:27 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/12 21:56:36 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,32 +51,6 @@ int in_single_quote, int in_double_quote, t_info *info)
 	return (value_len);
 }
 
-static int	write_dollar_expansion(const char *value, \
-char *expanded, int *i, int *j)
-{
-	char	*exit;
-	int		k;
-	t_info	*info;
-
-	info = get_info();
-	if (value[*i + 1] == '?')
-	{
-		exit = ft_arena_itoa(info->exit_code);
-		k = 0;
-		while (exit[k])
-			expanded[(*j)++] = exit[k++];
-		*i += 2;
-		return (1);
-	}
-	else if (ft_isalpha(value[*i + 1]) || value[*i + 1] == '_')
-	{
-		(*i)++;
-		save_env_value_with_del(value, expanded, i, j);
-		return (1);
-	}
-	return (0);
-}
-
 static void	save_expanded_value(const char *value, char *expanded)
 {
 	int		i;
@@ -91,8 +65,14 @@ static void	save_expanded_value(const char *value, char *expanded)
 	while (value[i])
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
-		if (!in_single_quote && value[i] == '$' \
-&& write_dollar_expansion(value, expanded, &i, &j))
+		if (!in_single_quote && value[i] == '$' && value[i + 1] == '?' \
+&& write_exit_code(expanded, &i, &j))
+			continue;
+		else if (!in_single_quote && in_double_quote && value[i] == '$' \
+&& write_env_with_double_quote(value, expanded, &i, &j))
+			continue ;
+		else if (!in_single_quote && value[i] == '$' \
+&& write_env(value, expanded, &i, &j))
 			continue ;
 		expanded[j++] = value[i++];
 	}
