@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/12 04:38:15 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 04:57:50 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static void	run_last_command(t_info *info, t_cmd *cmds)
 		wait_call(info, pid);
 }
 
-//return type might need fix
 static int	run_piped_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;
