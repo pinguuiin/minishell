@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/12 04:57:50 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 19:20:19 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	run_single_command(t_info *info, t_cmd *cmds)
 	{
 		if (!redirect(cmds->redirection) && !execution_error_check(info, cmds))
 			execute_builtin(info, cmds->argv);
+		dup2(info->fd_stdio[0], STDIN_FILENO);
+		dup2(info->fd_stdio[1], STDOUT_FILENO);
 		return ;
 	}
 	pid = fork();
@@ -49,7 +51,10 @@ static void	run_last_command(t_info *info, t_cmd *cmds)
 
 	pid = fork();
 	if (pid == -1)
+	{
 		error_msg("minishell", NULL, "fork", 1);
+		wait_call(info, 0);
+	}
 	else if (pid == 0)
 		select_executor(info, cmds);
 	else

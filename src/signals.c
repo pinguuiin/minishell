@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:36:43 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 23:15:59 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 18:56:48 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	wait_call(t_info *info, pid_t last_pid)
 	int		status;
 	pid_t	pid;
 
+	dup2(info->fd_stdio[0], STDIN_FILENO);
+	dup2(info->fd_stdio[1], STDOUT_FILENO);
 	if (last_pid == 0)
 	{
 		while (waitpid(-1, NULL, WNOHANG) != -1)
