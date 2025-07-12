@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/12 04:18:17 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 04:38:15 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,21 @@ static int	run_piped_command(t_info *info, t_cmd *cmds)
 	if (pipe(pipefd) == -1)
 		return (error_msg("minishell", NULL, "pipe", 1));
 	pid = fork();
-	if (pid < 0)
-		return (error_msg("minishell", NULL, "fork", 1));
-	else if (pid == 0)
+	if (pid == 0)
 	{
 		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		select_executor(info, cmds);
 	}
-	close(pipefd[1]);
-	dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
+	else if (pid > 0)
+	{
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		close(pipefd[0]);
+	}
+	else
+		return (error_msg("minishell", NULL, "fork", 1));
 	return (0);
 }
 
