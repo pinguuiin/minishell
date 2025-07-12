@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 02:08:04 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/12 09:06:23 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,26 @@ static t_arena	*create_new_chunk(t_arena *arena_ptr, size_t size)
 	return (new_chunk);
 }
 
+static size_t	align_up(size_t offset)
+{
+	return ((offset + (ARENA_ALIGNMENT - 1)) & ~(ARENA_ALIGNMENT -1));
+}
+
 void	*aalloc(t_arena **arena_ptr, size_t size)
 {
 	t_arena	*arena_chunk;
 	t_arena	*new_chunk;
 	void	*ptr;
+	size_t	aligned_offset;
 
 	arena_chunk = *arena_ptr;
 	while (arena_chunk)
 	{
-		if (arena_chunk->offset + size <= arena_chunk->size)
+		aligned_offset = align_up(arena_chunk->offset);
+		if (aligned_offset + size <= arena_chunk->size)
 		{
-			ptr = (char *)arena_chunk->memory + arena_chunk->offset;
-			arena_chunk->offset += size;
+			ptr = (char *)arena_chunk->memory + aligned_offset;
+			arena_chunk->offset = aligned_offset + size;
 			return (ptr);
 		}
 		arena_chunk = arena_chunk->next;
