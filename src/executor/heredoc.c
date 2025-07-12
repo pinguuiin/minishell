@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:46:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 06:59:00 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 23:21:38 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static void	write_heredoc_input(char *input, t_redir *redir, int fd)
 		key_len = 0;
 		while (*input && *input != '$')
 			ft_putchar_fd(*input++, fd);
-		if (*input == '$' && (ft_isalnum(*(input + 1)) ||
-		*(input + 1) == '_' || *(input + 1) == '?'))
+		if (*input == '$' && (ft_isalnum(*(input + 1))
+				|| *(input + 1) == '_' || *(input + 1) == '?'))
 		{
 			input++;
 			write_expansion(start, input, &key_len, fd);

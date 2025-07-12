@@ -6,13 +6,13 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 07:06:29 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 23:13:59 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int process_heredoc(t_info *info)
+static int	process_heredoc(t_info *info)
 {
 	t_cmd	*cmd;
 	t_redir	*redir;
@@ -23,8 +23,8 @@ static int process_heredoc(t_info *info)
 		redir = cmd->redirection;
 		while (redir)
 		{
-			if (redir->type == REDIR_HEREDOC \
-			|| redir->type == REDIR_HEREDOC_QUOTE)
+			if (redir->type == REDIR_HEREDOC
+				|| redir->type == REDIR_HEREDOC_QUOTE)
 			{
 				redir->fd = open_heredoc(redir);
 				if (redir->fd == -2)
@@ -41,9 +41,7 @@ static void	process_input(t_info *info)
 {
 	info->env_list = envp_to_list(info->env_arr, &(info->arena));
 	tokenize_elements(info);
-	// print_tokens(info->tokens);
 	parser(info);
-	// print_cmds(info->cmds);
 	if (process_heredoc(info))
 		return ;
 	executor(info, info->cmds);
@@ -68,8 +66,8 @@ static void	run_shell_loop(t_info *info)
 		if (!((info->input)[0]))
 			continue ;
 		add_history(info->input);
-		if (is_all_whitespace(info->input) \
-		|| has_syntax_error(info->input, info))
+		if (is_all_whitespace(info->input)
+			|| has_syntax_error(info->input, info))
 			continue ;
 		process_input(info);
 	}

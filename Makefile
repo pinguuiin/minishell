@@ -33,14 +33,13 @@ SRC =	main.c \
 		executor/builtins/builtin.c \
 		executor/exec_error_check.c \
 		executor/exec_utils.c \
-		executor/execute_command.c \
+		executor/execute_bin.c \
 		executor/executor.c \
 		executor/heredoc.c \
 		executor/redirection.c \
 		utils/clear_and_exit.c \
 		utils/info.c \
-		utils/memory.c \
-		tester.c
+		utils/memory.c
 
 
 OBJ_DIR = obj
