@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:44:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 23:13:59 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 18:45:56 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static void	process_input(t_info *info)
 	if (process_heredoc(info))
 		return ;
 	executor(info, info->cmds);
-	dup2(info->fd_stdio[0], STDIN_FILENO);
-	dup2(info->fd_stdio[1], STDOUT_FILENO);
 }
 
 static void	run_shell_loop(t_info *info)
