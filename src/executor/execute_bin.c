@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_command.c                                  :+:      :+:    :+:   */
+/*   execute_bin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:32:56 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 05:17:02 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 04:17:58 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Find PATH in the environment variables and split it into a 2d array*/
 static char	**find_path(t_info *info, char *cmd)
 {
 	char	*path;
@@ -28,8 +27,6 @@ static char	**find_path(t_info *info, char *cmd)
 	return (prefix);
 }
 
-/*Concatenate paths and filename and check the existence and
-accessability of the target file*/
 static char	*find_cmdfile(t_info *info, char *cmd)
 {
 	int		i;
@@ -59,8 +56,7 @@ static char	*find_cmdfile(t_info *info, char *cmd)
 	return (NULL);
 }
 
-/*Check if command has absolute/relative path or no path and then execute it*/
-void	execute_command(t_info *info, char **argv)
+void	execute_bin(t_info *info, char **argv)
 {
 	char	*filepath;
 

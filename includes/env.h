@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:21:58 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 11:20:40 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/12 03:57:08 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-// copy env
 int		count_envp(char **envp);
 char	**copy_envp_entries(char **envp, char **env_arr, \
 int envp_count, t_info *info);

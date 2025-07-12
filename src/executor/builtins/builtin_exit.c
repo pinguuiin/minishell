@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:32:41 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/06 00:38:03 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 04:21:26 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ static int	ft_atocode(char *s)
  *no argument - exit on 0
  *one numerical argument - exit on (unsigned int)arg % 256
  						- exceeding long long treated as a string
- *non-numerical argument(s) - exit on 2 and *error message
- *numerical argument plus other arguments - code set to 1 and **error message
- * *error message:
- *@param argv
+ *non-numerical argument(s) - exit on 2 and error message 1
+ *numerical argument + other args - code set to 1 and error message 2
  */
 int	shell_exit(t_info *info, char **argv)
 {

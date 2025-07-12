@@ -6,13 +6,11 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 03:47:50 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 03:32:18 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 04:57:50 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// ========!Free memory and readlines; close pipe and fds before exit!========
 
 static void	select_executor(t_info *info, t_cmd *cmds)
 {
@@ -23,7 +21,7 @@ static void	select_executor(t_info *info, t_cmd *cmds)
 	if (is_builtin(cmds))
 		silent_exit(execute_builtin(info, cmds->argv));
 	else
-		execute_command(info, cmds->argv);
+		execute_bin(info, cmds->argv);
 }
 
 static void	run_single_command(t_info *info, t_cmd *cmds)
@@ -58,7 +56,6 @@ static void	run_last_command(t_info *info, t_cmd *cmds)
 		wait_call(info, pid);
 }
 
-//return type might need fix
 static int	run_piped_command(t_info *info, t_cmd *cmds)
 {
 	pid_t	pid;

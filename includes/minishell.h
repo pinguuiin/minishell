@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/11 06:20:22 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/11 23:43:55 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include "lexer.h"
 # include "parser.h"
 # include "executor.h"
-# include "tester.h"
 
 extern volatile sig_atomic_t	g_signal;
 
