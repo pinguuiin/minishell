@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+static void	close_cmd_fds(t_redir *redir)
+{
+	while (redir)
+	{
+		if (redir->fd != -1)
+		{
+			close(redir->fd);
+			redir->fd = -1;
+		}
+		redir = redir->next;
+	}
+}
+
 static int	open_file(t_redir *redir)
 {
 	if (redir->type == REDIR_INPUT)
@@ -27,8 +40,10 @@ static int	open_file(t_redir *redir)
 
 int	redirect(t_redir *redir)
 {
-	int	fd[2];
+	int		fd[2];
+	t_redir	*start;
 
+	start = redir;
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
 	while (redir)
@@ -46,5 +61,6 @@ int	redirect(t_redir *redir)
 	}
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
+	close_cmd_fds(start);
 	return (0);
 }
