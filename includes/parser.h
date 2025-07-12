@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:25:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/08 07:08:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/12 17:27:30 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ typedef enum e_redir_type
 // Redirection node
 typedef struct s_redir
 {
-	t_redir_type	type;// Type of redirection
-	char			*file;// Target file or heredoc delimiter
-	struct s_redir	*next;// Linked list for multiple redirections
-	int				fd;//file descriptor from opening the file
+	t_redir_type	type;
+	char			*file;
+	struct s_redir	*next;
+	int				fd;
 }	t_redir;
 
 // Command node (single command in a pipeline)
 typedef struct s_cmd
 {
-	char			**argv;// NULL-terminated array of arguments
-	t_redir			*redirection;// Linked list of input/output redirections
-	struct s_cmd	*next;// Next command in pipeline
+	char			**argv;
+	t_redir			*redirection;
+	struct s_cmd	*next;
 }	t_cmd;
 
 void	calculate_env_len(const char *value, int *i, int *value_len);
