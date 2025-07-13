@@ -6,23 +6,11 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:30:25 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 22:40:28 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 09:46:18 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	handle_dollar_expansion(const char *value, \
-int *i, int *value_len, t_info *info)
-{
-	if (value[*i] && value[*i] == '?')
-	{
-		*value_len += itoa_len(info->exit_code);
-		(*i)++;
-	}
-	else if (value[*i] && (ft_isalpha(value[*i]) || value[*i] == '_'))
-		calculate_env_len(value, i, value_len);
-}
 
 static int	compute_expanded_len(const char *value, \
 int in_single_quote, int in_double_quote, t_info *info)
@@ -65,16 +53,16 @@ static void	save_expanded_value(const char *value, char *expanded)
 	while (value[i])
 	{
 		update_quote_state(value[i], &in_single_quote, &in_double_quote);
-		if (!in_single_quote && value[i] == '$' && value[i + 1] == '?' \
-&& write_exit_code(expanded, &i, &j))
-			continue ;
+		if (!in_single_quote && value[i] == '$' && value[i + 1] == '?')
+			write_exit_code(expanded, &i, &j);
 		else if (!in_single_quote && in_double_quote && value[i] == '$' \
 && write_env_with_double_quote(value, expanded, &i, &j))
-			continue ;
+			;
 		else if (!in_single_quote && value[i] == '$' \
 && write_env(value, expanded, &i, &j))
-			continue ;
-		expanded[j++] = value[i++];
+			;
+		else
+			expanded[j++] = value[i++];
 	}
 	expanded[j] = '\0';
 }

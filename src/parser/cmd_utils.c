@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:13:07 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/08 07:09:41 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 09:40:01 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,6 @@ t_cmd	*allocate_and_connect_cmd(t_cmd *cmd, t_info *info)
 	ft_memset(new_cmd, 0, sizeof(t_cmd));
 	cmd->next = new_cmd;
 	return (new_cmd);
-}
-
-void	remove_delimiter(char *expanded_value)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (expanded_value[i] == DELIMITER)
-		i++;
-	while (expanded_value[i])
-	{
-		if (expanded_value[i] == DELIMITER)
-		{
-			expanded_value[j++] = expanded_value[i++];
-			while (expanded_value[i] == DELIMITER)
-				i++;
-			continue ;
-		}
-		expanded_value[j++] = expanded_value[i++];
-	}
-	if (j > 0 && expanded_value[j - 1] == DELIMITER)
-		expanded_value[j - 1] = '\0';
-	else
-		expanded_value[j] = '\0';
 }
 
 static int	count_tokens_by_delimiter(const char *str)

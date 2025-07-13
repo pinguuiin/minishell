@@ -6,11 +6,51 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:20:02 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 21:00:49 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 09:54:57 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	write_exit_code(char *expanded, int *i, int *j)
+{
+	char	*exit_str;
+	int		k;
+	t_info	*info;
+
+	info = get_info();
+	exit_str = ft_arena_itoa(info->exit_code);
+	k = 0;
+	while (exit_str[k])
+		expanded[(*j)++] = exit_str[k++];
+	*i += 2;
+}
+
+void	remove_delimiter(char *expanded_value)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (expanded_value[i] == DELIMITER)
+		i++;
+	while (expanded_value[i])
+	{
+		if (expanded_value[i] == DELIMITER)
+		{
+			expanded_value[j++] = expanded_value[i++];
+			while (expanded_value[i] == DELIMITER)
+				i++;
+			continue ;
+		}
+		expanded_value[j++] = expanded_value[i++];
+	}
+	if (j > 0 && expanded_value[j - 1] == DELIMITER)
+		expanded_value[j - 1] = '\0';
+	else
+		expanded_value[j] = '\0';
+}
 
 int	itoa_len(int n)
 {

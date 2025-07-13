@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 21:00:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 22:40:05 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 09:37:25 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	calculate_env_len(const char *value, int *i, int *value_len)
+static void	calculate_env_len(const char *value, int *i, int *value_len)
 {
 	t_env	*env_list;
 
@@ -25,43 +25,16 @@ void	calculate_env_len(const char *value, int *i, int *value_len)
 		(*i)++;
 }
 
-int	write_exit_code(char *expanded, int *i, int *j)
+void	handle_dollar_expansion(const char *value, \
+int *i, int *value_len, t_info *info)
 {
-	char	*exit_str;
-	int		k;
-	t_info	*info;
-
-	info = get_info();
-	exit_str = ft_arena_itoa(info->exit_code);
-	k = 0;
-	while (exit_str[k])
-		expanded[(*j)++] = exit_str[k++];
-	*i += 2;
-	return (1);
-}
-
-void	save_env_value_with_del(const char *value, char *expanded, \
-int *i, int *j)
-{
-	t_env	*env_list;
-	int		k;
-
-	k = 0;
-	env_list = find_env_by_name(value, *i);
-	while (value[*i] && (ft_isalnum(value[*i]) || value[*i] == '_'))
-		(*i)++;
-	if (!env_list || !env_list->value)
-		return ;
-	while ((env_list->value)[k])
+	if (value[*i] && value[*i] == '?')
 	{
-		if ((env_list->value)[k] == ' ' || (env_list->value)[k] == '\t')
-		{
-			expanded[(*j)++] = DELIMITER;
-			k = skip_spaces(env_list->value, k);
-			continue ;
-		}
-		expanded[(*j)++] = (env_list->value)[k++];
+		*value_len += itoa_len(info->exit_code);
+		(*i)++;
 	}
+	else if (value[*i] && (ft_isalpha(value[*i]) || value[*i] == '_'))
+		calculate_env_len(value, i, value_len);
 }
 
 int	write_env_with_double_quote(const char *value, \
