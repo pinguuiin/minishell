@@ -25,6 +25,7 @@ SRC =	main.c \
 		parser/parser.c \
 		parser/redirection_utils.c \
 		parser/utils.c \
+		parser/env_utils.c \
 		executor/builtins/builtin_cd.c \
 		executor/builtins/builtin_echo.c \
 		executor/builtins/builtin_exit.c \

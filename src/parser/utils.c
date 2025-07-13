@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 01:11:51 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/08 07:09:30 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/12 21:52:32 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static char	*allocate_and_copy_env_name(const char *value, int i, t_info *info)
 	return (env_name);
 }
 
-t_env	*find_env_by_name(const char *value, int i, t_info *info)
+t_env	*find_env_by_name(const char *value, int i)
 {
 	t_env	*env_list;
+	t_info	*info;
 	char	*env_name;
 
+	info = get_info();
 	env_name = allocate_and_copy_env_name(value, i, info);
 	env_list = info->env_list;
 	while (env_list)

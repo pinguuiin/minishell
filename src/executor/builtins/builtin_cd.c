@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:06:09 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/06 00:24:04 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 22:52:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	cd(char **argv, char **envp)
 	if (getpwd(&oldpwd, envp))
 		return (error_msg("minishell", NULL, "cd", 1));
 	if (chdir(expand_path(path, oldpwd)) == -1)
-		return (error_msg("minishell", NULL, "cd", 1));
+		return (error_msg("minishell: cd", NULL, path, 1));
 	if (getpwd(&pwd, envp))
 		return (error_msg("minishell", NULL, "cd", 1));
 	return (update_env_pwd(envp, oldpwd, pwd));

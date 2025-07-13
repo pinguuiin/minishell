@@ -3,28 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/11 23:43:55 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/12 22:50:47 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
 # include <sys/wait.h>
-# include <unistd.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <signal.h>
 
 # include "../libft/libft.h"
 # include "memory.h"

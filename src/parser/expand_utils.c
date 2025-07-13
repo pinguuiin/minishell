@@ -6,51 +6,50 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:20:02 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/08 07:06:56 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 09:54:57 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	calculate_env_len(const char *value, int *i, int *value_len)
+void	write_exit_code(char *expanded, int *i, int *j)
 {
-	t_info	*info;
-	t_env	*env_list;
-
-	info = get_info();
-	env_list = find_env_by_name(value, *i, info);
-	if (!env_list || !env_list->value)
-		return ;
-	else
-		*value_len += ft_strlen(env_list->value);
-	while (value[*i] && (ft_isalnum(value[*i]) || value[*i] == '_'))
-		(*i)++;
-}
-
-void	save_env_value_with_del(const char *value, char *expanded, \
-int *i, int *j)
-{
-	t_env	*env_list;
+	char	*exit_str;
 	int		k;
 	t_info	*info;
 
-	k = 0;
 	info = get_info();
-	env_list = find_env_by_name(value, *i, info);
-	while (value[*i] && (ft_isalnum(value[*i]) || value[*i] == '_'))
-		(*i)++;
-	if (!env_list || !env_list->value)
-		return ;
-	while ((env_list->value)[k])
+	exit_str = ft_arena_itoa(info->exit_code);
+	k = 0;
+	while (exit_str[k])
+		expanded[(*j)++] = exit_str[k++];
+	*i += 2;
+}
+
+void	remove_delimiter(char *expanded_value)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (expanded_value[i] == DELIMITER)
+		i++;
+	while (expanded_value[i])
 	{
-		if ((env_list->value)[k] == ' ' || (env_list->value)[k] == '\t')
+		if (expanded_value[i] == DELIMITER)
 		{
-			expanded[(*j)++] = DELIMITER;
-			k = skip_spaces(env_list->value, k);
+			expanded_value[j++] = expanded_value[i++];
+			while (expanded_value[i] == DELIMITER)
+				i++;
 			continue ;
 		}
-		expanded[(*j)++] = (env_list->value)[k++];
+		expanded_value[j++] = expanded_value[i++];
 	}
+	if (j > 0 && expanded_value[j - 1] == DELIMITER)
+		expanded_value[j - 1] = '\0';
+	else
+		expanded_value[j] = '\0';
 }
 
 int	itoa_len(int n)
