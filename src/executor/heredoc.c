@@ -20,7 +20,6 @@ static void	write_expansion(char *start, char *input, int *key_len, int fd)
 	if (ft_strncmp(input, "?", 1) == 0)
 	{
 		ft_putnbr_fd(get_info()->exit_code, fd);
-		get_info()->exit_code = 0;
 		*key_len = 1;
 		return ;
 	}
