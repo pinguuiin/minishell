@@ -42,6 +42,8 @@ static void	process_input(t_info *info)
 	info->env_list = envp_to_list(info->env_arr, &(info->arena));
 	tokenize_elements(info);
 	parser(info);
+	info->fd_stdio[0] = dup(STDIN_FILENO);
+	info->fd_stdio[1] = dup(STDOUT_FILENO);
 	if (process_heredoc(info))
 		return ;
 	executor(info, info->cmds);
@@ -58,7 +60,8 @@ static void	run_shell_loop(t_info *info)
 		if (!(info->input))
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			silent_exit(0);
+			arena_free_all();
+			exit(0);
 		}
 		if (!((info->input)[0]))
 			continue ;
