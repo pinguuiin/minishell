@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:16:49 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 17:27:08 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/14 21:27:55 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define MEMORY_H
 
 # include "minishell.h"
-# define ARENA_BLOCK_SIZE	10485760
+# define ARENA_BLOCK_SIZE	51200
+# define ENV_BLOCK_SIZE		1048576
 # define ARENA_ALIGNMENT	8
 
 typedef struct s_arena

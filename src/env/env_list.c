@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:16 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/02 11:21:51 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/14 22:41:27 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_env	*new_env_node_from_string(const char *env, t_arena **arena)
 
 	node = aalloc(arena, sizeof(t_env));
 	if (!node)
-		return (NULL);
+		clean_and_exit("env node");
 	equal = ft_strchr(env, '=');
 	if (equal)
 	{

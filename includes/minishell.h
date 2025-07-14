@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:19:00 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 22:50:47 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 22:18:01 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ extern volatile sig_atomic_t	g_signal;
 typedef struct s_info
 {
 	t_arena	*arena;
+	t_arena	*envp_arena;
 	t_token	*tokens;
 	t_env	*env_list;
 	t_cmd	*cmds;

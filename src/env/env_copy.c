@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:17:13 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/07 14:05:34 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 22:24:04 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char **env_arr, int envp_count, t_info *info)
 	i = 0;
 	while (i < envp_count)
 	{
-		env_arr[i] = aalloc(&(info->arena), ft_strlen(envp[i]) + 1);
+		env_arr[i] = aalloc(&(info->envp_arena), ft_strlen(envp[i]) + 1);
 		if (!env_arr[i])
 			clean_and_exit("env_arr entry");
 		ft_strlcpy(env_arr[i], envp[i], ft_strlen(envp[i]) + 1);
@@ -80,7 +80,7 @@ char	**copy_envp(char **envp, t_info *info)
 	int		envp_count;
 
 	envp_count = count_envp(envp);
-	env_arr = aalloc(&(info->arena), (envp_count + 1) * sizeof(char *));
+	env_arr = aalloc(&(info->envp_arena), (envp_count + 1) * sizeof(char *));
 	if (!env_arr)
 		clean_and_exit("env_arr");
 	env_arr = copy_envp_entries(envp, env_arr, envp_count, info);

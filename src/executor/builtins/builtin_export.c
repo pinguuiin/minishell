@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 01:18:06 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/06 01:20:33 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/13 22:28:38 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ static void	export_arg(t_info *info, char *s, char ***envp)
 		return ;
 	if (!(*envp)[i])
 	{
-		new_envp = aalloc(&info->arena, (len + 2) * sizeof(char *));
+		new_envp = aalloc(&info->envp_arena, (len + 2) * sizeof(char *));
 		if (!new_envp)
 			clean_and_exit("export");
 		new_envp = copy_envp_entries(*envp, new_envp, len, info);
 		new_envp[len + 1] = NULL;
 	}
-	new_envp[i] = arena_strjoin(&info->arena, s, "");
+	new_envp[i] = arena_strjoin(&info->envp_arena, s, "");
 	if (!new_envp[i])
 		clean_and_exit("export");
 	*envp = new_envp;
