@@ -58,8 +58,7 @@ static void	run_shell_loop(t_info *info)
 		if (!(info->input))
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			arena_free_all();
-			exit(0);
+			silent_exit(0);
 		}
 		if (!((info->input)[0]))
 			continue ;
