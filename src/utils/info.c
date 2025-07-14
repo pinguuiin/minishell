@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:23:43 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/15 00:00:08 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/15 00:34:45 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_info(char **envp)
 	info->fd_stdio[0] = dup(STDIN_FILENO);
 	info->fd_stdio[1] = dup(STDOUT_FILENO);
 	info->envp_arena = arena_create(ENV_BLOCK_SIZE);
-	info->env_arr = copy_envp(envp, info);
+	info->env_arr = copy_envp(envp, info->envp_arena);
 }
 
 void	reset_info(void)
