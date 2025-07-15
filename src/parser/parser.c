@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 22:53:38 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/07 14:03:00 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/16 00:46:48 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_cmd *cmd, t_info *info)
 
 	redir = allocate_and_connect_redir(cmd, info);
 	expanded_value = expand_value(token->next->value, info);
+	if (expanded_value[0] == EMPTY_STR)
+		expanded_value[0] = '\0';
 	if (has_delimiter(expanded_value) \
 || (has_only_env(token->next->value) && !expanded_value[0]))
 	{
