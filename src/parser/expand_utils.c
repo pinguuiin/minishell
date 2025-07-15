@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:20:02 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/13 09:54:57 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/14 22:39:36 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*ft_arena_itoa(int n)
 	len = itoa_len(n);
 	str = aalloc(&(info->arena), len + 1);
 	if (!str)
-		return (NULL);
+		clean_and_exit("arena itoa");
 	convert(n, str, len);
 	return (str);
 }

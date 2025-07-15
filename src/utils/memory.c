@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:24:34 by donheo            #+#    #+#             */
-/*   Updated: 2025/07/12 09:06:23 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/14 23:01:18 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,14 @@ t_arena	*arena_create(size_t size)
 
 	arena = malloc(sizeof(t_arena));
 	if (!arena)
-	{
-		ft_putstr_fd("failed to create arena\n", STDERR_FILENO);
-		exit(1);
-	}
+		clean_and_exit("arena");
 	arena->memory = malloc(size);
 	if (!arena->memory)
 	{
 		free(arena);
-		ft_putstr_fd("failed to create memory for arena\n", STDERR_FILENO);
-		exit(1);
+		clean_and_exit("arena memory");
 	}
+	ft_bzero(arena->memory, size);
 	arena->offset = 0;
 	arena->size = size;
 	arena->next = NULL;
@@ -76,10 +73,7 @@ void	*aalloc(t_arena **arena_ptr, size_t size)
 	}
 	new_chunk = create_new_chunk(*arena_ptr, size);
 	if (!new_chunk)
-	{
-		arena_free_all();
 		return (NULL);
-	}
 	*arena_ptr = new_chunk;
 	return (new_chunk->memory);
 }
@@ -92,6 +86,14 @@ void	arena_free_all(void)
 
 	info = get_info();
 	arena = info->arena;
+	while (arena)
+	{
+		next = arena->next;
+		free(arena->memory);
+		free(arena);
+		arena = next;
+	}
+	arena = info->envp_arena;
 	while (arena)
 	{
 		next = arena->next;

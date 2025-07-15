@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:06:09 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/12 22:52:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/07/13 23:10:48 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	realloc_env_var(char **var, char *name, char *content)
 	t_info	*info;
 
 	info = get_info();
-	*var = aalloc(&info->arena, ft_strlen(name) + ft_strlen(content) + 2);
+	*var = aalloc(&info->envp_arena, ft_strlen(name) + ft_strlen(content) + 2);
 	if (!*var)
 		clean_and_exit("cd");
 	ft_memmove(*var, name, ft_strlen(name));
