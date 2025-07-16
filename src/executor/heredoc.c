@@ -6,7 +6,7 @@
 /*   By: piyu <piyu@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:46:11 by piyu              #+#    #+#             */
-/*   Updated: 2025/07/11 23:21:38 by piyu             ###   ########.fr       */
+/*   Updated: 2025/07/16 18:52:14 by piyu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ static void	write_heredoc_input(char *input, t_redir *redir, int fd)
 
 static int	heredoc_clean_up(char *input, int *pipefd)
 {
-	free(input);
+	g_signal = 0;
+	rl_event_hook = readline_handler;
+	if (input)
+		free(input);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	return (-2);
@@ -78,10 +81,10 @@ int	open_heredoc(t_redir *redir)
 	int		pipefd[2];
 	char	*input;
 
-	rl_event_hook = rl_heredoc_handler;
 	if (pipe(pipefd) == -1)
 		return (-1);
 	redir->fd = pipefd[0];
+	rl_event_hook = rl_heredoc_handler;
 	while (1)
 	{
 		input = readline("> ");
@@ -90,7 +93,7 @@ int	open_heredoc(t_redir *redir)
 		if (!input || !ft_strncmp(input, redir->file, ft_strlen(input) + 1))
 		{
 			if (!input)
-				write(2, "minishell: warning: heredoc delimited by EOF\n", 46);
+				write(2, "minishell: warning: heredoc delimited by EOF\n", 45);
 			else
 				free(input);
 			break ;
@@ -99,5 +102,5 @@ int	open_heredoc(t_redir *redir)
 		free(input);
 	}
 	close(pipefd[1]);
-	return (pipefd[0]);
+	return (rl_event_hook = readline_handler, pipefd[0]);
 }
