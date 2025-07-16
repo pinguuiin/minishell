@@ -40,7 +40,8 @@ SRC =	main.c \
 		executor/redirection.c \
 		utils/clear_and_exit.c \
 		utils/info.c \
-		utils/memory.c
+		utils/memory.c \
+		utils/error_message.c
 
 
 OBJ_DIR = obj
